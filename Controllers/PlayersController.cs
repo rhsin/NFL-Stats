@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NflStats.Data;
 using NflStats.Models;
-using NflStats.Services;
 
 namespace NflStats.Controllers
 {
@@ -26,15 +24,6 @@ namespace NflStats.Controllers
         public async Task<ActionResult<IEnumerable<Player>>> GetPlayers()
         {
             return await _context.Players.ToListAsync();
-        }
-
-        // GET: api/Players/Csv
-        [HttpGet("Csv")]
-        public List<Player> GetPlayerRecords()
-        {
-            var csvImporter = new CsvImporter();
-
-            return csvImporter.GetPlayerRecords();
         }
 
         // GET: api/Players/5
