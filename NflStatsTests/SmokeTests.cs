@@ -17,6 +17,7 @@ namespace NflStatsTests
 
         [Theory]
         [InlineData("api/Players")]
+        [InlineData("api/Players/1")]
         public async Task TestGetEndpoints(string url)
         {
             var response = await _client.GetAsync(url);

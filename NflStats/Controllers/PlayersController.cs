@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NflStats.Data;
 using NflStats.Models;
+using NflStats.Repositories;
 
 namespace NflStats.Controllers
 {
@@ -13,31 +15,37 @@ namespace NflStats.Controllers
     public class PlayersController : ControllerBase
     {
         private readonly ApplicationContext _context;
+        private readonly IPlayerRepository _playerRepository;
 
-        public PlayersController(ApplicationContext context)
+        public PlayersController(ApplicationContext context, IPlayerRepository playerRepository)
         {
             _context = context;
+            _playerRepository = playerRepository;
         }
 
         // GET: api/Players
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Player>>> GetPlayers()
         {
-            return await _context.Players.ToListAsync();
+            return Ok(await _playerRepository.GetPlayers());
         }
 
         // GET: api/Players/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Player>> GetPlayer(int id)
         {
-            var player = await _context.Players.FindAsync(id);
+            var players = await _playerRepository.GetPlayers();
 
-            if (player == null)
+            try
             {
-                return NotFound();
-            }
+                var player = players.First(p => p.Id == id);
 
-            return player;
+                return Ok(player);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT: api/Players/5

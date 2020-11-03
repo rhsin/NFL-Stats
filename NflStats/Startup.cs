@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NflStats.Data;
+using NflStats.Repositories;
 using NflStats.Services;
 
 namespace NflStats
@@ -27,6 +28,7 @@ namespace NflStats
             services.AddControllers();
 
             services.AddScoped<ICsvImporter, CsvImporter>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
