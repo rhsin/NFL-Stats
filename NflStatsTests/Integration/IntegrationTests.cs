@@ -2,6 +2,8 @@
 using Newtonsoft.Json;
 using NflStats.Models;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -26,11 +28,25 @@ namespace NflStatsTests.Integration
             var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.IsType<List<Player>>(players);
+            Assert.Equal(100, players.Count());
             Assert.Contains("Christian McCaffrey", stringResponse);
             Assert.Contains("RB", stringResponse);
             Assert.Contains("CAR", stringResponse);
             Assert.Contains("469.2", stringResponse);
+        }
+
+        [Fact]
+        public async Task GetPlayer()
+        {
+            var response = await _client.GetAsync("api/Players/408");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var player = JsonConvert.DeserializeObject<Player>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal("Lamar Jackson", player.Name);
+            Assert.Equal("QB", player.Position);
+            Assert.Equal("BAL", player.Team);
+            Assert.Equal(415.68, Math.Round(player.Points, 2));
         }
 
         [Fact]

@@ -27,14 +27,14 @@ namespace NflStats.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Player>>> GetPlayers()
         {
-            return Ok(await _playerRepository.GetPlayers());
+            return Ok(await _playerRepository.GetTop());
         }
 
         // GET: api/Players/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Player>> GetPlayer(int id)
         {
-            var players = await _playerRepository.GetPlayers();
+            var players = await _playerRepository.GetAll();
 
             try
             {

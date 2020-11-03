@@ -9,7 +9,8 @@ namespace NflStats.Repositories
 {
     public interface IPlayerRepository
     {
-        public Task<IEnumerable<Player>> GetPlayers();
+        public Task<IEnumerable<Player>> GetAll();
+        public Task<IEnumerable<Player>> GetTop();
     }
 
     public class PlayerRepository : IPlayerRepository
@@ -21,10 +22,19 @@ namespace NflStats.Repositories
             _config = config;
         }
 
-        public async Task<IEnumerable<Player>> GetPlayers()
+        public async Task<IEnumerable<Player>> GetAll()
+        {
+            string sql = @"SELECT *
+                           FROM Players";
+
+            return await this.ExecutePlayerQuery(sql, null);
+        }
+
+        public async Task<IEnumerable<Player>> GetTop()
         {
             string sql = @"SELECT TOP 100 *
-                           FROM Players";
+                           FROM Players
+                           ORDER BY Points DESC";
 
             return await this.ExecutePlayerQuery(sql, null);
         }
