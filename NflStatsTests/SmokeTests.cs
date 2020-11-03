@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
 using System.Net.Http;
@@ -21,7 +20,8 @@ namespace NflStatsTests
         public async Task TestGetEndpoints(string url)
         {
             var response = await _client.GetAsync(url);
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Theory]
@@ -29,7 +29,8 @@ namespace NflStatsTests
         public async Task TestPostEndpoints(string url)
         {
             var response = await _client.PostAsync(url, null);
-            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
     }
 }

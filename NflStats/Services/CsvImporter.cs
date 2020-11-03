@@ -17,7 +17,7 @@ namespace NflStats.Services
     {
         public List<Player> GetPlayerRecords()
         {
-            using (var reader = new StreamReader(@"C:\Users\Ryan\source\repos\NflStats\Data\2019.csv"))
+            using (var reader = new StreamReader(@"C:\Users\Ryan\source\repos\NflStats\NflStats\Data\2019.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.RegisterClassMap<PlayerMap>();
