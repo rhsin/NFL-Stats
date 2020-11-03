@@ -12,35 +12,35 @@ namespace NflStats.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PlayersController : ControllerBase
+    public class RostersController : ControllerBase
     {
         private readonly ApplicationContext _context;
-        private readonly IPlayerRepository _playerRepository;
+        private readonly IRosterRepository _rosterRepository;
 
-        public PlayersController(ApplicationContext context, IPlayerRepository playerRepository)
+        public RostersController(ApplicationContext context, IRosterRepository rosterRepository)
         {
             _context = context;
-            _playerRepository = playerRepository;
+            _rosterRepository = rosterRepository;
         }
 
-        // GET: api/Players
+        // GET: api/Rosters
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Player>>> GetPlayers()
+        public async Task<ActionResult<IEnumerable<Roster>>> GetRosters()
         {
-            return Ok(await _playerRepository.GetTop());
+            return Ok(await _rosterRepository.GetAll());
         }
 
-        // GET: api/Players/5
+        // GET: api/Rosters/1
         [HttpGet("{id}")]
-        public async Task<ActionResult<Player>> GetPlayer(int id)
+        public async Task<ActionResult<Roster>> GetRoster(int id)
         {
-            var players = await _playerRepository.GetAll();
+            var rosters = await _rosterRepository.GetAll();
 
             try
             {
-                var player = players.First(p => p.Id == id);
+                var roster = rosters.First(p => p.Id == id);
 
-                return Ok(player);
+                return Ok(roster);
             }
             catch (Exception ex)
             {
@@ -48,18 +48,18 @@ namespace NflStats.Controllers
             }
         }
 
-        // PUT: api/Players/5
+        // PUT: api/Rosters/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlayer(int id, Player player)
+        public async Task<IActionResult> PutRoster(int id, Roster roster)
         {
-            if (id != player.Id)
+            if (id != roster.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(player).State = EntityState.Modified;
+            _context.Entry(roster).State = EntityState.Modified;
 
             try
             {
@@ -67,7 +67,7 @@ namespace NflStats.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PlayerExists(id))
+                if (!RosterExists(id))
                 {
                     return NotFound();
                 }
@@ -80,37 +80,37 @@ namespace NflStats.Controllers
             return NoContent();
         }
 
-        // POST: api/Players
+        // POST: api/Rosters
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Player>> PostPlayer(Player player)
+        public async Task<ActionResult<Roster>> PostRoster(Roster roster)
         {
-            _context.Players.Add(player);
+            _context.Rosters.Add(roster);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPlayer", new { id = player.Id }, player);
+            return CreatedAtAction("GetRoster", new { id = roster.Id }, roster);
         }
 
-        // DELETE: api/Players/5
+        // DELETE: api/Rosters/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Player>> DeletePlayer(int id)
+        public async Task<ActionResult<Roster>> DeleteRoster(int id)
         {
-            var player = await _context.Players.FindAsync(id);
-            if (player == null)
+            var roster = await _context.Rosters.FindAsync(id);
+            if (roster == null)
             {
                 return NotFound();
             }
 
-            _context.Players.Remove(player);
+            _context.Rosters.Remove(roster);
             await _context.SaveChangesAsync();
 
-            return player;
+            return roster;
         }
 
-        private bool PlayerExists(int id)
+        private bool RosterExists(int id)
         {
-            return _context.Players.Any(e => e.Id == id);
+            return _context.Rosters.Any(e => e.Id == id);
         }
     }
 }

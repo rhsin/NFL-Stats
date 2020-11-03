@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using NflStats.Data;
 using NflStats.Models;
 using NflStats.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NflStats.Controllers
 {

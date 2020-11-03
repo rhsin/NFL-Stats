@@ -25,10 +25,12 @@ namespace NflStats
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); 
 
             services.AddScoped<ICsvImporter, CsvImporter>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<IRosterRepository, RosterRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

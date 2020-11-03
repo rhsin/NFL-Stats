@@ -18,6 +18,8 @@ namespace NflStatsTests
         [Theory]
         [InlineData("api/Players")]
         [InlineData("api/Players/1")]
+        [InlineData("api/Rosters")]
+        [InlineData("api/Rosters/1")]
         public async Task GetEndpoints(string url)
         {
             var response = await _client.GetAsync(url);
