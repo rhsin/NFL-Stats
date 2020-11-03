@@ -18,7 +18,7 @@ namespace NflStatsTests
         [Theory]
         [InlineData("api/Players")]
         [InlineData("api/Players/1")]
-        public async Task TestGetEndpoints(string url)
+        public async Task GetEndpoints(string url)
         {
             var response = await _client.GetAsync(url);
 
@@ -27,7 +27,7 @@ namespace NflStatsTests
 
         [Theory]
         [InlineData("api/Seeders/Run/Players")]
-        public async Task TestPostEndpoints(string url)
+        public async Task PostEndpoints(string url)
         {
             var response = await _client.PostAsync(url, null);
 

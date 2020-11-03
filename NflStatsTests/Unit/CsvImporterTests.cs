@@ -9,7 +9,7 @@ namespace NflStatsTests.Unit
     public class CsvImporterTests
     {
         [Fact]
-        public void TestGetPlayerRecords()
+        public void GetPlayerRecords()
         {
             var csvImporter = new CsvImporter();
 

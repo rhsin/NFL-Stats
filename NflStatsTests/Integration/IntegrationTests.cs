@@ -50,7 +50,7 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
-        public async Task SeedPlayersBadRequest()
+        public async Task SeedPlayers()
         {
             var response = await _client.PostAsync("api/Seeders/Run/Players", null);
             var stringResponse = await response.Content.ReadAsStringAsync();

@@ -11,5 +11,14 @@ namespace NflStats.Data
         }
 
         public DbSet<Player> Players { get; set; }
+        public DbSet<Roster> Rosters { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Player>()
+                .HasOne<Roster>(p => p.Roster)
+                .WithMany(r => r.Players)
+                .HasForeignKey(p => p.RosterId);
+        }
     }
 }
