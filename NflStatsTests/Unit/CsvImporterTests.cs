@@ -12,7 +12,6 @@ namespace NflStatsTests.Unit
         public void GetPlayerRecords()
         {
             var csvImporter = new CsvImporter();
-
             var players = csvImporter.GetPlayerRecords();
 
             Assert.IsType<List<Player>>(players);
