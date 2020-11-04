@@ -12,7 +12,6 @@ namespace NflStats.Repositories
     public interface IRosterRepository
     {
         public Task<IEnumerable<Roster>> GetAll();
-        public Task<IEnumerable<Roster>> GetTop();
     }
 
     public class RosterRepository : IRosterRepository
@@ -31,14 +30,6 @@ namespace NflStats.Repositories
             return await _context.Rosters
                 .Include(r => r.Players)
                 .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Roster>> GetTop()
-        {
-            string sql = @"SELECT TOP 100 *
-                           FROM Rosters";
-
-            return await this.ExecuteRosterQuery(sql, null);
         }
 
         private async Task<IEnumerable<Roster>> ExecuteRosterQuery(string sql, object parameters)

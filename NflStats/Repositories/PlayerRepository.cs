@@ -11,6 +11,7 @@ namespace NflStats.Repositories
     {
         public Task<IEnumerable<Player>> GetAll();
         public Task<IEnumerable<Player>> GetTop();
+        public Task<IEnumerable<Player>> GetPosition(string position);
     }
 
     public class PlayerRepository : IPlayerRepository
@@ -37,6 +38,18 @@ namespace NflStats.Repositories
                            ORDER BY Points DESC";
 
             return await this.ExecutePlayerQuery(sql, null);
+        }
+
+        public async Task<IEnumerable<Player>> GetPosition(string position)
+        {
+            var parameters = new { Position = position };
+
+            string sql = @"SELECT *
+                           FROM Players
+                           WHERE UPPER(Position) = UPPER(@Position)
+                           ORDER BY Points DESC";
+
+            return await this.ExecutePlayerQuery(sql, parameters);
         }
 
         private async Task<IEnumerable<Player>> ExecutePlayerQuery(string sql, object parameters)

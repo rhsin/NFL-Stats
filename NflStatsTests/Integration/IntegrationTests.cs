@@ -50,6 +50,42 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task GetPosition()
+        {
+            var response = await _client.GetAsync("api/Players/Position/QB");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(71, players.Count());
+            Assert.All(players, p => Assert.Equal("QB", p.Position));
+            Assert.Contains("Dak Prescott", stringResponse);
+            Assert.Contains("Jarrett Stidham", stringResponse);
+        }
+
+        [Fact]
+        public async Task GetRosters()
+        {
+            var response = await _client.GetAsync("api/Rosters");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Contains("team", stringResponse);
+            Assert.Contains("players", stringResponse);
+        }
+
+        [Fact]
+        public async Task GetRoster()
+        {
+            var response = await _client.GetAsync("api/Rosters/1");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Contains("team", stringResponse);
+            Assert.Contains("players", stringResponse);
+        }
+
+        [Fact]
         public async Task SeedPlayers()
         {
             var response = await _client.PostAsync("api/Seeders/Run/Players", null);
