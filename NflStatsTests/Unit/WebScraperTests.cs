@@ -6,16 +6,16 @@ using Xunit;
 
 namespace NflStatsTests.Unit
 {
-    public class CsvImporterTests
+    public class WebScraperTests
     {
         [Fact]
-        public void GetPlayerRecords()
+        public void GetPlayers()
         {
-            var csvImporter = new CsvImporter();
-            var players = csvImporter.GetPlayerRecords();
+            var webScraper = new WebScraper();
+            var players = webScraper.GetPlayers().Result;
 
             Assert.IsType<List<Player>>(players);
-            Assert.Equal(620, players.Count());
+            Assert.True(players.Count() > 30);
             Assert.All(players, p => Assert.NotNull(p.Name));
         }
     }

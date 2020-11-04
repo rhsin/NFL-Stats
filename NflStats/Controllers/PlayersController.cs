@@ -62,7 +62,7 @@ namespace NflStats.Controllers
         {
             var webscraper = new WebScraper();
 
-            var players = await webscraper.GetData();
+            var players = await webscraper.GetPlayers();
 
             return Ok(players);
         }

@@ -10,12 +10,12 @@ namespace NflStats.Services
 {
     public interface ICsvImporter
     {
-        public List<Player> GetPlayerRecords();
+        public IEnumerable<Player> GetPlayerRecords();
     }
 
     public class CsvImporter : ICsvImporter
     {
-        public List<Player> GetPlayerRecords()
+        public IEnumerable<Player> GetPlayerRecords()
         {
             using (var reader = new StreamReader(@"C:\Users\Ryan\source\repos\NflStats\NflStats\Data\2019.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))

@@ -23,7 +23,7 @@ namespace NflStats.Controllers
 
         // GET: api/Seeders/Csv/Players
         [HttpGet("Csv/Players")]
-        public List<Player> GetPlayerRecords()
+        public IEnumerable<Player> GetPlayerRecords()
         {
             return _csvImporter.GetPlayerRecords();
         }
