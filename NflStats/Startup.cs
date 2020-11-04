@@ -29,6 +29,7 @@ namespace NflStats
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); 
 
             services.AddScoped<ICsvImporter, CsvImporter>();
+            services.AddScoped<ILineupValidator, LineupValidator>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<IRosterRepository, RosterRepository>();
         }

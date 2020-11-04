@@ -86,6 +86,16 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task CheckRoster()
+        {
+            var response = await _client.GetAsync("api/Rosters/Check/1");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.True(!String.IsNullOrEmpty(stringResponse));
+        }
+
+        [Fact]
         public async Task AddPlayer()
         {
             var response = await _client.PutAsync("api/Rosters/Players/Add/1/10", null);

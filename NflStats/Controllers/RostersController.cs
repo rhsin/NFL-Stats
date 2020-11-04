@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NflStats.Data;
 using NflStats.Models;
 using NflStats.Repositories;
+using NflStats.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,14 @@ namespace NflStats.Controllers
     {
         private readonly ApplicationContext _context;
         private readonly IRosterRepository _rosterRepository;
+        private readonly ILineupValidator _lineupValidator;
 
-        public RostersController(ApplicationContext context, IRosterRepository rosterRepository)
+        public RostersController(ApplicationContext context, IRosterRepository rosterRepository,
+            ILineupValidator lineupValidator)
         {
             _context = context;
             _rosterRepository = rosterRepository;
+            _lineupValidator = lineupValidator;
         }
 
         // GET: api/Rosters
@@ -73,6 +77,29 @@ namespace NflStats.Controllers
                 await _rosterRepository.RemovePlayer(rosterId, playerId);
 
                 return Ok($"Player {playerId} Removed From Roster {rosterId}!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // GET: api/Rosters/Check/1
+        [HttpGet("Check/{id}")]
+        public async Task<ActionResult<Roster>> CheckRoster(int id)
+        {
+            var rosters = await _rosterRepository.GetAll();
+
+            try
+            {
+                var roster = rosters.First(p => p.Id == id);
+
+                if (!_lineupValidator.IsStandard(roster))
+                {
+                    return Ok($"Roster {roster.Id} Is Not Valid Lineup!");
+                }
+
+                return Ok(roster);
             }
             catch (Exception ex)
             {
