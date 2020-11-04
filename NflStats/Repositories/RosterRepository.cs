@@ -12,6 +12,8 @@ namespace NflStats.Repositories
     public interface IRosterRepository
     {
         public Task<IEnumerable<Roster>> GetAll();
+        public Task AddPlayer(int rosterId, int playerId);
+        public Task RemovePlayer(int rosterId, int playerId);
     }
 
     public class RosterRepository : IRosterRepository
@@ -32,13 +34,31 @@ namespace NflStats.Repositories
                 .ToListAsync();
         }
 
-        private async Task<IEnumerable<Roster>> ExecuteRosterQuery(string sql, object parameters)
+        public async Task AddPlayer(int rosterId, int playerId)
         {
-            using (var connection = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
-            {
-                var rosters = await connection.QueryAsync<Roster>(sql, parameters);
+            var parameters = new { RosterId = rosterId, PlayerId = playerId };
 
-                return rosters;
+            string sql = @"UPDATE Players
+                           SET RosterId = @RosterId
+                           WHERE Id = @PlayerId";
+
+            using (var connection = new SqlConnection(_config.GetConnectionString("Default")))
+            {
+                await connection.ExecuteAsync(sql, parameters);
+            }
+        }
+
+        public async Task RemovePlayer(int rosterId, int playerId)
+        {
+            var parameters = new { RosterId = rosterId, PlayerId = playerId };
+
+            string sql = @"UPDATE Players
+                           SET RosterId = NULL
+                           WHERE Id = @PlayerId";
+
+            using (var connection = new SqlConnection(_config.GetConnectionString("Default")))
+            {
+                await connection.ExecuteAsync(sql, parameters);
             }
         }
     }

@@ -54,7 +54,7 @@ namespace NflStats.Repositories
 
         private async Task<IEnumerable<Player>> ExecutePlayerQuery(string sql, object parameters)
         {
-            using (var connection = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            using (var connection = new SqlConnection(_config.GetConnectionString("Default")))
             {
                 var players = await connection.QueryAsync<Player>(sql, parameters);
 

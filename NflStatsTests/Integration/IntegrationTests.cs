@@ -86,6 +86,26 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task AddPlayer()
+        {
+            var response = await _client.PutAsync("api/Rosters/Players/Add/1/10", null);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal("Player 10 Added To Roster 1!", stringResponse);
+        }
+
+        [Fact]
+        public async Task RemovePlayer()
+        {
+            var response = await _client.PutAsync("api/Rosters/Players/Remove/1/10", null);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal("Player 10 Removed From Roster 1!", stringResponse);
+        }
+
+        [Fact]
         public async Task SeedPlayers()
         {
             var response = await _client.PostAsync("api/Seeders/Run/Players", null);

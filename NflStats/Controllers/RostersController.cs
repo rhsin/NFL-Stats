@@ -48,6 +48,38 @@ namespace NflStats.Controllers
             }
         }
 
+        // PUT: api/Rosters/Players/Add/1/10
+        [HttpPut("Players/Add/{rosterId}/{playerId}")]
+        public async Task<ActionResult> AddPlayer(int rosterId, int playerId)
+        {
+            try
+            {
+                await _rosterRepository.AddPlayer(rosterId, playerId);
+
+                return Ok($"Player {playerId} Added To Roster {rosterId}!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }           
+        }
+
+        // PUT: api/Rosters/Players/Remove/1/10
+        [HttpPut("Players/Remove/{rosterId}/{playerId}")]
+        public async Task<ActionResult> RemovePlayer(int playerId, int rosterId = 1)
+        {
+            try
+            {
+                await _rosterRepository.RemovePlayer(rosterId, playerId);
+
+                return Ok($"Player {playerId} Removed From Roster {rosterId}!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         // PUT: api/Rosters/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
