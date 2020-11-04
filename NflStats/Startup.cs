@@ -30,6 +30,7 @@ namespace NflStats
 
             services.AddScoped<ICsvImporter, CsvImporter>();
             services.AddScoped<ILineupValidator, LineupValidator>();
+            services.AddScoped<IWebScraper, WebScraper>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<IRosterRepository, RosterRepository>();
         }

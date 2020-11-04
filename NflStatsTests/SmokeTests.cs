@@ -19,6 +19,7 @@ namespace NflStatsTests
         [InlineData("api/Players")]
         [InlineData("api/Players/1")]
         [InlineData("api/Players/Position/QB")]
+        [InlineData("api/Players/Web/QB")]
         [InlineData("api/Rosters")]
         [InlineData("api/Rosters/1")]
         [InlineData("api/Rosters/Check/1")]

@@ -17,11 +17,14 @@ namespace NflStats.Controllers
     {
         private readonly ApplicationContext _context;
         private readonly IPlayerRepository _playerRepository;
+        private readonly IWebScraper _webScraper;
 
-        public PlayersController(ApplicationContext context, IPlayerRepository playerRepository)
+        public PlayersController(ApplicationContext context, IPlayerRepository playerRepository,
+            IWebScraper webScraper)
         {
             _context = context;
             _playerRepository = playerRepository;
+            _webScraper = webScraper;
         }
 
         // GET: api/Players
@@ -56,15 +59,20 @@ namespace NflStats.Controllers
             }
         }
 
-        // GET: api/Players/Web
-        [HttpGet("Web")]
-        public async Task<ActionResult<IEnumerable<Player>>> GetWebPlayers()
+        // GET: api/Players/Web/QB
+        [HttpGet("Web/{position?}")]
+        public async Task<ActionResult<IEnumerable<Player>>> GetWebPlayers(string position = "QB")
         {
-            var webscraper = new WebScraper();
+            try
+            {
+                var players = await _webScraper.GetPlayers(position);
 
-            var players = await webscraper.GetPlayers();
-
-            return Ok(players);
+                return Ok(players);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
 
         // PUT: api/Players/5

@@ -64,6 +64,20 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task GetWebPlayers()
+        {
+            var response = await _client.GetAsync("api/Players/Web/QB");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.True(players.Count() > 30);
+            Assert.All(players, p => Assert.NotNull(p.Name));
+            Assert.All(players, p => Assert.IsType<float>(p.Points));
+            Assert.Contains("Justin Herbert", stringResponse);
+        }
+
+        [Fact]
         public async Task GetRosters()
         {
             var response = await _client.GetAsync("api/Rosters");

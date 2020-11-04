@@ -8,36 +8,39 @@ namespace NflStats.Services
 {
     public interface IWebScraper
     {
-        public Task<IEnumerable<Player>> GetPlayers();
+        public Task<IEnumerable<Player>> GetPlayers(string position);
     }
 
     public class WebScraper : IWebScraper
     {
-        public async Task<IEnumerable<Player>> GetPlayers()
+        private readonly IBrowsingContext _context;
+
+        public WebScraper()
         {
-            var config = Configuration.Default.WithDefaultLoader();
-            var context = BrowsingContext.New(config);
-            var document = await context.OpenAsync(
-                @"https://www.footballdb.com/fantasy-football/index.html?pos=QB&yr=2020&wk=8&rules=1");
-            var elements = document.QuerySelectorAll("span.hidden-xs");
+            _context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
+        }
 
-            return elements.Select(e => new Player 
+        public async Task<IEnumerable<Player>> GetPlayers(string position = "QB")
+        {
+            var document = await _context.OpenAsync(
+                $@"https://www.footballdb.com/fantasy-football/index.html?pos={position}&yr=2020&wk=8&rules=1");
+            var elements = document.QuerySelectorAll("tr.right");
+
+            var players = new List<Player>();
+
+            foreach (var e in elements)
             {
-                Name = e.TextContent
-            })
-            .ToList();
+                float points;
+                float.TryParse(e.QuerySelector("td.hilite")?.TextContent, out points);
 
-            //var players = new List<Player>();
+                players.Add(new Player
+                {
+                    Name = e.QuerySelector("a")?.TextContent,
+                    Points = points
+                });
+            }
 
-            //foreach (var span in elements)
-            //{
-            //    players.Add(new Player
-            //    {
-            //        Name = span.TextContent
-            //    });
-            //}
-
-            //return players.ToList();
+            return players;
         }
     }
 }
