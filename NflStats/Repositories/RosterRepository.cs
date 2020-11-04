@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using NflStats.Data;
 using NflStats.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NflStats.Repositories
@@ -31,6 +32,12 @@ namespace NflStats.Repositories
         {
             return await _context.Rosters
                 .Include(r => r.Players)
+                .Select(r => new Roster 
+                {
+                    Id = r.Id,
+                    Team = r.Team,
+                    Players = r.Players.OrderBy(p => p.Position).ToList()
+                })
                 .ToListAsync();
         }
 

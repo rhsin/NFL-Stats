@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NflStats.Data;
 using NflStats.Models;
 using NflStats.Repositories;
+using NflStats.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,17 @@ namespace NflStats.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        // GET: api/Players/Web
+        [HttpGet("Web")]
+        public async Task<ActionResult<IEnumerable<Player>>> GetWebPlayers()
+        {
+            var webscraper = new WebScraper();
+
+            var players = await webscraper.GetData();
+
+            return Ok(players);
         }
 
         // PUT: api/Players/5
