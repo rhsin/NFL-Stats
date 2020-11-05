@@ -76,6 +76,32 @@ namespace NflStats.Controllers
             }
         }
 
+        // GET: api/Players/Rosters/1/8
+        // Filters the Players from WebScraper that have matching name in selected Roster.
+        [HttpGet("Rosters/{id}/{week}")]
+        public async Task<ActionResult<IEnumerable<Player>>> GetWebRoster(int id, int week)
+        {
+            try
+            {
+                var players = await _webScraper.GetPlayers(week, "QB%2CRB%2CWR%2CTE");
+
+                var roster = await _context.Rosters
+                    .Where(r => r.Id == id)
+                    .Select(r => r.Players)
+                    .SingleAsync();
+
+                var rosterPlayers = players
+                    .Where(p => roster.Any(r => r.Name == p.Name))
+                    .ToList();
+
+                return Ok(rosterPlayers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
+        }
+
         // PUT: api/Players/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

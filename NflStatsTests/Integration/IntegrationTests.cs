@@ -138,5 +138,17 @@ namespace NflStatsTests.Integration
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.Equal("Players Already Seeded!", stringResponse);
         }
+
+        [Fact]
+        public async Task GetWebRoster()
+        {
+            var response = await _client.GetAsync("api/Players/Rosters/1/8");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.True(players.Count() > 0);
+            Assert.Contains("Dalvin Cook", stringResponse);
+        }
     }
 }
