@@ -1,3 +1,7 @@
-.App {
-  text-align: center;
+/* .App {
+
+} */
+
+.MuiPaper-root {
+  margin: 1rem 0;
 }

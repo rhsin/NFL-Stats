@@ -1,32 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import NavBar from './NavBar';
 import PlayerTable from './PlayerTable';
+import PlayerForm from './PlayerForm';
+import Container from '@material-ui/core/Container';
+import { url } from './AppContants';
 
 function Roster() {
   const [roster, setRoster] = useState(null);
   const [players, setPlayers] = useState([]);
-  const url = 'https://localhost:44365/api/';
 
   useEffect(()=> {
     axios.get(url + 'Rosters/1')
       .then(res => setRoster(res.data))
       .catch(err => console.log(err));
-  }, []);
-
-  useEffect(()=> {
     axios.get(url + 'Players')
       .then(res => setPlayers(res.data))
       .catch(err => console.log(err));
   }, []);
 
   return (
-    <>
-      <h3>NFL Stats</h3>
-      {roster && <div>{roster.team}</div>}
+    <Container maxWidth='md'>
+      <NavBar />
       {roster && <PlayerTable players={roster.players} />}
-      <br/>
+      <PlayerForm 
+        setPlayers={players => setPlayers(players)}
+      />
       <PlayerTable players={players} />
-    </>
+    </Container>
   );
 }
 
