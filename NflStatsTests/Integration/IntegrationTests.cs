@@ -66,12 +66,12 @@ namespace NflStatsTests.Integration
         [Fact]
         public async Task GetWebPlayers()
         {
-            var response = await _client.GetAsync("api/Players/Web/QB");
+            var response = await _client.GetAsync("api/Players/Web/8/QB");
             var stringResponse = await response.Content.ReadAsStringAsync();
             var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.True(players.Count() > 30);
+            Assert.Equal(33, players.Count());
             Assert.All(players, p => Assert.NotNull(p.Name));
             Assert.All(players, p => Assert.IsType<float>(p.Points));
             Assert.Contains("Justin Herbert", stringResponse);

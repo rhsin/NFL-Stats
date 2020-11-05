@@ -59,13 +59,14 @@ namespace NflStats.Controllers
             }
         }
 
-        // GET: api/Players/Web/QB
-        [HttpGet("Web/{position?}")]
-        public async Task<ActionResult<IEnumerable<Player>>> GetWebPlayers(string position = "QB")
+        // GET: api/Players/Web/8/QB
+        [HttpGet("Web/{week}/{position?}")]
+        public async Task<ActionResult<IEnumerable<Player>>> GetWebPlayers(int week,
+            string position = "QB%2CRB%2CWR%2CTE")
         {
             try
             {
-                var players = await _webScraper.GetPlayers(position);
+                var players = await _webScraper.GetPlayers(week, position);
 
                 return Ok(players);
             }

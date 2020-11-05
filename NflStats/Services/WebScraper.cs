@@ -8,7 +8,7 @@ namespace NflStats.Services
 {
     public interface IWebScraper
     {
-        public Task<IEnumerable<Player>> GetPlayers(string position);
+        public Task<IEnumerable<Player>> GetPlayers(int week, string position);
     }
 
     public class WebScraper : IWebScraper
@@ -20,12 +20,11 @@ namespace NflStats.Services
             _context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
         }
 
-        public async Task<IEnumerable<Player>> GetPlayers(string position = "QB")
+        public async Task<IEnumerable<Player>> GetPlayers(int week = 8, string position = "QB%2CRB%2CWR%2CTE")
         {
-            var document = await _context.OpenAsync(
-                $@"https://www.footballdb.com/fantasy-football/index.html?pos={position}&yr=2020&wk=8&rules=1");
+            var source = $@"https://www.footballdb.com/fantasy-football/index.html?pos={position}&yr=2020&wk={week}&rules=1";
+            var document = await _context.OpenAsync(source);
             var elements = document.QuerySelectorAll("tr.right");
-
             var players = new List<Player>();
 
             foreach (var e in elements)
@@ -39,6 +38,8 @@ namespace NflStats.Services
                     Points = points
                 });
             }
+
+            players.RemoveAt(0);
 
             return players;
         }

@@ -15,7 +15,7 @@ namespace NflStatsTests.Unit
             var players = webScraper.GetPlayers().Result;
 
             Assert.IsType<List<Player>>(players);
-            Assert.True(players.Count() > 30);
+            Assert.Equal(100, players.Count());
             Assert.All(players, p => Assert.NotNull(p.Name));
             Assert.All(players, p => Assert.IsType<float>(p.Points));
         }
