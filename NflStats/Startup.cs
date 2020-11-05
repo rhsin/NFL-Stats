@@ -26,7 +26,14 @@ namespace NflStats
                 options.UseSqlServer(Configuration.GetConnectionString("Default")));
 
             services.AddControllers().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); 
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddCors(options => options.AddPolicy("AllowAll", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
 
             services.AddScoped<ICsvImporter, CsvImporter>();
             services.AddScoped<ILineupValidator, LineupValidator>();
@@ -48,6 +55,8 @@ namespace NflStats
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("AllowAll");
 
             app.UseEndpoints(endpoints =>
             {
