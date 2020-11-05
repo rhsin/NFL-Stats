@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PlayerTable from './PlayerTable';
 
 function Roster() {
   const [roster, setRoster] = useState(null);
@@ -22,23 +23,9 @@ function Roster() {
     <>
       <h3>NFL Stats</h3>
       {roster && <div>{roster.team}</div>}
-      {roster && roster.players.map(player =>
-        <div key={player.id}>
-          <div>{player.name}</div>
-          <div>{player.position}</div>
-          <div>{player.team}</div>
-          <div>{player.points}</div>
-        </div>
-      )}
-      <br></br>
-      {players.map(player =>
-        <div key={player.id}>
-          <div>{player.name}</div>
-          <div>{player.position}</div>
-          <div>{player.team}</div>
-          <div>{player.points}</div>
-        </div>
-      )}
+      {roster && <PlayerTable players={roster.players} />}
+      <br/>
+      <PlayerTable players={players} />
     </>
   );
 }
