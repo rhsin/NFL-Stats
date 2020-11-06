@@ -3,37 +3,21 @@ import user from '@testing-library/user-event';
 import axios from 'axios';
 import Roster from '../components/Roster';
 import { url } from '../components/AppContants';
+import { players, rosterPlayers, newPlayers } from './TestData';
 
 jest.mock('axios');
 
 const rosterUrl = url + 'Rosters/1';
-const playerUrl = url + 'Players'
-
-const players = [
-  {
-    id: 455,
-    name: 'Patrick Mahomes',
-    position: 'QB',
-    team: 'KAN',
-    points: 285.04
-  }
-];
-
-const newPlayers = [
-  {
-    id: 408,
-    name: 'Lamar Jackson',
-    position: 'QB',
-    team: 'BAL',
-    points: 415.68
-  }
-];
+const playerUrl = url + 'Players';
+const searchUrl = url + 'Players/Find?position=&name=';
+const addUrl = url + 'Rosters/Players/Add/1/455';
+const removeUrl = url + 'Rosters/Players/Remove/1/415';
 
 test('renders player table rows', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case rosterUrl:
-        return Promise.resolve({data: {players: players}});
+        return Promise.resolve({data: {players: rosterPlayers}});
       case playerUrl:
         return Promise.resolve({data: players});
       default:
@@ -42,17 +26,19 @@ test('renders player table rows', async () => {
   });
   render(<Roster />);
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
-  const textElements = screen.getAllByText(/Patrick Mahomes/);
-  expect(textElements).toBeTruthy();
+  expect(screen.getByText(/Dalvin Cook/i)).toBeInTheDocument();
+  expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
 });
 
 test('fetch data after search button clicked', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case rosterUrl:
-        return Promise.resolve({data: {players: newPlayers}});
+        return Promise.resolve({data: {players: players}});
       case playerUrl:
-        return Promise.resolve({data: players});
+        return Promise.resolve({data: rosterPlayers});
+      case searchUrl:
+        return Promise.resolve({data: newPlayers});
       default:
         return Promise.reject(new Error('Axios Not Called'));
     }
@@ -61,8 +47,37 @@ test('fetch data after search button clicked', async () => {
   const button = screen.getByRole('button', {name: 'search'});
   user.click(button);
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(3));
-  const textElements = screen.getAllByText(/Lamar Jackson/);
-  expect(textElements).toBeTruthy();
+  expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
+  expect(screen.getByText(/Lamar Jackson/i)).toBeInTheDocument();
+});
+
+test('add/remove player buttons sends put requests', async () => {
+  axios.get.mockImplementation((url) => {
+    switch(url) {
+      case rosterUrl:
+        return Promise.resolve({data: {players: players}});
+      case playerUrl:
+        return Promise.resolve({data: rosterPlayers});
+      default:
+        return Promise.reject(new Error('Axios Not Called'));
+    }
+  });
+  axios.put.mockImplementation((url) => {
+    switch(url) {
+      case addUrl:
+        return Promise.resolve('Player Added!');
+      case removeUrl:
+        return Promise.resolve('Player Removed!');
+      default:
+        return Promise.reject(new Error('Axios Not Called'));
+    }
+  });
+  render(<Roster />);
+  await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
+  const button = screen.getAllByRole('button', {name: 'player'});
+  user.click(button[0]);
+  user.click(button[1]);
+  await waitFor(()=> expect(axios.put).toHaveBeenCalledTimes(2));
 });
 
 
