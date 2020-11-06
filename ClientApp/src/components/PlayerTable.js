@@ -41,7 +41,7 @@ function PlayerTable(props) {
                   color='primary'
                   aria-label='player'
                 >
-                  {type == 'player' ?
+                  {type == 'players' ?
                     <AddBoxIcon /> : 
                     <RemoveCircleIcon />
                   }

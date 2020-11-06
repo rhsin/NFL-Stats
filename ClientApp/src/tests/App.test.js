@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import App from '../App';
 
-test('renders App heading', () => {
+test('renders NavBar heading', () => {
   render(<App />);
   const textElement = screen.getByText(/NFL Stats/i);
   expect(textElement).toBeInTheDocument();

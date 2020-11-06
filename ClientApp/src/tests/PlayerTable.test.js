@@ -14,13 +14,13 @@ const players = [
 
 const handleClick = jest.fn();
 
-test('renders table rows', () => {  
+test('renders table rows from props', () => {  
   render(<PlayerTable players={players}/>);
   const textElement = screen.getByText(/Patrick Mahomes/i);
   expect(textElement).toBeInTheDocument();
 });
 
-test('button calls handleClick', () => {  
+test('add player button calls handleClick', () => {  
   render(
     <PlayerTable
       players={players} 
