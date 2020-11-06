@@ -35,6 +35,9 @@ function PlayerForm({ setPlayers }) {
         helperText='Select position'
         variant='outlined'
       >
+        <MenuItem value=''>
+          All
+        </MenuItem>
         {positions.map((position, index) => 
           <MenuItem key={index} value={position}>
             {position}

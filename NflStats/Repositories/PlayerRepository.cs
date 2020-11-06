@@ -42,12 +42,12 @@ namespace NflStats.Repositories
 
         public async Task<IEnumerable<Player>> FindBy(string position, string name)
         {
-            var parameters = new { Position = position, Name = $"%{name}%" };
+            var parameters = new { Position = $"%{position}%", Name = $"%{name}%" };
 
             string sql = @"SELECT *
                            FROM Players
-                           WHERE UPPER(Position) = UPPER(@Position)
-                           AND UPPER(Name) LIKE UPPER(@Name)
+                           WHERE LOWER(Position) LIKE LOWER(@Position)
+                           AND LOWER(Name) LIKE LOWER(@Name)
                            ORDER BY Points DESC";
 
             return await this.ExecutePlayerQuery(sql, parameters);

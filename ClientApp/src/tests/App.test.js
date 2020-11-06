@@ -9,7 +9,7 @@ test('renders App heading', () => {
 
 test('renders PlayerTable heading', () => {
   render(<App />);
-  const textElement = screen.getAllByText(/Points/i);
+  const textElement = screen.getAllByText(/Points/);
   expect(textElement).toBeTruthy();
 });
 

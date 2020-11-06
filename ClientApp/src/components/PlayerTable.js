@@ -6,8 +6,13 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
-function PlayerTable({ players }) {
+function PlayerTable(props) {
+  const { type, players, handleClick } = props;
+
   return (
     <TableContainer component={Paper}>
       <Table className='table-player' size='small'>
@@ -17,6 +22,7 @@ function PlayerTable({ players }) {
             <TableCell align='right'>Position</TableCell>
             <TableCell align='right'>Team</TableCell>
             <TableCell align='right'>Points</TableCell>
+            <TableCell align='right'>Roster</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -28,6 +34,19 @@ function PlayerTable({ players }) {
               <TableCell align='right'>{player.position}</TableCell>
               <TableCell align='right'>{player.team}</TableCell>
               <TableCell align='right'>{player.points}</TableCell>
+              <TableCell align='right'>
+                <IconButton 
+                  onClick={()=> handleClick(player.id)}
+                  edge='end'
+                  color='primary'
+                  aria-label='player'
+                >
+                  {type == 'player' ?
+                    <AddBoxIcon /> : 
+                    <RemoveCircleIcon />
+                  }
+                </IconButton>
+              </TableCell>
             </TableRow>
           )}
         </TableBody>
