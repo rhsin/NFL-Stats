@@ -11,7 +11,7 @@ namespace NflStats.Repositories
     {
         public Task<IEnumerable<Player>> GetAll();
         public Task<IEnumerable<Player>> GetTop();
-        public Task<IEnumerable<Player>> GetPosition(string position);
+        public Task<IEnumerable<Player>> FindBy(string position, string name);
     }
 
     public class PlayerRepository : IPlayerRepository
@@ -40,13 +40,14 @@ namespace NflStats.Repositories
             return await this.ExecutePlayerQuery(sql, null);
         }
 
-        public async Task<IEnumerable<Player>> GetPosition(string position)
+        public async Task<IEnumerable<Player>> FindBy(string position, string name)
         {
-            var parameters = new { Position = position };
+            var parameters = new { Position = position, Name = $"%{name}%" };
 
             string sql = @"SELECT *
                            FROM Players
                            WHERE UPPER(Position) = UPPER(@Position)
+                           AND UPPER(Name) LIKE UPPER(@Name)
                            ORDER BY Points DESC";
 
             return await this.ExecutePlayerQuery(sql, parameters);

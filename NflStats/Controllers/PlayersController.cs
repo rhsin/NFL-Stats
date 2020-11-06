@@ -34,11 +34,11 @@ namespace NflStats.Controllers
             return Ok(await _playerRepository.GetTop());
         }
 
-        // GET: api/Players/Position/QB
-        [HttpGet("Position/{position}")]
-        public async Task<ActionResult<IEnumerable<Player>>> GetPosition(string position)
+        // GET: api/Players/Find
+        [HttpGet("Find")]
+        public async Task<ActionResult<IEnumerable<Player>>> FindPlayer(string position, string name)
         {
-            return Ok(await _playerRepository.GetPosition(position));
+            return Ok(await _playerRepository.FindBy(position, name));
         }
 
         // GET: api/Players/5

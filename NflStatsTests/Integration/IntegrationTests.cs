@@ -50,9 +50,9 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
-        public async Task GetPosition()
+        public async Task FindPlayerPosition()
         {
-            var response = await _client.GetAsync("api/Players/Position/QB");
+            var response = await _client.GetAsync("api/Players/Find?position=QB");
             var stringResponse = await response.Content.ReadAsStringAsync();
             var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
 
@@ -61,6 +61,19 @@ namespace NflStatsTests.Integration
             Assert.All(players, p => Assert.Equal("QB", p.Position));
             Assert.Contains("Dak Prescott", stringResponse);
             Assert.Contains("Jarrett Stidham", stringResponse);
+        }
+
+        [Fact]
+        public async Task FindPlayerName()
+        {
+            var response = await _client.GetAsync("api/Players/Find?position=QB&name=Mahomes");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Single(players);
+            Assert.All(players, p => Assert.Equal("QB", p.Position));
+            Assert.Contains("Patrick Mahomes", stringResponse);
         }
 
         [Fact]

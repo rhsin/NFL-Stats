@@ -8,11 +8,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import { url, positions } from './AppContants';
 
 function PlayerForm({ setPlayers }) {
-  const [player, setPlayer] = useState('');
+  const [name, setName] = useState('');
   const [position, setPosition] = useState('');
 
   const handleClick = () => {
-    axios.get(url + 'Players/Position/' + position)
+    axios.get(url + `Players/Find?position=${position}&name=${name}`)
       .then(res => setPlayers(res.data))
       .catch(err => console.log(err));
   };
@@ -23,7 +23,7 @@ function PlayerForm({ setPlayers }) {
         id='search-player' 
         label='Search Player' 
         type='search' 
-        onChange={e => setPlayer(e.target.value)}
+        onChange={e => setName(e.target.value)}
         variant='outlined' 
       />
       <TextField
