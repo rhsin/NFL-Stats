@@ -9,8 +9,8 @@ test('renders NavBar heading', () => {
 
 test('renders PlayerTable heading', () => {
   render(<App />);
-  const textElement = screen.getAllByText(/Points/);
-  expect(textElement).toBeTruthy();
+  const textElements = screen.getAllByText(/Points/);
+  expect(textElements).toBeTruthy();
 });
 
 test('renders PlayerForm search textfield', () => {
