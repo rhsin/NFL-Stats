@@ -5,16 +5,27 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-import { url, positions } from './AppContants';
+import { url, positions } from './AppConstants';
 
-function PlayerForm({ setPlayers }) {
+function PlayerForm(props) {
+  const { setPlayers, setLoading } = props;
+
   const [name, setName] = useState('');
   const [position, setPosition] = useState('');
 
-  const handleClick = () => {
-    axios.get(url + `Players/Find?position=${position}&name=${name}`)
-      .then(res => setPlayers(res.data))
-      .catch(err => console.log(err));
+  const handleClick = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        url + `Players/Find?position=${position}&name=${name}`);
+      setPlayers(response.data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+    finally {
+      setLoading(false);
+    }
   };
 
   return (

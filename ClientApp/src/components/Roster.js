@@ -4,7 +4,7 @@ import NavBar from './NavBar';
 import PlayerTable from './PlayerTable';
 import PlayerForm from './PlayerForm';
 import Container from '@material-ui/core/Container';
-import { url } from './AppContants';
+import { url } from './AppConstants';
 
 function Roster() {
   const [roster, setRoster] = useState(null);
@@ -12,45 +12,54 @@ function Roster() {
   const [loading, setLoading] = useState(false);
 
   useEffect(()=> {
-    axios.get(url + 'Rosters/1')
-      .then(res => setRoster(res.data))
-      .catch(err => console.log(err));
-    axios.get(url + 'Players')
-      .then(res => setPlayers(res.data))
-      .catch(err => console.log(err));
+    fetchData();
   }, [loading]);
 
-  const addPlayer = (id) => {
-    axios.put(url + 'Rosters/Players/Add/1/' + id)
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err));
-    setLoading(!loading);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(url + 'Rosters/1');
+      const responseP = await axios.get(url + 'Players');
+      setRoster(response.data);
+      setPlayers(responseP.data);
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
 
-  const removePlayer = (id) => {
-    axios.put(url + 'Rosters/Players/Remove/1/' + id)
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err));
-    setLoading(!loading);
+  const handlePlayer = async (action, id) => {
+    try {
+      setLoading(true);
+      const response = await axios.put(`${url}Rosters/Players/${action}/1/${id}`);
+      console.log(response.data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+    finally {
+      setLoading(false);
+    }
   };
 
   return (
     <Container maxWidth='md'>
       <NavBar />
+      {loading && <div>Loading...</div>}
       {roster && (
         <PlayerTable 
           type='roster'
           players={roster.players} 
-          handleClick={id => removePlayer(id)}
+          handleClick={id => handlePlayer('Remove', id)}
         />
       )}
       <PlayerForm 
         setPlayers={players => setPlayers(players)}
+        setLoading={loading => setLoading(loading)}
       />
       <PlayerTable 
         type='players'
         players={players} 
-        handleClick={id => addPlayer(id)}
+        handleClick={id => handlePlayer('Add', id)}
       />
     </Container>
   );

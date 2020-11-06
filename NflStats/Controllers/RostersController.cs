@@ -54,7 +54,7 @@ namespace NflStats.Controllers
 
         // PUT: api/Rosters/Players/Add/1/10
         [HttpPut("Players/Add/{rosterId}/{playerId}")]
-        public async Task<ActionResult> AddPlayer(int rosterId, int playerId)
+        public async Task<IActionResult> AddPlayer(int rosterId, int playerId)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace NflStats.Controllers
 
         // PUT: api/Rosters/Players/Remove/1/10
         [HttpPut("Players/Remove/{rosterId}/{playerId}")]
-        public async Task<ActionResult> RemovePlayer(int playerId, int rosterId = 1)
+        public async Task<IActionResult> RemovePlayer(int playerId, int rosterId = 1)
         {
             try
             {

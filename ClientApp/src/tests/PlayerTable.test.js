@@ -11,7 +11,7 @@ test('renders table rows from props', () => {
   expect(textElement).toBeInTheDocument();
 });
 
-test('add player button calls handleClick', () => {  
+test('handlePlayer button calls handleClick', () => {  
   render(
     <PlayerTable
       players={players} 
