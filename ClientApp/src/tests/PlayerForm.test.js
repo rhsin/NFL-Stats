@@ -12,8 +12,18 @@ test('renders search button', () => {
     />
   );
   const button = screen.getByRole('button', {name: 'search'});
-  expect(button).toBeTruthy();
+  expect(button).toBeInTheDocument();
 });
 
+test('renders position select', () => {
+  render(
+    <PlayerForm 
+      setPlayers={()=> setPlayers()}
+      setLoading={()=> setLoading()}
+    />
+  );
+  const textElement = screen.getByLabelText(/Position/i);
+  expect(textElement).toBeInTheDocument();
+});
 
 

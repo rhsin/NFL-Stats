@@ -4,6 +4,8 @@ import NavBar from './NavBar';
 import PlayerTable from './PlayerTable';
 import PlayerForm from './PlayerForm';
 import Container from '@material-ui/core/Container';
+import IconButton from '@material-ui/core/IconButton';
+import BarChartIcon from '@material-ui/icons/BarChart';
 import { url } from './AppConstants';
 
 function Roster() {
@@ -41,10 +43,28 @@ function Roster() {
     }
   };
 
+  const fetchWebRoster = async (week = 8) => {
+    try {
+      const response = await axios.get(`${url}Players/Rosters/1/${week}`);
+      setPlayers(response.data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container maxWidth='md'>
       <NavBar />
       {loading && <div>Loading...</div>}
+      <IconButton 
+        onClick={()=> fetchWebRoster(8)}
+        color='primary'
+        aria-label='roster'
+      >
+        <div id='button-update'>Update</div>
+        <BarChartIcon />
+      </IconButton>
       {roster && (
         <PlayerTable 
           type='roster'

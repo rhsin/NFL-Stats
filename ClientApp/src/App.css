@@ -1,7 +1,10 @@
-/* .App {
-
-} */
 
 .MuiPaper-root {
   margin: 1rem 0;
+}
+
+#button-update {
+  font-size: 1rem;
+  margin-right: .2rem;
+  margin-top: .17rem;
 }

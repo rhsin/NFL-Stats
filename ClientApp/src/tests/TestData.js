@@ -28,3 +28,13 @@ export const newPlayers = [
     points: 415.68
   }
 ];
+
+export const webPlayers = [
+  {
+    id: 414,
+    name: 'Travis Kelce',
+    position: 'TE',
+    team: 'KAN',
+    points: 254.3
+  }
+];

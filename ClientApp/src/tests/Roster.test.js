@@ -3,7 +3,7 @@ import user from '@testing-library/user-event';
 import axios from 'axios';
 import Roster from '../components/Roster';
 import { url } from '../components/AppConstants';
-import { players, rosterPlayers, newPlayers } from './TestData';
+import { players, rosterPlayers, newPlayers, webPlayers } from './TestData';
 
 jest.mock('axios');
 
@@ -12,6 +12,7 @@ const playerUrl = url + 'Players';
 const searchUrl = url + 'Players/Find?position=&name=';
 const addUrl = url + 'Rosters/Players/Add/1/455';
 const removeUrl = url + 'Rosters/Players/Remove/1/415';
+const webUrl = url + 'Players/Rosters/1/8';
 
 test('renders player table rows', async () => {
   axios.get.mockImplementation((url) => {
@@ -44,6 +45,22 @@ test('fetch data after search button clicked', async () => {
   await user.click(button);
   expect(axios.get).toHaveBeenCalledTimes(2);
   expect(screen.getByText(/Lamar Jackson/i)).toBeInTheDocument();
+});
+
+test('fetch roster after update button clicked', async () => {
+  axios.get.mockImplementation((url) => {
+    switch(url) {
+      case webUrl:
+        return Promise.resolve({data: webPlayers});
+      default:
+        return Promise.reject(new Error('Axios Not Called'));
+    }
+  });
+  render(<Roster />);
+  const button = screen.getByRole('button', {name: 'roster'});
+  await user.click(button);
+  expect(axios.get).toHaveBeenCalledTimes(2);
+  expect(screen.getByText(/Travis Kelce/i)).toBeInTheDocument();
 });
 
 test('handlePlayer buttons sends put requests', async () => {

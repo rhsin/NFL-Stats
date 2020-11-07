@@ -7,6 +7,12 @@ test('renders NavBar heading', () => {
   expect(textElement).toBeInTheDocument();
 });
 
+test('renders update button', () => {  
+  render(<App />);
+  const button = screen.getByRole('button', {name: 'search'});
+  expect(button).toBeInTheDocument();
+});
+
 test('renders PlayerTable heading', () => {
   render(<App />);
   const textElements = screen.getAllByText(/Points/);
