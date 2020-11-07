@@ -8,23 +8,19 @@ import SearchIcon from '@material-ui/icons/Search';
 import { url, positions } from './AppConstants';
 
 function PlayerForm(props) {
-  const { setPlayers, setLoading } = props;
+  const { setPlayers } = props;
 
   const [name, setName] = useState('');
   const [position, setPosition] = useState('');
 
   const handleClick = async () => {
     try {
-      setLoading(true);
       const response = await axios.get(
-        url + `Players/Find?position=${position}&name=${name}`);
+        `${url}Players/Find?position=${position}&name=${name}`);
       setPlayers(response.data);
     }
     catch (error) {
       console.log(error);
-    }
-    finally {
-      setLoading(false);
     }
   };
 

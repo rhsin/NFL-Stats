@@ -33,10 +33,6 @@ test('renders player table rows', async () => {
 test('fetch data after search button clicked', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
-      case rosterUrl:
-        return Promise.resolve({data: {players: players}});
-      case playerUrl:
-        return Promise.resolve({data: rosterPlayers});
       case searchUrl:
         return Promise.resolve({data: newPlayers});
       default:
@@ -45,20 +41,18 @@ test('fetch data after search button clicked', async () => {
   });
   render(<Roster />);
   const button = screen.getByRole('button', {name: 'search'});
-  user.click(button);
-  await waitForElementToBeRemoved(()=> screen.getByText(/Loading.../i));
-  await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(7));
-  expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
-  // expect(screen.getByText(/Lamar Jackson/i)).toBeInTheDocument();
+  await user.click(button);
+  expect(axios.get).toHaveBeenCalledTimes(2);
+  expect(screen.getByText(/Lamar Jackson/i)).toBeInTheDocument();
 });
 
 test('handlePlayer buttons sends put requests', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case rosterUrl:
-        return Promise.resolve({data: {players: players}});
+        return Promise.resolve({data: {players: rosterPlayers}});
       case playerUrl:
-        return Promise.resolve({data: rosterPlayers});
+        return Promise.resolve({data: players});
       default:
         return Promise.reject(new Error('Axios Not Called'));
     }
@@ -79,7 +73,7 @@ test('handlePlayer buttons sends put requests', async () => {
   user.click(button[0]);
   user.click(button[1]);
   await waitForElementToBeRemoved(()=> screen.getByText(/Loading.../i));
-  await waitFor(()=> expect(axios.put).toHaveBeenCalledTimes(2));
+  expect(axios.put).toHaveBeenCalledTimes(2);
 });
 
 

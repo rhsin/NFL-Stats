@@ -54,7 +54,6 @@ function Roster() {
       )}
       <PlayerForm 
         setPlayers={players => setPlayers(players)}
-        setLoading={loading => setLoading(loading)}
       />
       <PlayerTable 
         type='players'
