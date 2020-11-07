@@ -17,14 +17,14 @@ namespace NflStats.Controllers
     {
         private readonly ApplicationContext _context;
         private readonly IPlayerRepository _playerRepository;
-        private readonly IWebScraper _webScraper;
+        private readonly IFantasyPoints _fantasyPoints;
 
         public PlayersController(ApplicationContext context, IPlayerRepository playerRepository,
-            IWebScraper webScraper)
+            IFantasyPoints fantasyPoints)
         {
             _context = context;
             _playerRepository = playerRepository;
-            _webScraper = webScraper;
+            _fantasyPoints = fantasyPoints;
         }
 
         // GET: api/Players
@@ -59,46 +59,38 @@ namespace NflStats.Controllers
             }
         }
 
-        // GET: api/Players/Web/8/QB
-        [HttpGet("Web/{week}/{position?}")]
-        public async Task<ActionResult<IEnumerable<Player>>> GetWebPlayers(int week,
-            string position = "QB%2CRB%2CWR%2CTE")
+        // GET: api/Players/Fantasy/412/8
+        // Finds the Player from WebScraper with matching name and returns updated weekly points.
+        [HttpGet("Fantasy/{id}/{week}")]
+        public async Task<ActionResult<Player>> GetFantasyPlayer(int id, int week)
         {
             try
             {
-                var players = await _webScraper.GetPlayers(week, position);
+                var player = await _fantasyPoints.GetPlayer(id, week);
+
+                return Ok(player);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // GET: api/Players/Fantasy/Rosters/1/8
+        // Filters the Players from WebScraper that have matching name in selected Roster, and returns
+        // updated weekly points.
+        [HttpGet("Fantasy/Rosters/{id}/{week}")]
+        public async Task<ActionResult<IEnumerable<Player>>> GetFantasyRoster(int id, int week)
+        {
+            try
+            {
+                var players = await _fantasyPoints.GetRoster(id, week);
 
                 return Ok(players);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.ToString());
-            }
-        }
-
-        // GET: api/Players/Rosters/1/8
-        // Filters the Players from WebScraper that have matching name in selected Roster.
-        [HttpGet("Rosters/{id}/{week}")]
-        public async Task<ActionResult<IEnumerable<Player>>> GetWebRoster(int id, int week)
-        {
-            try
-            {
-                var players = await _webScraper.GetPlayers(week, "QB%2CRB%2CWR%2CTE");
-
-                var roster = await _context.Rosters
-                    .Where(r => r.Id == id)
-                    .Select(r => r.Players)
-                    .SingleAsync();
-
-                var rosterPlayers = players
-                    .Where(p => roster.Any(r => r.Name == p.Name))
-                    .ToList();
-
-                return Ok(rosterPlayers);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.ToString());
+                return BadRequest(ex.Message);
             }
         }
 

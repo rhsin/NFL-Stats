@@ -36,6 +36,7 @@ namespace NflStats
             }));
 
             services.AddScoped<ICsvImporter, CsvImporter>();
+            services.AddScoped<IFantasyPoints, FantasyPoints>();
             services.AddScoped<ILineupValidator, LineupValidator>();
             services.AddScoped<IWebScraper, WebScraper>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();

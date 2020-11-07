@@ -32,7 +32,8 @@ function Roster() {
   const handlePlayer = async (action, id) => {
     try {
       setLoading(true);
-      const response = await axios.put(`${url}Rosters/Players/${action}/1/${id}`);
+      const response = await axios.put(
+        `${url}Rosters/Players/${action}/1/${id}`);
       console.log(response.data);
     }
     catch (error) {
@@ -43,9 +44,10 @@ function Roster() {
     }
   };
 
-  const fetchWebRoster = async (week = 8) => {
+  const fetchFantasyData = async (week = 8) => {
     try {
-      const response = await axios.get(`${url}Players/Rosters/1/${week}`);
+      const response = await axios.get(
+        `${url}Players/Fantasy/Rosters/1/${week}`);
       setPlayers(response.data);
     }
     catch (error) {
@@ -58,7 +60,7 @@ function Roster() {
       <NavBar />
       {loading && <div>Loading...</div>}
       <IconButton 
-        onClick={()=> fetchWebRoster(8)}
+        onClick={()=> fetchFantasyData(8)}
         color='primary'
         aria-label='roster'
       >

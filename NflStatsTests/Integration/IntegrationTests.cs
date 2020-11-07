@@ -77,17 +77,32 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
-        public async Task GetWebPlayers()
+        public async Task GetFantasyPlayer()
         {
-            var response = await _client.GetAsync("api/Players/Web/8/QB");
+            var response = await _client.GetAsync("api/Players/Fantasy/412/8");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var player = JsonConvert.DeserializeObject<Player>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal("Dalvin Cook", player.Name);
+            Assert.Equal(46, player.Points);
+        }
+
+        [Fact]
+        public async Task GetFantasyRoster()
+        {
+            var response = await _client.GetAsync("api/Players/Fantasy/Rosters/1/8");
             var stringResponse = await response.Content.ReadAsStringAsync();
             var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(33, players.Count());
+            Assert.True(players.Count() > 0);
             Assert.All(players, p => Assert.NotNull(p.Name));
             Assert.All(players, p => Assert.IsType<float>(p.Points));
-            Assert.Contains("Justin Herbert", stringResponse);
+            Assert.Contains("Dalvin Cook", stringResponse);
+            Assert.Contains("RB", stringResponse);
+            Assert.Contains("MIN", stringResponse);
+            Assert.Contains("46", stringResponse);
         }
 
         [Fact]
@@ -150,18 +165,6 @@ namespace NflStatsTests.Integration
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.Equal("Players Already Seeded!", stringResponse);
-        }
-
-        [Fact]
-        public async Task GetWebRoster()
-        {
-            var response = await _client.GetAsync("api/Players/Rosters/1/8");
-            var stringResponse = await response.Content.ReadAsStringAsync();
-            var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
-
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.True(players.Count() > 0);
-            Assert.Contains("Dalvin Cook", stringResponse);
         }
     }
 }
