@@ -51,13 +51,13 @@ namespace NflStats
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("AllowAll");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseCors("AllowAll");
 
             app.UseEndpoints(endpoints =>
             {

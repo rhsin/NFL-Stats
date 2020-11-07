@@ -29,7 +29,7 @@ export const newPlayers = [
   }
 ];
 
-export const webPlayers = [
+export const fantasyPlayers = [
   {
     id: 414,
     name: 'Travis Kelce',

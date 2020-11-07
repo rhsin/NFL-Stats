@@ -16,9 +16,9 @@ namespace NflStats.Services
     public class FantasyPoints : IFantasyPoints
     {
         private readonly ApplicationContext _context;
-        private readonly WebScraper _webScraper;
+        private readonly IWebScraper _webScraper;
 
-        public FantasyPoints(ApplicationContext context, WebScraper webScraper)
+        public FantasyPoints(ApplicationContext context, IWebScraper webScraper)
         {
             _context = context;
             _webScraper = webScraper;

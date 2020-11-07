@@ -97,8 +97,6 @@ namespace NflStatsTests.Integration
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.True(players.Count() > 0);
-            Assert.All(players, p => Assert.NotNull(p.Name));
-            Assert.All(players, p => Assert.IsType<float>(p.Points));
             Assert.Contains("Dalvin Cook", stringResponse);
             Assert.Contains("RB", stringResponse);
             Assert.Contains("MIN", stringResponse);
@@ -166,5 +164,18 @@ namespace NflStatsTests.Integration
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.Equal("Players Already Seeded!", stringResponse);
         }
+
+        //[Fact]
+        //public async Task GetFantasyRoster()
+        //{
+        //    var response = await _client.GetAsync("api/Players/Fantasy/Rosters/1/8");
+        //    var stringResponse = await response.Content.ReadAsStringAsync();
+        //    var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
+
+        //    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        //    Assert.True(players.Count() > 0);
+        //    Assert.All(players, p => Assert.NotNull(p.Name));
+        //    Assert.All(players, p => Assert.IsType<float>(p.Points));
+        //}
     }
 }

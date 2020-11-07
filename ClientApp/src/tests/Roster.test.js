@@ -3,7 +3,7 @@ import user from '@testing-library/user-event';
 import axios from 'axios';
 import Roster from '../components/Roster';
 import { url } from '../components/AppConstants';
-import { players, rosterPlayers, newPlayers, webPlayers } from './TestData';
+import { players, rosterPlayers, newPlayers, fantasyPlayers } from './TestData';
 
 jest.mock('axios');
 
@@ -12,7 +12,7 @@ const playerUrl = url + 'Players';
 const searchUrl = url + 'Players/Find?position=&name=';
 const addUrl = url + 'Rosters/Players/Add/1/455';
 const removeUrl = url + 'Rosters/Players/Remove/1/415';
-const webUrl = url + 'Players/Rosters/1/8';
+const fantasyUrl = url + 'Players/Fantasy/Rosters/1/8';
 
 test('renders player table rows', async () => {
   axios.get.mockImplementation((url) => {
@@ -47,11 +47,11 @@ test('fetch data after search button clicked', async () => {
   expect(screen.getByText(/Lamar Jackson/i)).toBeInTheDocument();
 });
 
-test('fetch roster after update button clicked', async () => {
+test('fetch fantasy roster on update button clicked', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
-      case webUrl:
-        return Promise.resolve({data: webPlayers});
+      case fantasyUrl:
+        return Promise.resolve({data: fantasyPlayers});
       default:
         return Promise.reject(new Error('Axios Not Called'));
     }
