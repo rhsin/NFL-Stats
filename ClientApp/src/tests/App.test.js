@@ -7,6 +7,12 @@ test('renders NavBar heading', () => {
   expect(textElement).toBeInTheDocument();
 });
 
+test('renders loading alert', () => {
+  render(<App />);
+  const textElement = screen.getByText(/Loading.../i);
+  expect(textElement).toBeInTheDocument();
+});
+
 test('renders update button', () => {  
   render(<App />);
   const button = screen.getByRole('button', {name: 'search'});

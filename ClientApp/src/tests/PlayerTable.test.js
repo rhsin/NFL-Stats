@@ -5,6 +5,7 @@ import FantasyTable from '../components/FantasyTable';
 import { players, fantasyPlayers } from './TestData';
 
 const handleClick = jest.fn();
+const handleModal = jest.fn();
 
 test('renders table rows from props', () => {  
   render(<PlayerTable players={players}/>);
@@ -28,5 +29,17 @@ test('handlePlayer button calls handleClick', () => {
   const button = screen.getByRole('button', {name: 'player'});
   user.click(button);
   expect(handleClick).toHaveBeenCalledTimes(1);
+});
+
+test('player button calls handleModal', () => {  
+  render(
+    <PlayerTable
+      players={players} 
+      handleModal={()=> handleModal()}
+    />
+  );
+  const button = screen.getByRole('button', {name: 'modal'});
+  user.click(button);
+  expect(handleModal).toHaveBeenCalledTimes(1);
 });
 

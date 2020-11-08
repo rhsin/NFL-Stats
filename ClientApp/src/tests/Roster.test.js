@@ -27,6 +27,7 @@ test('renders player table rows', async () => {
     }
   });
   render(<Roster />);
+  await waitForElementToBeRemoved(()=> screen.getByText(/Loading.../i));
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
   expect(screen.getByText(/Dalvin Cook/i)).toBeInTheDocument();
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
@@ -43,7 +44,8 @@ test('fetch data after search button clicked', async () => {
   });
   render(<Roster />);
   const button = screen.getByRole('button', {name: 'search'});
-  await user.click(button);
+  user.click(button);
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading.../i));
   expect(axios.get).toHaveBeenCalledTimes(2);
   expect(screen.getByText(/Lamar Jackson/i)).toBeInTheDocument();
 });
@@ -59,8 +61,9 @@ test('fetch fantasy roster on update button clicked', async () => {
   });
   render(<Roster />);
   const button = screen.getByRole('button', {name: 'roster'});
-  await user.click(button);
-  expect(axios.get).toHaveBeenCalledTimes(3);
+  user.click(button);
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading.../i));
+  expect(axios.get).toHaveBeenCalledTimes(4);
   expect(screen.getByText(/Travis Kelce/i)).toBeInTheDocument();
 });
 
@@ -81,7 +84,7 @@ test('fetch fantasy details on player button clicked', async () => {
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
   const button = screen.getAllByRole('button', {name: 'modal'});
   user.click(button[0]);
-  await waitForElementToBeRemoved(()=> screen.getByText(/Loading.../i));
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading.../i));
   expect(screen.getByText(/Alvin Kamara/i)).toBeInTheDocument();
 });
 
@@ -111,7 +114,7 @@ test('handlePlayer buttons sends put requests', async () => {
   const button = screen.getAllByRole('button', {name: 'player'});
   user.click(button[0]);
   user.click(button[1]);
-  await waitForElementToBeRemoved(()=> screen.getByText(/Loading.../i));
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading.../i));
   expect(axios.put).toHaveBeenCalledTimes(2);
 });
 

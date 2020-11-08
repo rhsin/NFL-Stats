@@ -4,9 +4,8 @@ import NavBar from './NavBar';
 import PlayerTable from './PlayerTable';
 import PlayerForm from './PlayerForm';
 import PlayerModal from './PlayerModal';
+import LoadingAlert from './LoadingAlert';
 import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import { url } from './AppConstants';
@@ -15,6 +14,7 @@ function Roster() {
   const [roster, setRoster] = useState(null);
   const [players, setPlayers] = useState([]);
   const [details, setDetails] = useState([]);
+  const [render, setRender] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -24,6 +24,7 @@ function Roster() {
 
   const fetchData = async () => {
     try {
+      setRender(true);
       const response = await axios.get(url + 'Rosters/1');
       const responseP = await axios.get(url + 'Players');
       setRoster(response.data);
@@ -32,6 +33,7 @@ function Roster() {
     catch (error) {
       console.log(error);
     }
+    setRender(false);
   };
 
   const handlePlayer = async (action, id) => {
@@ -78,15 +80,8 @@ function Roster() {
   return (
     <Container maxWidth='md'>
       <NavBar />
-      {loading && 
-        <Paper className='alert' elevation={2}>
-          <CircularProgress
-            size={17}
-            thickness={2}
-          />
-          <span className='alert-text'>Loading...</span>
-        </Paper>
-      }
+      {loading && <LoadingAlert />}
+      {render && <LoadingAlert />}
       <IconButton 
         onClick={()=> fetchFantasyData(8)}
         color='primary'
