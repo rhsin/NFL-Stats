@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NflStatsTests": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

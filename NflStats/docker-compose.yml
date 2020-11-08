@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  nflstats:
+    image: ${DOCKER_REGISTRY-}nflstats
+    build:
+      context: .
+      dockerfile: Dockerfile
+  nflstatstests:
+    image: ${DOCKER_REGISTRY-}nflstatstests
+    build:
+      context: .
+      dockerfile: ../NflStatsTests/Dockerfile
+
