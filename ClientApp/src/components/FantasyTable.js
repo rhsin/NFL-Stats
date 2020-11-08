@@ -6,14 +6,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
-function PlayerTable(props) {
-  const { type, players, handleClick, handleModal } = props;
-
+function FantasyTable({ players }) {
   return (
     <TableContainer component={Paper}>
       <Table className='table-player' size='small'>
@@ -23,39 +17,17 @@ function PlayerTable(props) {
             <TableCell align='right'>Position</TableCell>
             <TableCell align='right'>Team</TableCell>
             <TableCell align='right'>Points</TableCell>
-            <TableCell align='right'>Roster</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {players.map(player =>
             <TableRow key={player.id}>
               <TableCell component='th' scope='row'>
-                <Button 
-                  onClick={()=> handleModal(player.id)}
-                  color='primary'
-                  aria-label='modal'
-                >
-                  <div className='button-player'>
-                    {player.name}
-                  </div>
-                </Button>
+                {player.name}
               </TableCell>
               <TableCell align='right'>{player.position}</TableCell>
               <TableCell align='right'>{player.team}</TableCell>
               <TableCell align='right'>{player.points}</TableCell>
-              <TableCell align='right'>
-                <IconButton 
-                  onClick={()=> handleClick(player.id)}
-                  edge='end'
-                  color='primary'
-                  aria-label='player'
-                >
-                  {type === 'players' ?
-                    <AddBoxIcon /> : 
-                    <RemoveCircleIcon />
-                  }
-                </IconButton>
-              </TableCell>
             </TableRow>
           )}
         </TableBody>
@@ -64,4 +36,4 @@ function PlayerTable(props) {
   );
 }
 
-export default PlayerTable;
+export default FantasyTable;

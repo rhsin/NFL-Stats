@@ -59,7 +59,7 @@ test('fetch fantasy roster on update button clicked', async () => {
   render(<Roster />);
   const button = screen.getByRole('button', {name: 'roster'});
   await user.click(button);
-  expect(axios.get).toHaveBeenCalledTimes(2);
+  expect(axios.get).toHaveBeenCalledTimes(3);
   expect(screen.getByText(/Travis Kelce/i)).toBeInTheDocument();
 });
 

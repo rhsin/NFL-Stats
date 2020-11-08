@@ -3,8 +3,12 @@
   margin: 1rem 0;
 }
 
-#button-update {
+.button-update {
   font-size: 1rem;
   margin-right: .2rem;
   margin-top: .17rem;
+}
+
+.button-player {
+  text-transform: capitalize;
 }
