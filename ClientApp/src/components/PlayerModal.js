@@ -11,14 +11,15 @@ function PlayerModal(props) {
   
   return (
     <Dialog
+      className='player-modal'
       fullWidth={true}
       maxWidth='md'
       open={open}
       onClose={()=> setOpen()}
       aria-labelledby='player-modal'
     >
+      <DialogTitle>Fantasy Update</DialogTitle>
       <Paper className='card-modal' elevation={3}>
-        <DialogTitle>Fantasy Update</DialogTitle>
         <FantasyTable players={players} />
       </Paper>
       <DialogActions>

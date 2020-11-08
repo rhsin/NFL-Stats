@@ -3,6 +3,19 @@
   margin: 1rem 0;
 }
 
+.MuiDialogActions-root {
+  margin: .2rem .4rem .2rem 0;
+}
+
+.alert {
+  padding: .75rem;
+}
+
+.alert-text {
+  margin-left: .8rem;
+  font-weight: 350;
+}
+
 .button-update {
   font-size: 1rem;
   margin-right: .2rem;
@@ -13,7 +26,20 @@
   text-transform: capitalize;
 }
 
+.player-modal {
+  margin: 1.5rem;
+  padding: 1.5rem;
+}
+
 .card-modal {
-  margin: 1rem;
-  padding: 1rem;
+  margin: 0 1.2rem;
+  padding: 1.1rem;
+}
+
+#search-player {
+  width: 400px;
+}
+
+#select-position {
+  width: 60px;
 }

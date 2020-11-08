@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
@@ -25,13 +24,14 @@ function PlayerForm(props) {
   };
 
   return (
-    <Paper elevation={3}>
+    <>
       <TextField 
         id='search-player' 
         label='Search Player' 
         type='search' 
         onChange={e => setName(e.target.value)}
         variant='outlined' 
+        size='small'
       />
       <TextField
         id='select-position'
@@ -39,8 +39,8 @@ function PlayerForm(props) {
         label='Position'
         value={position}
         onChange={e => setPosition(e.target.value)}
-        helperText='Select position'
         variant='outlined'
+        size='small'
       >
         <MenuItem value=''>
           All
@@ -59,7 +59,7 @@ function PlayerForm(props) {
       >
         <SearchIcon />
       </IconButton>
-    </Paper>
+    </>
   );
 }
 

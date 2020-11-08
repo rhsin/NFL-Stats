@@ -5,6 +5,8 @@ import PlayerTable from './PlayerTable';
 import PlayerForm from './PlayerForm';
 import PlayerModal from './PlayerModal';
 import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import { url } from './AppConstants';
@@ -76,7 +78,15 @@ function Roster() {
   return (
     <Container maxWidth='md'>
       <NavBar />
-      {loading && <div>Loading...</div>}
+      {loading && 
+        <Paper className='alert' elevation={2}>
+          <CircularProgress
+            size={17}
+            thickness={2}
+          />
+          <span className='alert-text'>Loading...</span>
+        </Paper>
+      }
       <IconButton 
         onClick={()=> fetchFantasyData(8)}
         color='primary'
@@ -85,6 +95,9 @@ function Roster() {
         <div className='button-update'>Update</div>
         <BarChartIcon />
       </IconButton>
+      <PlayerForm 
+        setPlayers={players => setPlayers(players)}
+      />
       <PlayerModal 
         open={open}
         players={details}
@@ -98,9 +111,6 @@ function Roster() {
           handleModal={id => handleModal(id, 8)}
         />
       )}
-      <PlayerForm 
-        setPlayers={players => setPlayers(players)}
-      />
       <PlayerTable 
         type='players'
         players={players} 
