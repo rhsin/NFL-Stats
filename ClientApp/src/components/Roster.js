@@ -80,8 +80,8 @@ function Roster() {
   return (
     <Container maxWidth='md'>
       <NavBar />
-      {loading && <LoadingAlert />}
-      {render && <LoadingAlert />}
+      {loading && <LoadingAlert data='Players' />}
+      {render && <LoadingAlert data='Roster' />}
       <IconButton 
         onClick={()=> fetchFantasyData(8)}
         color='primary'

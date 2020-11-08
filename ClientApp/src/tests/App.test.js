@@ -9,7 +9,7 @@ test('renders NavBar heading', () => {
 
 test('renders loading alert', () => {
   render(<App />);
-  const textElement = screen.getByText(/Loading.../i);
+  const textElement = screen.getByText(/Loading/i);
   expect(textElement).toBeInTheDocument();
 });
 
