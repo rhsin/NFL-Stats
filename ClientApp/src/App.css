@@ -12,3 +12,8 @@
 .button-player {
   text-transform: capitalize;
 }
+
+.card-modal {
+  margin: 1rem;
+  padding: 1rem;
+}

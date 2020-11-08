@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 function FantasyTable({ players }) {
   return (
     <TableContainer component={Paper}>
-      <Table className='table-player' size='small'>
+      <Table className='table-player'>
         <TableHead>
           <TableRow>
             <TableCell>Player</TableCell>
