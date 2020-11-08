@@ -38,3 +38,11 @@ export const fantasyPlayers = [
     points: 254.3
   }
 ];
+
+export const fantasyPlayer = {
+  id: 447,
+  name: 'Alvin Kamara',
+  position: 'RB',
+  team: 'NOR',
+  points: 248.52
+};
