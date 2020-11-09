@@ -12,8 +12,8 @@ const playerUrl = url + 'Players';
 const searchUrl = url + 'Players/Find?position=&name=';
 const addUrl = url + 'Rosters/Players/Add/1/455';
 const removeUrl = url + 'Rosters/Players/Remove/1/415';
-const fantasyUrl = url + 'Players/Fantasy/Rosters/1/8';
-const detailUrl = url + 'Players/Fantasy/415/8';
+const fantasyUrl = url + 'Players/Fantasy/Rosters/1/9';
+const detailUrl = url + 'Players/Fantasy/415/9';
 
 test('renders player table rows', async () => {
   axios.get.mockImplementation((url) => {

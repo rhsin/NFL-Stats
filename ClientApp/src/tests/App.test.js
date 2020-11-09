@@ -19,10 +19,10 @@ test('renders update button', () => {
   expect(button).toBeInTheDocument();
 });
 
-test('renders PlayerTable heading', () => {
+test('renders PlayerForm week textfield', () => {
   render(<App />);
-  const textElements = screen.getAllByText(/Points/);
-  expect(textElements).toBeTruthy();
+  const textElement = screen.getByLabelText(/Week/i);
+  expect(textElement).toBeInTheDocument();
 });
 
 test('renders PlayerForm search textfield', () => {
@@ -35,4 +35,10 @@ test('renders PlayerForm select textfield', () => {
   render(<App />);
   const textElement = screen.getByLabelText(/Position/i);
   expect(textElement).toBeInTheDocument();
+});
+
+test('renders PlayerTable heading', () => {
+  render(<App />);
+  const textElements = screen.getAllByText(/Points/);
+  expect(textElements).toBeTruthy();
 });

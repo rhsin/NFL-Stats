@@ -36,10 +36,18 @@
   padding: 1.1rem;
 }
 
+#input-week {
+  margin-right: 2rem;
+}
+
 #search-player {
   width: 400px;
 }
 
 #select-position {
   width: 60px;
+}
+
+#select-week {
+  width: 45px;
 }

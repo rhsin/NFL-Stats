@@ -14,6 +14,7 @@ function Roster() {
   const [roster, setRoster] = useState(null);
   const [players, setPlayers] = useState([]);
   const [details, setDetails] = useState([]);
+  const [week, setWeek] = useState(9);
   const [render, setRender] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -49,7 +50,7 @@ function Roster() {
     setLoading(false);
   };
 
-  const fetchFantasyData = async (week = 8) => {
+  const fetchFantasyData = async () => {
     try {
       setLoading(true);
       const response = await axios.get(
@@ -63,7 +64,7 @@ function Roster() {
     setLoading(false);
   };
 
-  const handleModal = async (id, week = 8) => {
+  const handleModal = async (id) => {
     try {
       setLoading(true);
       const response = await axios.get(
@@ -83,7 +84,7 @@ function Roster() {
       {loading && <LoadingAlert data='Players' />}
       {render && <LoadingAlert data='Roster' />}
       <IconButton 
-        onClick={()=> fetchFantasyData(8)}
+        onClick={()=> fetchFantasyData()}
         color='primary'
         aria-label='roster'
       >
@@ -91,7 +92,9 @@ function Roster() {
         <BarChartIcon />
       </IconButton>
       <PlayerForm 
+        week={week}
         setPlayers={players => setPlayers(players)}
+        setWeek={week => setWeek(week)}
       />
       <PlayerModal 
         open={open}
@@ -103,14 +106,14 @@ function Roster() {
           type='roster'
           players={roster.players} 
           handleClick={id => handlePlayer('Remove', id)}
-          handleModal={id => handleModal(id, 8)}
+          handleModal={id => handleModal(id)}
         />
       )}
       <PlayerTable 
         type='players'
         players={players} 
         handleClick={id => handlePlayer('Add', id)}
-        handleModal={id => handleModal(id, 8)}
+        handleModal={id => handleModal(id)}
       />
     </Container>
   );

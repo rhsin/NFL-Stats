@@ -4,10 +4,10 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-import { url, positions } from './AppConstants';
+import { url, positions, weeks } from './AppConstants';
 
 function PlayerForm(props) {
-  const { setPlayers } = props;
+  const { week, setPlayers, setWeek } = props;
 
   const [name, setName] = useState('');
   const [position, setPosition] = useState('');
@@ -25,6 +25,23 @@ function PlayerForm(props) {
 
   return (
     <>
+      <span id='input-week'>
+        <TextField
+          id='select-week'
+          select
+          label='Week'
+          value={week}
+          onChange={e => setWeek(e.target.value)}
+          variant='outlined'
+          size='small'
+        >
+          {weeks.map(week => 
+            <MenuItem key={week} value={week}>
+              {week}
+            </MenuItem>
+          )}
+        </TextField>
+      </span>
       <TextField 
         id='search-player' 
         label='Search Player' 
