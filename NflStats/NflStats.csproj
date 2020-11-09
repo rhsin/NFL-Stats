@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20201109125204_AddPlayerFields.cs" />
+    <Compile Remove="Data\Migrations\20201109125204_AddPlayerFields.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.14.0" />
     <PackageReference Include="CsvHelper" Version="15.0.8" />
 	<PackageReference Include="Dapper" Version="2.0.35" />

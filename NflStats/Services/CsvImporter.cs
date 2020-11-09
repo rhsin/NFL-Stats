@@ -36,6 +36,15 @@ namespace NflStats.Services
             Map(m => m.Position).Name("Pos");
             Map(m => m.Team).Name("Tm");
             Map(m => m.Points).Name("FantasyPoints");
+            Map(m => m.Games).Name("G");
+            Map(m => m.PassYds).Name("PassingYds");
+            Map(m => m.PassTds).Name("PassingTD");
+            Map(m => m.PassInt).Name("Int");
+            Map(m => m.RushYds).Name("RushingYds");
+            Map(m => m.RushTds).Name("RushingTD");
+            Map(m => m.RecYds).Name("ReceivingYds");
+            Map(m => m.RecTds).Name("ReceivingTD");
+            Map(m => m.Fumbles).Name("Fumbles");
         }
     }
 }

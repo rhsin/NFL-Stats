@@ -17,9 +17,9 @@ namespace NflStatsTests
 
         [Theory]
         [InlineData("api/Players")]
-        [InlineData("api/Players/1")]
+        [InlineData("api/Players/1827")]
         [InlineData("api/Players/Find?position=QB")]
-        [InlineData("api/Players/Fantasy/412/8")]
+        [InlineData("api/Players/Fantasy/1827/8")]
         [InlineData("api/Rosters")]
         [InlineData("api/Rosters/1")]
         [InlineData("api/Rosters/Check/1")]
@@ -33,6 +33,7 @@ namespace NflStatsTests
 
         [Theory]
         [InlineData("api/Seeders/Run/Players")]
+        //[InlineData("api/Seeders/Refresh/Players")]
         public async Task TestPostEndpoints(string url)
         {
             var response = await _client.PostAsync(url, null);
@@ -41,8 +42,8 @@ namespace NflStatsTests
         }
 
         [Theory]
-        [InlineData("api/Rosters/Players/Add/1/10")]
-        [InlineData("api/Rosters/Players/Remove/1/10")]
+        [InlineData("api/Rosters/Players/Add/1/1806")]
+        [InlineData("api/Rosters/Players/Remove/1/1806")]
         public async Task TestPutEndpoints(string url)
         {
             var response = await _client.PutAsync(url, null);

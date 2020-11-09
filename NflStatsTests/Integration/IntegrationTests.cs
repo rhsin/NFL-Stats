@@ -14,6 +14,8 @@ namespace NflStatsTests.Integration
     public class IntegrationTests : IClassFixture<WebApplicationFactory<NflStats.Startup>>
     {
         private readonly HttpClient _client;
+        private readonly int _id = 1827;
+        private readonly int _pId = 1806;
 
         public IntegrationTests(WebApplicationFactory<NflStats.Startup> factory)
         {
@@ -38,15 +40,15 @@ namespace NflStatsTests.Integration
         [Fact]
         public async Task GetPlayer()
         {
-            var response = await _client.GetAsync("api/Players/408");
+            var response = await _client.GetAsync($"api/Players/{_id}");
             var stringResponse = await response.Content.ReadAsStringAsync();
             var player = JsonConvert.DeserializeObject<Player>(stringResponse);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal("Lamar Jackson", player.Name);
-            Assert.Equal("QB", player.Position);
-            Assert.Equal("BAL", player.Team);
-            Assert.Equal(415.68, Math.Round(player.Points, 2));
+            Assert.Equal("Dalvin Cook", player.Name);
+            Assert.Equal("RB", player.Position);
+            Assert.Equal("MIN", player.Team);
+            Assert.Equal(292.4, Math.Round(player.Points, 2));
         }
 
         [Fact]
@@ -79,7 +81,7 @@ namespace NflStatsTests.Integration
         [Fact]
         public async Task GetFantasyPlayer()
         {
-            var response = await _client.GetAsync("api/Players/Fantasy/412/8");
+            var response = await _client.GetAsync($"api/Players/Fantasy/{_id}/8");
             var stringResponse = await response.Content.ReadAsStringAsync();
             var player = JsonConvert.DeserializeObject<Player>(stringResponse);
 
@@ -138,21 +140,21 @@ namespace NflStatsTests.Integration
         [Fact]
         public async Task AddPlayer()
         {
-            var response = await _client.PutAsync("api/Rosters/Players/Add/1/10", null);
+            var response = await _client.PutAsync($"api/Rosters/Players/Add/1/{_pId}", null);
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal("Player 10 Added To Roster 1!", stringResponse);
+            Assert.Equal($"Player {_pId} Added To Roster 1!", stringResponse);
         }
 
         [Fact]
         public async Task RemovePlayer()
         {
-            var response = await _client.PutAsync("api/Rosters/Players/Remove/1/10", null);
+            var response = await _client.PutAsync($"api/Rosters/Players/Remove/1/{_pId}", null);
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal("Player 10 Removed From Roster 1!", stringResponse);
+            Assert.Equal($"Player {_pId} Removed From Roster 1!", stringResponse);
         }
 
         [Fact]
@@ -166,16 +168,13 @@ namespace NflStatsTests.Integration
         }
 
         //[Fact]
-        //public async Task GetFantasyRoster()
+        //public async Task RefreshPlayers()
         //{
-        //    var response = await _client.GetAsync("api/Players/Fantasy/Rosters/1/8");
+        //    var response = await _client.PostAsync("api/Seeders/Refresh/Players", null);
         //    var stringResponse = await response.Content.ReadAsStringAsync();
-        //    var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
 
         //    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        //    Assert.True(players.Count() > 0);
-        //    Assert.All(players, p => Assert.NotNull(p.Name));
-        //    Assert.All(players, p => Assert.IsType<float>(p.Points));
+        //    Assert.Equal("Players Refreshed Successfully!", stringResponse);
         //}
     }
 }

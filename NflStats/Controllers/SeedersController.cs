@@ -48,7 +48,27 @@ namespace NflStats.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.ToString());
+            }
+        }
+
+        // POST: api/Seeders/Refresh/Players
+        [HttpPost("Refresh/Players")]
+        public IActionResult RefreshPlayers()
+        {
+            try
+            {
+                var players = _csvImporter.GetPlayerRecords();
+
+                _context.Players.RemoveRange(_context.Players);
+                _context.Players.AddRange(players);
+                _context.SaveChanges();
+
+                return Ok("Players Refreshed Successfully!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
             }
         }
     }
