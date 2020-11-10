@@ -2,6 +2,8 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using NflStats.Models;
+using NflStats.Services;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,10 +19,12 @@ namespace NflStats.Repositories
     public class PlayerRepository : IPlayerRepository
     {
         private readonly IConfiguration _config;
+        private readonly SQLValidator _sqlValidator;
 
         public PlayerRepository(IConfiguration config)
         {
             _config = config;
+            _sqlValidator = new SQLValidator();
         }
 
         public async Task<IEnumerable<Player>> GetAll()
@@ -52,6 +56,20 @@ namespace NflStats.Repositories
 
             return await this.ExecutePlayerQuery(sql, parameters);
         }
+
+        //public async Task<IEnumerable<Player>> FindByYards(string type, int yards)
+        //{
+        //    var column = _sqlValidator.Yards(type);
+
+        //    var parameters = new { Yards = yards };
+
+        //    string sql = @$"SELECT *
+        //                    FROM Players
+        //                    WHERE {column} > @Yards
+        //                    ORDER BY {column} DESC";
+
+        //    return await this.ExecutePlayerQuery(sql, parameters);
+        //}
 
         private async Task<IEnumerable<Player>> ExecutePlayerQuery(string sql, object parameters)
         {

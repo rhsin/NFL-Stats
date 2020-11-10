@@ -8,7 +8,7 @@ namespace NflStatsTests.Unit
     public class LineupValidatorTests
     {
         [Fact]
-        public void IsStandard()
+        public void Standard()
         {
             var roster = new Roster
             {
@@ -20,11 +20,11 @@ namespace NflStatsTests.Unit
             };
             var lineupValidator = new LineupValidator();
 
-            Assert.True(lineupValidator.IsStandard(roster));
+            Assert.True(lineupValidator.Standard(roster));
         }
 
         [Fact]
-        public void IsStandardFalse()
+        public void StandardFalse()
         {
             var roster = new Roster
             {
@@ -36,7 +36,7 @@ namespace NflStatsTests.Unit
             };
             var lineupValidator = new LineupValidator();
 
-            Assert.False(lineupValidator.IsStandard(roster));
+            Assert.False(lineupValidator.Standard(roster));
         }
     }
 }

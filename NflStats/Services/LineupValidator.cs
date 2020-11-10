@@ -5,12 +5,12 @@ namespace NflStats.Services
 {
     public interface ILineupValidator
     {
-        public bool IsStandard(Roster roster);
+        public bool Standard(Roster roster);
     }
 
     public class LineupValidator : ILineupValidator
     {
-        public bool IsStandard(Roster roster)
+        public bool Standard(Roster roster)
         {
             var players = roster.Players;
 

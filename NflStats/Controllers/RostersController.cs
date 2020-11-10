@@ -94,7 +94,7 @@ namespace NflStats.Controllers
             {
                 var roster = rosters.First(p => p.Id == id);
 
-                if (!_lineupValidator.IsStandard(roster))
+                if (!_lineupValidator.Standard(roster))
                 {
                     return Ok($"Roster {roster.Id} Is Not Valid Lineup!");
                 }
