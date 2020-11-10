@@ -10,6 +10,7 @@ namespace NflStats.Services
 
     public class LineupValidator : ILineupValidator
     {
+        // Checks if Players list in Roster meets standard fantasy lineup requirements.
         public bool Standard(Roster roster)
         {
             var players = roster.Players;

@@ -1,3 +1,6 @@
+// HandlePlayer function takes action parameter "Add" or "Remove" to add/remove player(id) from roster.
+// FetchFantasyData & FetchFantasyDetails both open PlayerModal and retrieves fantasy points for selected week.
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavBar from './NavBar';
@@ -65,7 +68,7 @@ function Roster() {
     setLoading(false);
   };
 
-  const handleModal = async (id) => {
+  const fetchFantasyDetails = async (id) => {
     try {
       setLoading(true);
       const response = await axios.get(
@@ -80,7 +83,7 @@ function Roster() {
   };
 
   return (
-    <Container maxWidth='md'>
+    <Container maxWidth='lg'>
       <NavBar />
       {loading && <LoadingAlert data='Players' />}
       {render && <LoadingAlert data='Roster' />}
@@ -112,14 +115,14 @@ function Roster() {
           type='roster'
           players={roster.players} 
           handleClick={id => handlePlayer('Remove', id)}
-          handleModal={id => handleModal(id)}
+          handleModal={id => fetchFantasyDetails(id)}
         />
       )}
       <PlayerTable 
         type='players'
         players={players} 
         handleClick={id => handlePlayer('Add', id)}
-        handleModal={id => handleModal(id)}
+        handleModal={id => fetchFantasyDetails(id)}
       />
     </Container>
   );

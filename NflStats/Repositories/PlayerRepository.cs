@@ -65,7 +65,7 @@ namespace NflStats.Repositories
 
             string sql = @$"SELECT *
                             FROM Players
-                            WHERE {column} > @Value
+                            WHERE {column} >= @Value
                             ORDER BY {column} DESC";
 
             return await this.ExecutePlayerQuery(sql, parameters);

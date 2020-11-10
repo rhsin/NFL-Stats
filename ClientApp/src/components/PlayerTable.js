@@ -1,3 +1,6 @@
+// HandleClick function adds or removes player from roster, based on type of table (roster vs players).
+// HandleModal function opens PlayerModal and retrieves fantasy points for selected week.
+
 import React from 'react';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -24,8 +27,13 @@ function PlayerTable(props) {
             <TableCell align='right'>Team</TableCell>
             <TableCell align='right'>Points</TableCell>
             <TableCell align='right'>Pass Yds</TableCell>
+            <TableCell align='right'>Pass TDs</TableCell>
+            <TableCell align='right'>Int</TableCell>
             <TableCell align='right'>Rush Yds</TableCell>
+            <TableCell align='right'>Rush TDs</TableCell>
             <TableCell align='right'>Rec Yds</TableCell>
+            <TableCell align='right'>Rec TDs</TableCell>
+            <TableCell align='right'>Fumbles</TableCell>
             <TableCell align='right'>Roster</TableCell>
           </TableRow>
         </TableHead>
@@ -47,8 +55,13 @@ function PlayerTable(props) {
               <TableCell align='right'>{player.team}</TableCell>
               <TableCell align='right'>{player.points}</TableCell>
               <TableCell align='right'>{player.passYds}</TableCell>
+              <TableCell align='right'>{player.passTds}</TableCell>
+              <TableCell align='right'>{player.passInt}</TableCell>
               <TableCell align='right'>{player.rushYds}</TableCell>
+              <TableCell align='right'>{player.rushTds}</TableCell>
               <TableCell align='right'>{player.recYds}</TableCell>
+              <TableCell align='right'>{player.recTds}</TableCell>
+              <TableCell align='right'>{player.fumbles}</TableCell>
               <TableCell align='right'>
                 <IconButton 
                   onClick={()=> handleClick(player.id)}
