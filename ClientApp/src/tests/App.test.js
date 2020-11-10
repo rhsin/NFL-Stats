@@ -31,9 +31,9 @@ test('renders PlayerForm search textfield', () => {
   expect(textElement).toBeInTheDocument();
 });
 
-test('renders PlayerForm select textfield', () => {
+test('renders StatsForm value textfield', () => {
   render(<App />);
-  const textElement = screen.getByLabelText(/Position/i);
+  const textElement = screen.getByLabelText(/Input Value/i);
   expect(textElement).toBeInTheDocument();
 });
 

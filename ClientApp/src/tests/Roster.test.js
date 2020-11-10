@@ -9,7 +9,8 @@ jest.mock('axios');
 
 const rosterUrl = url + 'Rosters/1';
 const playerUrl = url + 'Players';
-const searchUrl = url + 'Players/Find?position=&name=';
+const searchUrl = url + 'Players/Find?position=QB&name=';
+const statsUrl = url + 'Players/Stats?field=Yards&type=Passing&value=3000';
 const addUrl = url + 'Rosters/Players/Add/1/455';
 const removeUrl = url + 'Rosters/Players/Remove/1/415';
 const fantasyUrl = url + 'Players/Fantasy/Rosters/1/9';
@@ -39,15 +40,30 @@ test('fetch data after search button clicked', async () => {
       case searchUrl:
         return Promise.resolve({data: newPlayers});
       default:
-        return Promise.reject(new Error('Axios Not Called 2'));
+        return Promise.reject(new Error('Axios Not Called 2A'));
     }
   });
   render(<Roster />);
   const button = screen.getByRole('button', {name: 'search'});
-  user.click(button);
-  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
-  expect(axios.get).toHaveBeenCalledTimes(2);
+  await user.click(button);
+  await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
   expect(screen.getByText(/Lamar Jackson/i)).toBeInTheDocument();
+});
+
+test('fetch data after stats button clicked', async () => {
+  axios.get.mockImplementation((url) => {
+    switch(url) {
+      case statsUrl:
+        return Promise.resolve({data: players});
+      default:
+        return Promise.reject(new Error('Axios Not Called 2B'));
+    }
+  });
+  render(<Roster />);
+  const button = screen.getByRole('button', {name: 'stats'});
+  await user.click(button);
+  await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
+  expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
 });
 
 test('fetch fantasy roster on update button clicked', async () => {

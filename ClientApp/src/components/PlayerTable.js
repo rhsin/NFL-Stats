@@ -20,9 +20,12 @@ function PlayerTable(props) {
         <TableHead>
           <TableRow>
             <TableCell>Player</TableCell>
-            <TableCell align='right'>Position</TableCell>
+            <TableCell align='right'>Pos</TableCell>
             <TableCell align='right'>Team</TableCell>
             <TableCell align='right'>Points</TableCell>
+            <TableCell align='right'>Pass Yds</TableCell>
+            <TableCell align='right'>Rush Yds</TableCell>
+            <TableCell align='right'>Rec Yds</TableCell>
             <TableCell align='right'>Roster</TableCell>
           </TableRow>
         </TableHead>
@@ -43,6 +46,9 @@ function PlayerTable(props) {
               <TableCell align='right'>{player.position}</TableCell>
               <TableCell align='right'>{player.team}</TableCell>
               <TableCell align='right'>{player.points}</TableCell>
+              <TableCell align='right'>{player.passYds}</TableCell>
+              <TableCell align='right'>{player.rushYds}</TableCell>
+              <TableCell align='right'>{player.recYds}</TableCell>
               <TableCell align='right'>
                 <IconButton 
                   onClick={()=> handleClick(player.id)}

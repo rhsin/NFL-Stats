@@ -51,3 +51,15 @@
 #select-week {
   width: 45px;
 }
+
+#select-field {
+  width: 120px;
+}
+
+#select-type {
+  width: 110px;
+}
+
+#input-value {
+  width: 250px;
+}

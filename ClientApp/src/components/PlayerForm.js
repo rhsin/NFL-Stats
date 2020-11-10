@@ -1,3 +1,6 @@
+// This form component sets players from data fetched from .NET API endpoints.
+// HandleClick retrieve players containing matching substring for name & position.
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
@@ -10,7 +13,7 @@ function PlayerForm(props) {
   const { week, setPlayers, setWeek } = props;
 
   const [name, setName] = useState('');
-  const [position, setPosition] = useState('');
+  const [position, setPosition] = useState('QB');
 
   const handleClick = async () => {
     try {

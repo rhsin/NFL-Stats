@@ -4,7 +4,7 @@ import PlayerForm from '../components/PlayerForm';
 const setPlayers = jest.fn();
 const setWeek = jest.fn();
 
-test('renders week select', () => {
+test('renders week select options', () => {
   render(
     <PlayerForm 
       week={9}
@@ -18,7 +18,7 @@ test('renders week select', () => {
   expect(optionElement).toBeInTheDocument();
 });
 
-test('renders position select', () => {
+test('renders position select options', () => {
   render(
     <PlayerForm 
       week={9}
@@ -27,7 +27,9 @@ test('renders position select', () => {
     />
   );
   const textElement = screen.getByLabelText(/Position/i);
+  const optionElement = screen.getByLabelText(/QB/i);
   expect(textElement).toBeInTheDocument();
+  expect(optionElement).toBeInTheDocument();
 });
 
 test('renders search button', () => {  

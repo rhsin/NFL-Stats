@@ -3,6 +3,7 @@ import axios from 'axios';
 import NavBar from './NavBar';
 import PlayerTable from './PlayerTable';
 import PlayerForm from './PlayerForm';
+import StatsForm from './StatsForm';
 import PlayerModal from './PlayerModal';
 import LoadingAlert from './LoadingAlert';
 import Container from '@material-ui/core/Container';
@@ -95,6 +96,11 @@ function Roster() {
         week={week}
         setPlayers={players => setPlayers(players)}
         setWeek={week => setWeek(week)}
+        setLoading={loading => setLoading(loading)}
+      />
+      <StatsForm 
+        setPlayers={players => setPlayers(players)}
+        setLoading={loading => setLoading(loading)}
       />
       <PlayerModal 
         open={open}
