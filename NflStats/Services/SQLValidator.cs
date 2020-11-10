@@ -4,16 +4,33 @@ namespace NflStats.Services
 {
     public interface ISQLValidator
     {
-        public string Yards(string input);
-        public string Touchdowns(string input);
-        public string Turnovers(string input);
+        public string Column(string field, string type);
+        public string Yards(string type);
+        public string Touchdowns(string type);
+        public string Turnovers(string type);
     }
 
     public class SQLValidator : ISQLValidator
     {
-        public string Yards(string input)
+        // Determines which method used to return Players table column name.
+        public string Column(string field, string type)
         {
-            switch (input.ToLower())
+            switch (field.ToLower())
+            {
+                case "yards":
+                    return this.Yards(type);
+                case "touchdowns":
+                    return this.Touchdowns(type);
+                case "turnovers":
+                    return this.Turnovers(type);
+                default:
+                    throw new ArgumentException("Invalid Type Parameter!");
+            }
+        }
+
+        public string Yards(string type)
+        {
+            switch (type.ToLower())
             {
                 case "passing":
                     return "PassYds";
@@ -34,9 +51,9 @@ namespace NflStats.Services
             }
         }
 
-        public string Touchdowns(string input)
+        public string Touchdowns(string type)
         {
-            switch (input.ToLower())
+            switch (type.ToLower())
             {
                 case "passing":
                     return "PassTds";
@@ -57,9 +74,9 @@ namespace NflStats.Services
             }
         }
 
-        public string Turnovers(string input)
+        public string Turnovers(string type)
         {
-            switch (input.ToLower())
+            switch (type.ToLower())
             {
                 case "interceptions":
                     return "PassInt";

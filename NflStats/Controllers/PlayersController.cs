@@ -35,6 +35,7 @@ namespace NflStats.Controllers
         }
 
         // GET: api/Players/Find
+        // Finds Players with position/name values that contain the passed parameters using SQL LIKE operator.
         [HttpGet("Find")]
         public async Task<ActionResult<IEnumerable<Player>>> FindPlayer(string position, string name)
         {
@@ -48,13 +49,14 @@ namespace NflStats.Controllers
             }
         }
 
-        // GET: api/Players/Yards
-        [HttpGet("Yards")]
-        public async Task<ActionResult<IEnumerable<Player>>> FindByYards(string type, int yards)
+        // GET: api/Players/Stats
+        // Finds Players by stats-field (Yards) & input-type (passing) that are greater than the passed value.
+        [HttpGet("Stats")]
+        public async Task<ActionResult<IEnumerable<Player>>> FindByStats(string field, string type, int value)
         {
             try
             {
-                return Ok(await _playerRepository.FindYards(type, yards));
+                return Ok(await _playerRepository.FindByStats(field, type, value));
             }
             catch (Exception ex)
             {
@@ -81,7 +83,7 @@ namespace NflStats.Controllers
         }
 
         // GET: api/Players/Fantasy/412/8
-        // Finds the Player from WebScraper with matching name and returns updated weekly points.
+        // Finds Player from WebScraper with matching name and returns updated weekly points.
         [HttpGet("Fantasy/{id}/{week}")]
         public async Task<ActionResult<Player>> GetFantasyPlayer(int id, int week)
         {
@@ -98,7 +100,7 @@ namespace NflStats.Controllers
         }
 
         // GET: api/Players/Fantasy/Rosters/1/8
-        // Filters the Players from WebScraper that have matching name in selected Roster, and returns
+        // Filters Players from WebScraper that have matching name in selected Roster, and returns
         // updated weekly points.
         [HttpGet("Fantasy/Rosters/{id}/{week}")]
         public async Task<ActionResult<IEnumerable<Player>>> GetFantasyRoster(int id, int week)

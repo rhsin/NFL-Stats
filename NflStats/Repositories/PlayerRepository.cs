@@ -13,7 +13,7 @@ namespace NflStats.Repositories
         public Task<IEnumerable<Player>> GetAll();
         public Task<IEnumerable<Player>> GetTop();
         public Task<IEnumerable<Player>> FindBy(string position, string name);
-        public Task<IEnumerable<Player>> FindYards(string type, int yards);
+        public Task<IEnumerable<Player>> FindByStats(string field,string type, int value);
     }
 
     public class PlayerRepository : IPlayerRepository
@@ -57,15 +57,15 @@ namespace NflStats.Repositories
             return await this.ExecutePlayerQuery(sql, parameters);
         }
 
-        public async Task<IEnumerable<Player>> FindYards(string type, int yards)
+        public async Task<IEnumerable<Player>> FindByStats(string field, string type, int value)
         {
-            string column = _sqlValidator.Yards(type);
+            string column = _sqlValidator.Column(field, type);
 
-            var parameters = new { Yards = yards };
+            var parameters = new { Value = value };
 
             string sql = @$"SELECT *
                             FROM Players
-                            WHERE {column} > @Yards
+                            WHERE {column} > @Value
                             ORDER BY {column} DESC";
 
             return await this.ExecutePlayerQuery(sql, parameters);

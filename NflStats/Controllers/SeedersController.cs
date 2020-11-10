@@ -29,6 +29,7 @@ namespace NflStats.Controllers
         }
 
         // POST: api/Seeders/Run/Players
+        // Seeds initial Player entities into Players table using CsvImporter.
         [HttpPost("Run/Players")]
         public IActionResult SeedPlayers()
         {
@@ -53,6 +54,7 @@ namespace NflStats.Controllers
         }
 
         // POST: api/Seeders/Refresh/Players
+        // Removes all Player entities & Seeds new Players using CsvImporter.
         [HttpPost("Refresh/Players")]
         public IActionResult RefreshPlayers()
         {

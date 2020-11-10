@@ -20,6 +20,7 @@ namespace NflStats.Services
             _context = BrowsingContext.New(Configuration.Default.WithDefaultLoader());
         }
 
+        // Fetches all player fantasy stats from HTML elements using CSS selectors and converts to list of Player entities.
         public async Task<IEnumerable<Player>> GetPlayers(int week = 8, string position = "QB%2CRB%2CWR%2CTE")
         {
             var source = $@"https://www.footballdb.com/fantasy-football/index.html?pos={position}&yr=2020&wk={week}&rules=1";

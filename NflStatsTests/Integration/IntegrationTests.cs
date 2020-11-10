@@ -79,9 +79,9 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
-        public async Task FindByYards()
+        public async Task FindByStats()
         {
-            var response = await _client.GetAsync("api/Players/Yards?type=QB&yards=4900");
+            var response = await _client.GetAsync("api/Players/Stats?field=yards&type=QB&value=4900");
             var stringResponse = await response.Content.ReadAsStringAsync();
             var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
 

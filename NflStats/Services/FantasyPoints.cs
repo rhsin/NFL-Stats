@@ -23,7 +23,8 @@ namespace NflStats.Services
             _context = context;
             _webScraper = webScraper;
         }
-
+        
+        // Returns Player(Id) with updated points from passed week, fetched using WebScraper.
         public async Task<Player> GetPlayer(int id, int week)
         {
             var players = await _webScraper.GetPlayers(week, "QB%2CRB%2CWR%2CTE");
@@ -34,6 +35,7 @@ namespace NflStats.Services
             return player;
         }
 
+        // Returns list of Players from Roster(Id) with updated points from passed week, fetched using WebScraper.
         public async Task<IEnumerable<Player>> GetRoster(int id, int week)
         {
             var players = await _webScraper.GetPlayers(week, "QB%2CRB%2CWR%2CTE");

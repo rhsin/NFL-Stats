@@ -15,6 +15,7 @@ namespace NflStats.Services
 
     public class CsvImporter : ICsvImporter
     {
+        // Reads Csv file and converts each row into Player entity using Player ClassMap.
         public IEnumerable<Player> GetPlayerRecords()
         {
             using (var reader = new StreamReader(@"C:\Users\Ryan\source\repos\NflStats\NflStats\Data\2019.csv"))

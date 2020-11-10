@@ -85,6 +85,7 @@ namespace NflStats.Controllers
         }
 
         // GET: api/Rosters/Check/1
+        // Checks if Players in Roster make a standard fantasy team lineup.
         [HttpGet("Check/{id}")]
         public async Task<ActionResult<Roster>> CheckRoster(int id)
         {
