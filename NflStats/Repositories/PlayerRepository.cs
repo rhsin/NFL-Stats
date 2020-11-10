@@ -3,7 +3,6 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using NflStats.Models;
 using NflStats.Services;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,6 +13,7 @@ namespace NflStats.Repositories
         public Task<IEnumerable<Player>> GetAll();
         public Task<IEnumerable<Player>> GetTop();
         public Task<IEnumerable<Player>> FindBy(string position, string name);
+        public Task<IEnumerable<Player>> FindYards(string type, int yards);
     }
 
     public class PlayerRepository : IPlayerRepository
@@ -57,19 +57,19 @@ namespace NflStats.Repositories
             return await this.ExecutePlayerQuery(sql, parameters);
         }
 
-        //public async Task<IEnumerable<Player>> FindByYards(string type, int yards)
-        //{
-        //    var column = _sqlValidator.Yards(type);
+        public async Task<IEnumerable<Player>> FindYards(string type, int yards)
+        {
+            string column = _sqlValidator.Yards(type);
 
-        //    var parameters = new { Yards = yards };
+            var parameters = new { Yards = yards };
 
-        //    string sql = @$"SELECT *
-        //                    FROM Players
-        //                    WHERE {column} > @Yards
-        //                    ORDER BY {column} DESC";
+            string sql = @$"SELECT *
+                            FROM Players
+                            WHERE {column} > @Yards
+                            ORDER BY {column} DESC";
 
-        //    return await this.ExecutePlayerQuery(sql, parameters);
-        //}
+            return await this.ExecutePlayerQuery(sql, parameters);
+        }
 
         private async Task<IEnumerable<Player>> ExecutePlayerQuery(string sql, object parameters)
         {

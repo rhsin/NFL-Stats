@@ -38,7 +38,28 @@ namespace NflStats.Controllers
         [HttpGet("Find")]
         public async Task<ActionResult<IEnumerable<Player>>> FindPlayer(string position, string name)
         {
-            return Ok(await _playerRepository.FindBy(position, name));
+            try
+            {
+                return Ok(await _playerRepository.FindBy(position, name));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // GET: api/Players/Yards
+        [HttpGet("Yards")]
+        public async Task<ActionResult<IEnumerable<Player>>> FindByYards(string type, int yards)
+        {
+            try
+            {
+                return Ok(await _playerRepository.FindYards(type, yards));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // GET: api/Players/5

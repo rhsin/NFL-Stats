@@ -79,6 +79,20 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task FindByYards()
+        {
+            var response = await _client.GetAsync("api/Players/Yards?type=QB&yards=4900");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(2, players.Count());
+            Assert.All(players, p => Assert.True(p.PassYds > 4900));
+            Assert.Contains("Jameis Winston", stringResponse);
+            Assert.Contains("Dak Prescott", stringResponse);
+        }
+
+        [Fact]
         public async Task GetFantasyPlayer()
         {
             var response = await _client.GetAsync($"api/Players/Fantasy/{_id}/8");

@@ -13,7 +13,7 @@ namespace NflStats.Services
     {
         public string Yards(string input)
         {
-            switch (input)
+            switch (input.ToLower())
             {
                 case "passing":
                     return "PassYds";
@@ -21,13 +21,13 @@ namespace NflStats.Services
                     return "RushYds";
                 case "receiving":
                     return "RecYds";
-                case "QB":
+                case "qb":
                     return "PassYds";
-                case "RB":
+                case "rb":
                     return "RushYds";
-                case "WR":
+                case "wr":
                     return "RecYds";
-                case "TE":
+                case "te":
                     return "RecYds";
                 default:
                     throw new ArgumentException("Passing, Rushing, Receiving Yards Only!");
@@ -36,7 +36,7 @@ namespace NflStats.Services
 
         public string Touchdowns(string input)
         {
-            switch (input)
+            switch (input.ToLower())
             {
                 case "passing":
                     return "PassTds";
@@ -44,13 +44,13 @@ namespace NflStats.Services
                     return "RushTds";
                 case "receiving":
                     return "RecTds";
-                case "QB":
+                case "qb":
                     return "PassTds";
-                case "RB":
+                case "rb":
                     return "RushTds";
-                case "WR":
+                case "wr":
                     return "RecTds";
-                case "TE":
+                case "te":
                     return "RecTds";
                 default:
                     throw new ArgumentException("Passing, Rushing, Receiving TDs Only!");
@@ -59,19 +59,19 @@ namespace NflStats.Services
 
         public string Turnovers(string input)
         {
-            switch (input)
+            switch (input.ToLower())
             {
                 case "interceptions":
                     return "PassInt";
                 case "fumbles":
                     return "Fumbles";
-                case "QB":
+                case "qb":
                     return "PassInt";
-                case "RB":
+                case "rb":
                     return "Fumbles";
-                case "WR":
+                case "wr":
                     return "Fumbles";
-                case "TE":
+                case "te":
                     return "Fumbles";
                 default:
                     throw new ArgumentException("Interceptions, Fumbles Only!");
