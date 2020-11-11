@@ -19,12 +19,12 @@ namespace NflStats.Repositories
     public class PlayerRepository : IPlayerRepository
     {
         private readonly IConfiguration _config;
-        private readonly SQLValidator _sqlValidator;
+        private readonly ISQLValidator _sqlValidator;
 
-        public PlayerRepository(IConfiguration config)
+        public PlayerRepository(IConfiguration config, ISQLValidator sqlValidator)
         {
             _config = config;
-            _sqlValidator = new SQLValidator();
+            _sqlValidator = sqlValidator;
         }
 
         public async Task<IEnumerable<Player>> GetAll()

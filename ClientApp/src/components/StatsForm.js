@@ -61,7 +61,7 @@ function StatsForm({ setPlayers }) {
       <TextField 
         id='input-value' 
         label='Input Value' 
-        type='search' 
+        type='number' 
         onChange={e => setValue(e.target.value)}
         defaultValue={value}
         variant='outlined' 
