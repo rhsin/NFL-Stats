@@ -18,33 +18,27 @@ namespace NflStatsTests.Unit
         [Fact]
         public void TotalPoints()
         {
-            var roster = new Roster
+            var players = new List<Player>
             {
-                Players = new List<Player>
-                {
-                    new Player { Position = "QB", Points = 8 },
-                    new Player { Position = "RB", Points = 2 }
-                }
+                new Player { Position = "QB", Points = 8 },
+                new Player { Position = "RB", Points = 2 }
             };
 
-            Assert.Equal(10, _lineupValidator.TotalPoints(roster));
+            Assert.Equal(10, _lineupValidator.TotalPoints(players));
         }
 
         [Fact]
         public void TotalPointsException()
         {
-            var roster = new Roster
+            var players = new List<Player>
             {
-                Players = new List<Player>
-                {
-                    new Player { Position = "QB", Points = 8 },
-                    new Player { Position = "QB", Points = 2 }
-                }
+                new Player { Position = "QB", Points = 8 },
+                new Player { Position = "QB", Points = 2 }
             };
 
             try
             {
-                _lineupValidator.TotalPoints(roster);
+                _lineupValidator.TotalPoints(players);
             }
             catch (Exception ex)
             {
@@ -55,31 +49,26 @@ namespace NflStatsTests.Unit
         [Fact]
         public void Standard()
         {
-            var roster = new Roster
+            var players = new List<Player>
             {
-                Players = new List<Player>
-                {
-                    new Player { Position = "QB" },
-                    new Player { Position = "RB" }
-                }
+                new Player { Position = "QB" },
+                new Player { Position = "WR" }
             };
 
-            Assert.True(_lineupValidator.Standard(roster));
+            Assert.True(_lineupValidator.Standard(players));
         }
 
         [Fact]
         public void StandardFalse()
         {
-            var roster = new Roster
+            var players = new List<Player>
             {
-                Players = new List<Player>
-                {
-                    new Player { Position = "QB" },
-                    new Player { Position = "QB" }
-                }
+                new Player { Position = "TE" },
+                new Player { Position = "TE" },
+                new Player { Position = "TE" }
             };
 
-            Assert.False(_lineupValidator.Standard(roster));
+            Assert.False(_lineupValidator.Standard(players));
         }
     }
 }

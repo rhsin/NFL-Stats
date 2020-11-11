@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
+using System.Text;
 
 namespace NflStatsTests.Integration
 {
@@ -142,13 +143,22 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
-        public async Task CheckRoster()
+        public async Task CheckFantasy()
         {
-            var response = await _client.GetAsync("api/Rosters/Check/1");
+            var players = new List<Player>
+            {
+                new Player { Position = "QB", Points = 8 },
+                new Player { Position = "RB", Points = 2 }
+            };
+            var json = JsonConvert.SerializeObject(players);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _client.PostAsync("api/Rosters/Fantasy", data);
             var stringResponse = await response.Content.ReadAsStringAsync();
+            var points = JsonConvert.DeserializeObject<float>(stringResponse);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.True(!String.IsNullOrEmpty(stringResponse));
+            Assert.Equal(10, points);
         }
 
         [Fact]

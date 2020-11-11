@@ -23,7 +23,6 @@ namespace NflStatsTests
         [InlineData("api/Players/Fantasy/1827/8")]
         [InlineData("api/Rosters")]
         [InlineData("api/Rosters/1")]
-        [InlineData("api/Rosters/Check/1")]
         [InlineData("api/Players/Fantasy/Rosters/1/8")]
         public async Task TestGetEndpoints(string url)
         {

@@ -29,7 +29,14 @@
 
 .card-modal {
   margin: 0 1.2rem;
-  padding: 1.1rem;
+  padding: .6rem .75rem;
+}
+
+.modal-text {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+  margin-right: .5rem;
 }
 
 .form-players {
@@ -38,6 +45,12 @@
 
 .form-stats {
   margin-bottom: 1rem;
+}
+
+#total-pts {
+  font-weight: 600;
+  color: rgb(18, 18, 161);
+  margin-left: .25rem;
 }
 
 #input-week {

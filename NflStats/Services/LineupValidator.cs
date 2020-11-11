@@ -1,23 +1,24 @@
 ﻿using NflStats.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NflStats.Services
 {
     public interface ILineupValidator
     {
-        public float TotalPoints(Roster roster);
-        public bool Standard(Roster roster);
+        public float TotalPoints(List<Player> players);
+        public bool Standard(List<Player> players);
     }
 
     public class LineupValidator : ILineupValidator
     {
         // Calculates total fantasy points if lineup is standard & valid.
-        public float TotalPoints(Roster roster)
+        public float TotalPoints(List<Player> players)
         {
-            if (this.Standard(roster))
+            if (this.Standard(players))
             {
-                return roster.Players.Sum(p => p.Points);
+                return players.Sum(p => p.Points);
             }
             else
             {
@@ -25,11 +26,9 @@ namespace NflStats.Services
             }
         }
 
-        // Checks if Players list in Roster meets standard fantasy lineup requirements.
-        public bool Standard(Roster roster)
+        // Checks if Players list meets standard fantasy lineup requirements.
+        public bool Standard(List<Player> players)
         {
-            var players = roster.Players;
-
             if (players.Count() > 7)
             {
                 return false;

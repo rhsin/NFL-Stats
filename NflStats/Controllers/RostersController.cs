@@ -84,23 +84,27 @@ namespace NflStats.Controllers
             }
         }
 
-        // GET: api/Rosters/Check/1
-        // Checks if Players in Roster make a standard fantasy team lineup.
-        [HttpGet("Check/{id}")]
-        public async Task<ActionResult<Roster>> CheckRoster(int id)
+        // POST: api/Rosters/Fantasy/1
+        // Checks if Players in Roster make a standard fantasy team lineup, and returns
+        // total fantasy points if valid.
+        [HttpPost("Fantasy/{id?}")]
+        public async Task<IActionResult> CheckFantasy(int? id, List<Player> players)
         {
-            var rosters = await _rosterRepository.GetAll();
-
             try
             {
-                var roster = rosters.First(p => p.Id == id);
-
-                if (!_lineupValidator.Standard(roster))
+                if (id.HasValue)
                 {
-                    return Ok($"Roster {roster.Id} Is Not Valid Lineup!");
+                    var rosters = await _rosterRepository.GetAll();
+                    var roster = rosters.First(p => p.Id == id);
+                    var rosterPlayers = roster.Players.ToList();
+                    var rosterPoints = _lineupValidator.TotalPoints(rosterPlayers);
+
+                    return Ok(rosterPoints);
                 }
 
-                return Ok(roster);
+                var points = _lineupValidator.TotalPoints(players);
+
+                return Ok(points); 
             }
             catch (Exception ex)
             {
