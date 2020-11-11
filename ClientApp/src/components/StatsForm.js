@@ -7,7 +7,7 @@ import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
+import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import { url, fields, types } from './AppConstants';
 
 function StatsForm({ setPlayers }) {
@@ -73,7 +73,7 @@ function StatsForm({ setPlayers }) {
         color='primary'
         aria-label='stats'
       >
-        <SearchIcon />
+        <DoubleArrowIcon />
       </IconButton>
     </>
   );

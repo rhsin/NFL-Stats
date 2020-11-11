@@ -2,7 +2,6 @@ import React from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import FantasyTable from './FantasyTable';
 
@@ -19,9 +18,9 @@ function PlayerModal(props) {
       aria-labelledby='player-modal'
     >
       <DialogTitle>Fantasy Update</DialogTitle>
-      <Paper className='card-modal' elevation={3}>
+      <div className='card-modal'>
         <FantasyTable players={players} />
-      </Paper>
+      </div>
       <DialogActions>
         <Button 
           onClick={()=> setOpen()}

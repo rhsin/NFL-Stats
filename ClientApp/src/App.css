@@ -1,8 +1,4 @@
 
-.MuiPaper-root {
-  margin: 1rem 0;
-}
-
 .MuiDialogActions-root {
   margin: .2rem .4rem .2rem 0;
 }
@@ -36,6 +32,14 @@
   padding: 1.1rem;
 }
 
+.form-players {
+  margin-top: .15rem;
+}
+
+.form-stats {
+  margin-bottom: 1rem;
+}
+
 #input-week {
   margin-right: 2rem;
 }
@@ -61,5 +65,5 @@
 }
 
 #input-value {
-  width: 250px;
+  width: 307px;
 }

@@ -7,14 +7,20 @@ import { players, fantasyPlayers } from './TestData';
 const handleClick = jest.fn();
 const handleModal = jest.fn();
 
+test('renders accordion heading from props', () => {  
+  render(<PlayerTable type='Test' players={players} />);
+  const textElements = screen.getAllByText(/Test/);
+  expect(textElements).toHaveLength(1);
+});
+
 test('renders table rows from props', () => {  
-  render(<PlayerTable players={players}/>);
+  render(<PlayerTable players={players} />);
   const textElement = screen.getByText(/Patrick Mahomes/i);
   expect(textElement).toBeInTheDocument();
 });
 
 test('renders fantasy table rows from props', () => {  
-  render(<FantasyTable players={fantasyPlayers}/>);
+  render(<FantasyTable players={fantasyPlayers} />);
   const textElement = screen.getByText(/Travis Kelce/i);
   expect(textElement).toBeInTheDocument();
 });

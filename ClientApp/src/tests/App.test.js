@@ -37,8 +37,14 @@ test('renders StatsForm value textfield', () => {
   expect(textElement).toBeInTheDocument();
 });
 
+test('renders PlayerTable accordion', () => {
+  render(<App />);
+  const textElement = screen.getByText(/Players/i);
+  expect(textElement).toBeInTheDocument();
+});
+
 test('renders PlayerTable heading', () => {
   render(<App />);
   const textElements = screen.getAllByText(/Points/);
-  expect(textElements).toBeTruthy();
+  expect(textElements).toHaveLength(1);
 });

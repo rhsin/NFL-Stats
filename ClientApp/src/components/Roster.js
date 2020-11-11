@@ -85,8 +85,8 @@ function Roster() {
   return (
     <Container maxWidth='lg'>
       <NavBar />
-      {loading && <LoadingAlert data='Players' />}
-      {render && <LoadingAlert data='Roster' />}
+      {loading && <LoadingAlert type='Players' />}
+      {render && <LoadingAlert type='Roster' />}
       <IconButton 
         onClick={()=> fetchFantasyData()}
         color='primary'
@@ -95,16 +95,20 @@ function Roster() {
         <div className='button-update'>Update</div>
         <BarChartIcon />
       </IconButton>
-      <PlayerForm 
-        week={week}
-        setPlayers={players => setPlayers(players)}
-        setWeek={week => setWeek(week)}
-        setLoading={loading => setLoading(loading)}
-      />
-      <StatsForm 
-        setPlayers={players => setPlayers(players)}
-        setLoading={loading => setLoading(loading)}
-      />
+      <div className='form-players'>
+        <PlayerForm 
+          week={week}
+          setPlayers={players => setPlayers(players)}
+          setWeek={week => setWeek(week)}
+          setLoading={loading => setLoading(loading)}
+        />
+      </div>
+      <div className='form-stats'>
+        <StatsForm 
+          setPlayers={players => setPlayers(players)}
+          setLoading={loading => setLoading(loading)}
+        />
+      </div>
       <PlayerModal 
         open={open}
         players={details}
@@ -112,14 +116,14 @@ function Roster() {
       />
       {roster && (
         <PlayerTable 
-          type='roster'
+          type='Roster'
           players={roster.players} 
           handleClick={id => handlePlayer('Remove', id)}
           handleModal={id => fetchFantasyDetails(id)}
         />
       )}
       <PlayerTable 
-        type='players'
+        type='Players'
         players={players} 
         handleClick={id => handlePlayer('Add', id)}
         handleModal={id => fetchFantasyDetails(id)}
