@@ -12,6 +12,7 @@ namespace NflStatsTests.Unit
         public void GetPlayers()
         {
             var webScraper = new WebScraper();
+
             var players = webScraper.GetPlayers().Result;
 
             Assert.IsType<List<Player>>(players);

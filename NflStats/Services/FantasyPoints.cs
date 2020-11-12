@@ -35,7 +35,8 @@ namespace NflStats.Services
             return player;
         }
 
-        // Returns list of Players from Roster(Id) with updated points from passed week, fetched using WebScraper.
+        // Returns list of Players from Roster(Id) with updated points from passed week, 
+        // fetched using WebScraper.
         public async Task<IEnumerable<Player>> GetRoster(int id, int week)
         {
             var players = await _webScraper.GetPlayers(week, "QB%2CRB%2CWR%2CTE");
@@ -49,8 +50,10 @@ namespace NflStats.Services
                 .Where(r => players.Any(p => p.Name == r.Name))
                 .ToList();
 
-            rosterPlayers.ForEach(rp =>
-                rp.Points = players.Where(p => p.Name == rp.Name).First().Points);
+            foreach (var rp in rosterPlayers)
+            {
+                rp.Points = players.Where(p => p.Name == rp.Name).First().Points;
+            }
 
             return rosterPlayers;
         }

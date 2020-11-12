@@ -40,6 +40,7 @@ namespace NflStats
             services.AddScoped<IFantasyPoints, FantasyPoints>();
             services.AddScoped<ILineupValidator, LineupValidator>();
             services.AddScoped<ISQLValidator, SQLValidator>();
+            services.AddScoped<IStatsCalculator, StatsCalculator>();
             services.AddScoped<IWebScraper, WebScraper>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<IRosterRepository, RosterRepository>();

@@ -107,6 +107,17 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task FindByStatsError()
+        {
+            var response = await _client.GetAsync("api/Players/Stats?field=yard&type=QB&value=4900");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<Error>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+            Assert.Equal("Invalid Type Parameter!", error.Message);
+        }
+
+        [Fact]
         public async Task GetFantasyPlayer()
         {
             var response = await _client.GetAsync($"api/Players/Fantasy/{_id}/8");
@@ -191,6 +202,25 @@ namespace NflStatsTests.Integration
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.True(points > 200);
+        }
+
+        [Fact]
+        public async Task CheckFantasyError()
+        {
+            var players = new List<Player>
+            {
+                new Player { Position = "QB", Points = 8 },
+                new Player { Position = "QB", Points = 2 }
+            };
+            var json = JsonConvert.SerializeObject(players);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _client.PostAsync("api/Rosters/Fantasy", data);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<Error>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+            Assert.Equal("Fantasy Lineup Not Valid!", error.Message);
         }
 
         [Fact]
