@@ -20,10 +20,10 @@ namespace NflStatsTests
         [InlineData("api/Players/1827")]
         [InlineData("api/Players/Find?position=QB")]
         [InlineData("api/Players/Stats?field=yards&type=QB&value=4900")]
-        [InlineData("api/Players/Fantasy/1827/8")]
+        [InlineData("api/Stats/Fantasy/1827/8")]
         [InlineData("api/Rosters")]
         [InlineData("api/Rosters/1")]
-        [InlineData("api/Players/Fantasy/Rosters/1/8")]
+        [InlineData("api/Stats/Fantasy/Rosters/1/8")]
         public async Task TestGetEndpoints(string url)
         {
             var response = await _client.GetAsync(url);

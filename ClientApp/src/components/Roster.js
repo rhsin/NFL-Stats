@@ -58,7 +58,7 @@ function Roster() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${url}Players/Fantasy/Rosters/1/${week}`);
+        `${url}Stats/Fantasy/Rosters/1/${week}`);
       setDetails(response.data);
       setOpen(!open);
     }
@@ -72,7 +72,7 @@ function Roster() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${url}Players/Fantasy/${id}/${week}`);
+        `${url}Stats/Fantasy/${id}/${week}`);
       setDetails([response.data]);
       setOpen(!open);
     }

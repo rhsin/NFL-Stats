@@ -13,8 +13,8 @@ const searchUrl = url + 'Players/Find?position=QB&name=';
 const statsUrl = url + 'Players/Stats?field=Yards&type=Passing&value=3000';
 const addUrl = url + 'Rosters/Players/Add/1/455';
 const removeUrl = url + 'Rosters/Players/Remove/1/415';
-const fantasyUrl = url + 'Players/Fantasy/Rosters/1/9';
-const detailUrl = url + 'Players/Fantasy/415/9';
+const fantasyUrl = url + 'Stats/Fantasy/Rosters/1/9';
+const detailUrl = url + 'Stats/Fantasy/415/9';
 const checkUrl = url + 'Rosters/Fantasy';
 
 test('renders player table rows', async () => {

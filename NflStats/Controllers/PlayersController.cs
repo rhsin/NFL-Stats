@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using NflStats.Data;
 using NflStats.Models;
 using NflStats.Repositories;
-using NflStats.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,14 +15,11 @@ namespace NflStats.Controllers
     {
         private readonly ApplicationContext _context;
         private readonly IPlayerRepository _playerRepository;
-        private readonly IFantasyPoints _fantasyPoints;
 
-        public PlayersController(ApplicationContext context, IPlayerRepository playerRepository,
-            IFantasyPoints fantasyPoints)
+        public PlayersController(ApplicationContext context, IPlayerRepository playerRepository)
         {
             _context = context;
             _playerRepository = playerRepository;
-            _fantasyPoints = fantasyPoints;
         }
 
         // GET: api/Players
@@ -57,27 +53,6 @@ namespace NflStats.Controllers
             var player = players.First(p => p.Id == id);
 
             return Ok(player);
-        }
-
-        // GET: api/Players/Fantasy/412/8
-        // Finds Player from WebScraper with matching name and returns updated weekly points.
-        [HttpGet("Fantasy/{id}/{week}")]
-        public async Task<ActionResult<Player>> GetFantasyPlayer(int id, int week)
-        {
-            var player = await _fantasyPoints.GetPlayer(id, week);
-
-            return Ok(player);
-        }
-
-        // GET: api/Players/Fantasy/Rosters/1/8
-        // Filters Players from WebScraper that have matching name in selected Roster, and returns
-        // updated weekly points.
-        [HttpGet("Fantasy/Rosters/{id}/{week}")]
-        public async Task<ActionResult<IEnumerable<Player>>> GetFantasyRoster(int id, int week)
-        {
-            var players = await _fantasyPoints.GetRoster(id, week);
-
-            return Ok(players);
         }
 
         // PUT: api/Players/5
