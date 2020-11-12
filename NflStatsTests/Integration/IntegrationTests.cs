@@ -162,6 +162,27 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task CheckFantasyRoster()
+        {
+            var players = new List<Player>
+            {
+                new Player { Position = "QB", Points = 8 },
+                new Player { Position = "RB", Points = 2 }
+            };
+            var json = JsonConvert.SerializeObject(players);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _client.PostAsync("api/Rosters/Fantasy/1", data);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var points = JsonConvert.DeserializeObject<float>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.True(points > 200);
+
+            //Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
         public async Task AddPlayer()
         {
             var response = await _client.PutAsync($"api/Rosters/Players/Add/1/{_pId}", null);

@@ -85,8 +85,9 @@ namespace NflStats.Controllers
         }
 
         // POST: api/Rosters/Fantasy/1
-        // Checks if Players in Roster make a standard fantasy team lineup, and returns
-        // total fantasy points if valid.
+        // Checks if Players list is standard fantasy team lineup, and returns total
+        // fantasy points if valid. If Roster Id parameter is passed, the Players
+        // list from that Roster is checked.
         [HttpPost("Fantasy/{id?}")]
         public async Task<IActionResult> CheckFantasy(int? id, List<Player> players)
         {
@@ -97,14 +98,11 @@ namespace NflStats.Controllers
                     var rosters = await _rosterRepository.GetAll();
                     var roster = rosters.First(p => p.Id == id);
                     var rosterPlayers = roster.Players.ToList();
-                    var rosterPoints = _lineupValidator.TotalPoints(rosterPlayers);
 
-                    return Ok(rosterPoints);
+                    return Ok(_lineupValidator.TotalPoints(rosterPlayers));
                 }
 
-                var points = _lineupValidator.TotalPoints(players);
-
-                return Ok(points); 
+                return Ok(_lineupValidator.TotalPoints(players)); 
             }
             catch (Exception ex)
             {

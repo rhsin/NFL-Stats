@@ -13,7 +13,7 @@ namespace NflStats.Services
 
     public class LineupValidator : ILineupValidator
     {
-        // Calculates total fantasy points if lineup is standard & valid.
+        // Calculates total fantasy points if Player lineup is standard & valid.
         public float TotalPoints(List<Player> players)
         {
             if (this.Standard(players))
