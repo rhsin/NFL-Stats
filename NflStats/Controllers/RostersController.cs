@@ -4,7 +4,6 @@ using NflStats.Data;
 using NflStats.Models;
 using NflStats.Repositories;
 using NflStats.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,49 +38,27 @@ namespace NflStats.Controllers
         public async Task<ActionResult<Roster>> GetRoster(int id)
         {
             var rosters = await _rosterRepository.GetAll();
+            var roster = rosters.First(r => r.Id == id);
 
-            try
-            {
-                var roster = rosters.First(p => p.Id == id);
-
-                return Ok(roster);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(roster);
         }
 
         // PUT: api/Rosters/Players/Add/1/10
         [HttpPut("Players/Add/{rosterId}/{playerId}")]
         public async Task<IActionResult> AddPlayer(int rosterId, int playerId)
         {
-            try
-            {
-                await _rosterRepository.AddPlayer(rosterId, playerId);
+            await _rosterRepository.AddPlayer(rosterId, playerId);
 
-                return Ok($"Player {playerId} Added To Roster {rosterId}!");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }           
+            return Ok($"Player {playerId} Added To Roster {rosterId}!");  
         }
 
         // PUT: api/Rosters/Players/Remove/1/10
         [HttpPut("Players/Remove/{rosterId}/{playerId}")]
         public async Task<IActionResult> RemovePlayer(int playerId, int rosterId = 1)
         {
-            try
-            {
-                await _rosterRepository.RemovePlayer(rosterId, playerId);
+            await _rosterRepository.RemovePlayer(rosterId, playerId);
 
-                return Ok($"Player {playerId} Removed From Roster {rosterId}!");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok($"Player {playerId} Removed From Roster {rosterId}!");
         }
 
         // POST: api/Rosters/Fantasy/1
@@ -89,25 +66,18 @@ namespace NflStats.Controllers
         // fantasy points if valid. If Roster Id parameter is passed, the Players
         // list from that Roster is checked.
         [HttpPost("Fantasy/{id?}")]
-        public async Task<IActionResult> CheckFantasy(int? id, List<Player> players)
+        public async Task<ActionResult<float>> CheckFantasy(int? id, List<Player> players)
         {
-            try
+            if (id.HasValue)
             {
-                if (id.HasValue)
-                {
-                    var rosters = await _rosterRepository.GetAll();
-                    var roster = rosters.First(p => p.Id == id);
-                    var rosterPlayers = roster.Players.ToList();
+                var rosters = await _rosterRepository.GetAll();
+                var roster = rosters.First(r => r.Id == id);
+                var rosterPlayers = roster.Players.ToList();
 
-                    return Ok(_lineupValidator.TotalPoints(rosterPlayers));
-                }
+                return Ok(_lineupValidator.TotalPoints(rosterPlayers));
+            }
 
-                return Ok(_lineupValidator.TotalPoints(players)); 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(_lineupValidator.TotalPoints(players)); 
         }
 
         // PUT: api/Rosters/5

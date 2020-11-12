@@ -4,7 +4,6 @@ using NflStats.Data;
 using NflStats.Models;
 using NflStats.Repositories;
 using NflStats.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,14 +38,7 @@ namespace NflStats.Controllers
         [HttpGet("Find")]
         public async Task<ActionResult<IEnumerable<Player>>> FindPlayer(string position, string name)
         {
-            try
-            {
-                return Ok(await _playerRepository.FindBy(position, name));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(await _playerRepository.FindBy(position, name));
         }
 
         // GET: api/Players/Stats
@@ -54,14 +46,7 @@ namespace NflStats.Controllers
         [HttpGet("Stats")]
         public async Task<ActionResult<IEnumerable<Player>>> FindByStats(string field, string type, int value)
         {
-            try
-            {
-                return Ok(await _playerRepository.FindByStats(field, type, value));
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(await _playerRepository.FindByStats(field, type, value));
         }
 
         // GET: api/Players/5
@@ -69,17 +54,9 @@ namespace NflStats.Controllers
         public async Task<ActionResult<Player>> GetPlayer(int id)
         {
             var players = await _playerRepository.GetAll();
+            var player = players.First(p => p.Id == id);
 
-            try
-            {
-                var player = players.First(p => p.Id == id);
-
-                return Ok(player);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(player);
         }
 
         // GET: api/Players/Fantasy/412/8
@@ -87,16 +64,9 @@ namespace NflStats.Controllers
         [HttpGet("Fantasy/{id}/{week}")]
         public async Task<ActionResult<Player>> GetFantasyPlayer(int id, int week)
         {
-            try
-            {
-                var player = await _fantasyPoints.GetPlayer(id, week);
+            var player = await _fantasyPoints.GetPlayer(id, week);
 
-                return Ok(player);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(player);
         }
 
         // GET: api/Players/Fantasy/Rosters/1/8
@@ -105,16 +75,9 @@ namespace NflStats.Controllers
         [HttpGet("Fantasy/Rosters/{id}/{week}")]
         public async Task<ActionResult<IEnumerable<Player>>> GetFantasyRoster(int id, int week)
         {
-            try
-            {
-                var players = await _fantasyPoints.GetRoster(id, week);
+            var players = await _fantasyPoints.GetRoster(id, week);
 
-                return Ok(players);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return Ok(players);
         }
 
         // PUT: api/Players/5

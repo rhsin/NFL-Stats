@@ -2,7 +2,6 @@
 using NflStats.Data;
 using NflStats.Models;
 using NflStats.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -38,19 +37,12 @@ namespace NflStats.Controllers
                 return BadRequest("Players Already Seeded!");
             }
 
-            try
-            {
-                var players = _csvImporter.GetPlayerRecords();
+            var players = _csvImporter.GetPlayerRecords();
 
-                _context.Players.AddRange(players);
-                _context.SaveChanges();
+            _context.Players.AddRange(players);
+            _context.SaveChanges();
 
-                return Ok("Players Seeded Successfully!");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.ToString());
-            }
+            return Ok("Players Seeded Successfully!");
         }
 
         // POST: api/Seeders/Refresh/Players
@@ -58,20 +50,13 @@ namespace NflStats.Controllers
         [HttpPost("Refresh/Players")]
         public IActionResult RefreshPlayers()
         {
-            try
-            {
-                var players = _csvImporter.GetPlayerRecords();
+            var players = _csvImporter.GetPlayerRecords();
 
-                _context.Players.RemoveRange(_context.Players);
-                _context.Players.AddRange(players);
-                _context.SaveChanges();
+            _context.Players.RemoveRange(_context.Players);
+            _context.Players.AddRange(players);
+            _context.SaveChanges();
 
-                return Ok("Players Refreshed Successfully!");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.ToString());
-            }
+            return Ok("Players Refreshed Successfully!");
         }
     }
 }

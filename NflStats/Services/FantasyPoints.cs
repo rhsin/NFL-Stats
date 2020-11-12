@@ -49,8 +49,8 @@ namespace NflStats.Services
                 .Where(r => players.Any(p => p.Name == r.Name))
                 .ToList();
 
-            rosterPlayers.ForEach(r =>
-                r.Points = players.Where(p => p.Name == r.Name).First().Points);
+            rosterPlayers.ForEach(rp =>
+                rp.Points = players.Where(p => p.Name == rp.Name).First().Points);
 
             return rosterPlayers;
         }

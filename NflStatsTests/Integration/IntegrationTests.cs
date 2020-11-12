@@ -178,8 +178,6 @@ namespace NflStatsTests.Integration
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.True(points > 200);
-
-            //Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
         [Fact]
