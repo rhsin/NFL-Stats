@@ -10,14 +10,24 @@ test('renders fantasy table on open', () => {
     <PlayerModal 
       open={true}
       players={players}
-      setOpen={()=> setOpen()}
     />
   );
   const textElement = screen.getByText(/Points/i);
   expect(textElement).toBeInTheDocument();
 });
 
-test('setOpen called on button click', () => {  
+test('renders submit button', () => {  
+  render(
+    <PlayerModal 
+      open={true}
+      players={players}
+    />
+  );
+  const button = screen.getByRole('button', {name: 'Submit'});
+  expect(button).toBeInTheDocument();
+});
+
+test('setOpen called on close button click', () => {  
   render(
     <PlayerModal 
       open={true}

@@ -15,6 +15,7 @@ const addUrl = url + 'Rosters/Players/Add/1/455';
 const removeUrl = url + 'Rosters/Players/Remove/1/415';
 const fantasyUrl = url + 'Players/Fantasy/Rosters/1/9';
 const detailUrl = url + 'Players/Fantasy/415/9';
+const checkUrl = url + 'Rosters/Fantasy';
 
 test('renders player table rows', async () => {
   axios.get.mockImplementation((url) => {
@@ -72,7 +73,7 @@ test('fetch fantasy roster on update button clicked', async () => {
       case fantasyUrl:
         return Promise.resolve({data: fantasyPlayers});
       default:
-        return Promise.reject(new Error('Axios Not Called 3'));
+        return Promise.reject(new Error('Axios Not Called 3A'));
     }
   });
   render(<Roster />);
@@ -81,6 +82,34 @@ test('fetch fantasy roster on update button clicked', async () => {
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   expect(axios.get).toHaveBeenCalledTimes(4);
   expect(screen.getByText(/Travis Kelce/i)).toBeInTheDocument();
+});
+
+test('fetch fantasy roster total on submit button clicked', async () => {
+  axios.get.mockImplementation((url) => {
+    switch(url) {
+      case fantasyUrl:
+        return Promise.resolve({data: fantasyPlayers});
+      default:
+        return Promise.reject(new Error('Axios Not Called 3B'));
+    }
+  });
+  axios.post.mockImplementation((url) => {
+    switch(url) {
+      case checkUrl:
+        return Promise.resolve({data: 15});
+      default:
+        return Promise.reject(new Error('Axios Not Called 3C'));
+    }
+  });
+  render(<Roster />);
+  const button = screen.getByRole('button', {name: 'roster'});
+  user.click(button);
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
+  const submitButton = screen.getByRole('button', {name: 'Submit'});
+  await user.click(submitButton);
+  await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
+  expect(screen.getByText(/Travis Kelce/i)).toBeInTheDocument();
+  expect(screen.getByText(/15/i)).toBeInTheDocument();
 });
 
 test('fetch fantasy details on player button clicked', async () => {
