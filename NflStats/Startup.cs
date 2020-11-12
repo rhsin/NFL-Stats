@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NflStats.Data;
+using NflStats.Middleware;
 using NflStats.Repositories;
 using NflStats.Services;
 
@@ -52,7 +53,7 @@ namespace NflStats
             //    app.UseDeveloperExceptionPage();
             //}
 
-            app.UseExceptionHandler("/Error");
+            app.UseExceptionMiddleware();
 
             app.UseCors("AllowAll");
 

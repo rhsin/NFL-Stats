@@ -24,6 +24,19 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task ErrorResponse()
+        {
+            var response = await _client.GetAsync("api/Rosters/1000");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var error = JsonConvert.DeserializeObject<Error>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+            Assert.Equal(500, error.StatusCode);
+            Assert.Equal("Sequence contains no matching element", error.Message);
+            Assert.Contains("RostersController.GetRoster", error.StackTrace);
+        }
+
+        [Fact]
         public async Task GetPlayers()
         {
             var response = await _client.GetAsync("api/Players");
