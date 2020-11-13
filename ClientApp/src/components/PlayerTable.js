@@ -75,7 +75,7 @@ function PlayerTable(props) {
                   <TableCell align='right'>{player.recYds}</TableCell>
                   <TableCell align='right'>{player.recTds}</TableCell>
                   <TableCell align='right'>{player.fumbles}</TableCell>
-                  <TableCell align='right'>{player.points}</TableCell>
+                  <TableCell align='right'>{player.points.toFixed(2)}</TableCell>
                   <TableCell align='right'>
                     <IconButton 
                       onClick={()=> handleClick(player.id)}

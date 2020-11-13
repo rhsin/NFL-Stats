@@ -21,6 +21,7 @@ namespace NflStatsTests.Unit
             {
                 new Player { PassTds = 10, PassInt = 2, Fumbles = 3, Points = 0 },
                 new Player { PassTds = 15, PassInt = 3, Fumbles = 2, Points = 0 },
+                new Player { PassTds = 1, PassInt = 0, Fumbles = 0, Points = 0 },
             };
 
             var result = _statsCalculator.TDRatio(players);

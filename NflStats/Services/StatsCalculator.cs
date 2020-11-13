@@ -15,9 +15,18 @@ namespace NflStats.Services
         // Player list ordered by the ratio, set as the Points field.
         public List<Player> TDRatio(List<Player> players)
         {
-            foreach (var p in players)
+            foreach (var p in players.ToList())
             {
-                p.Points = (float)p.PassTds / (float)(p.PassInt + p.Fumbles);
+                float ratio = (float)p.PassTds / (float)(p.PassInt + p.Fumbles);
+
+                if (ratio > 0 && ratio < 100)
+                {
+                    p.Points = ratio;
+                }
+                else
+                {
+                    players.Remove(p);
+                }
             }   
 
             return players.OrderByDescending(p => p.Points).ToList();
