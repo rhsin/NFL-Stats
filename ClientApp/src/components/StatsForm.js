@@ -1,5 +1,5 @@
 // This stats form component sets players from data fetched from .NET API endpoints.
-// HandleClick retrieve players using Field, Type & Value in SQL query to find 
+// HandleClick retrieves players using Field, Type & Value in SQL query to find 
 // players filtered by pass/rush/rec stats. 
 
 import React, { useState } from 'react';

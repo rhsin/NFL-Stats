@@ -3,7 +3,7 @@ import user from '@testing-library/user-event';
 import axios from 'axios';
 import Roster from '../components/Roster';
 import { url } from '../components/AppConstants';
-import { players, rosterPlayers, newPlayers, fantasyPlayers, fantasyPlayer } from './TestData';
+import { players, rosterPlayers, newPlayers, fantasyPlayers, fantasyPlayer, statsPlayers } from './TestData';
 
 jest.mock('axios');
 
@@ -15,6 +15,7 @@ const addUrl = url + 'Rosters/Players/Add/1/455';
 const removeUrl = url + 'Rosters/Players/Remove/1/415';
 const fantasyUrl = url + 'Stats/Fantasy/Rosters/1/9';
 const detailUrl = url + 'Stats/Fantasy/415/9';
+const ratioUrl = url + 'Stats/Ratio/Passing';
 const checkUrl = url + 'Rosters/Fantasy';
 
 test('renders player table rows', async () => {
@@ -35,7 +36,7 @@ test('renders player table rows', async () => {
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
 });
 
-test('fetch data after search button clicked', async () => {
+test('fetch data on search button click', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case searchUrl:
@@ -46,12 +47,12 @@ test('fetch data after search button clicked', async () => {
   });
   render(<Roster />);
   const button = screen.getByRole('button', {name: 'search'});
-  await user.click(button);
+  user.click(button);
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
   expect(screen.getByText(/Lamar Jackson/i)).toBeInTheDocument();
 });
 
-test('fetch data after stats button clicked', async () => {
+test('fetch data on stats form button click', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case statsUrl:
@@ -62,12 +63,12 @@ test('fetch data after stats button clicked', async () => {
   });
   render(<Roster />);
   const button = screen.getByRole('button', {name: 'stats'});
-  await user.click(button);
+  user.click(button);
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
 });
 
-test('fetch fantasy roster on update button clicked', async () => {
+test('fetch fantasy roster on update button click', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case fantasyUrl:
@@ -84,13 +85,39 @@ test('fetch fantasy roster on update button clicked', async () => {
   expect(screen.getByText(/Travis Kelce/i)).toBeInTheDocument();
 });
 
-test('fetch fantasy roster total on submit button clicked', async () => {
+test('fetch data on ratio stats button click', async () => {
+  axios.get.mockImplementation((url) => {
+    switch(url) {
+      case playerUrl:
+        return Promise.resolve({data: players});
+      default:
+        return Promise.reject(new Error('Axios Not Called 3B'));
+    }
+  });
+  axios.post.mockImplementation((url) => {
+    switch(url) {
+      case ratioUrl:
+        return Promise.resolve({data: statsPlayers});
+      default:
+        return Promise.reject(new Error('Axios Not Called 3C'));
+    }
+  });
+  render(<Roster />);
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
+  const ratioButton = screen.getByRole('button', {name: 'td-ratio'});
+  user.click(ratioButton);
+  await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
+  expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
+  expect(screen.getByText(/3.25/i)).toBeInTheDocument();
+});
+
+test('fetch fantasy roster total on submit button click', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case fantasyUrl:
         return Promise.resolve({data: fantasyPlayers});
       default:
-        return Promise.reject(new Error('Axios Not Called 3B'));
+        return Promise.reject(new Error('Axios Not Called 3D'));
     }
   });
   axios.post.mockImplementation((url) => {
@@ -98,7 +125,7 @@ test('fetch fantasy roster total on submit button clicked', async () => {
       case checkUrl:
         return Promise.resolve({data: 15});
       default:
-        return Promise.reject(new Error('Axios Not Called 3C'));
+        return Promise.reject(new Error('Axios Not Called 3E'));
     }
   });
   render(<Roster />);
@@ -106,13 +133,13 @@ test('fetch fantasy roster total on submit button clicked', async () => {
   user.click(button);
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   const submitButton = screen.getByRole('button', {name: 'Submit'});
-  await user.click(submitButton);
+  user.click(submitButton);
   await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
   expect(screen.getByText(/Travis Kelce/i)).toBeInTheDocument();
   expect(screen.getByText(/15/i)).toBeInTheDocument();
 });
 
-test('fetch fantasy details on player button clicked', async () => {
+test('fetch fantasy details on player button click', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case rosterUrl:

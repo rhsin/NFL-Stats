@@ -18,7 +18,9 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
 function PlayerTable(props) {
-  const { type, players, handleClick, handleModal } = props;
+  const { table, players, handleClick, handleModal } = props;
+
+  const stat = table === 'TD Ratio' ? 'TD/TO' : 'Points';
 
   return (
     <Accordion defaultExpanded={true}>
@@ -27,7 +29,7 @@ function PlayerTable(props) {
         aria-controls='panel-content'
         id='panel-header'
       >
-        {type} 
+        {table} 
       </AccordionSummary>
       <AccordionDetails>
         <Paper elevation={3}>
@@ -37,7 +39,6 @@ function PlayerTable(props) {
                 <TableCell>Player</TableCell>
                 <TableCell align='right'>Pos</TableCell>
                 <TableCell align='right'>Team</TableCell>
-                <TableCell align='right'>Points</TableCell>
                 <TableCell align='right'>Pass Yds</TableCell>
                 <TableCell align='right'>Pass TDs</TableCell>
                 <TableCell align='right'>Int</TableCell>
@@ -46,6 +47,7 @@ function PlayerTable(props) {
                 <TableCell align='right'>Rec Yds</TableCell>
                 <TableCell align='right'>Rec TDs</TableCell>
                 <TableCell align='right'>Fumbles</TableCell>
+                <TableCell align='right'>{stat}</TableCell>
                 <TableCell align='right'>Roster</TableCell>
               </TableRow>
             </TableHead>
@@ -65,7 +67,6 @@ function PlayerTable(props) {
                   </TableCell>
                   <TableCell align='right'>{player.position}</TableCell>
                   <TableCell align='right'>{player.team}</TableCell>
-                  <TableCell align='right'>{player.points}</TableCell>
                   <TableCell align='right'>{player.passYds}</TableCell>
                   <TableCell align='right'>{player.passTds}</TableCell>
                   <TableCell align='right'>{player.passInt}</TableCell>
@@ -74,6 +75,7 @@ function PlayerTable(props) {
                   <TableCell align='right'>{player.recYds}</TableCell>
                   <TableCell align='right'>{player.recTds}</TableCell>
                   <TableCell align='right'>{player.fumbles}</TableCell>
+                  <TableCell align='right'>{player.points}</TableCell>
                   <TableCell align='right'>
                     <IconButton 
                       onClick={()=> handleClick(player.id)}
@@ -81,7 +83,7 @@ function PlayerTable(props) {
                       color='primary'
                       aria-label='player'
                     >
-                      {type === 'Players' ?
+                      {table === 'Players' ?
                         <AddBoxIcon /> : 
                         <RemoveCircleIcon />
                       }

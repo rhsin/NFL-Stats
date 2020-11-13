@@ -8,7 +8,7 @@ const handleClick = jest.fn();
 const handleModal = jest.fn();
 
 test('renders accordion heading from props', () => {  
-  render(<PlayerTable type='Test' players={players} />);
+  render(<PlayerTable table='Test' players={players} />);
   const textElements = screen.getAllByText(/Test/);
   expect(textElements).toHaveLength(1);
 });

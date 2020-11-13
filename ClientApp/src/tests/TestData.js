@@ -46,3 +46,13 @@ export const fantasyPlayer = {
   team: 'NOR',
   points: 248.52
 };
+
+export const statsPlayers = [
+  {
+    id: 455,
+    name: 'Patrick Mahomes',
+    position: 'QB',
+    team: 'KAN',
+    points: 3.25
+  }
+];

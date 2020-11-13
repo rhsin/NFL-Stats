@@ -7,6 +7,7 @@ import NavBar from './NavBar';
 import PlayerTable from './PlayerTable';
 import PlayerForm from './PlayerForm';
 import StatsForm from './StatsForm';
+import StatsButton from './StatsButton';
 import PlayerModal from './PlayerModal';
 import LoadingAlert from './LoadingAlert';
 import Container from '@material-ui/core/Container';
@@ -19,6 +20,7 @@ function Roster() {
   const [players, setPlayers] = useState([]);
   const [details, setDetails] = useState([]);
   const [week, setWeek] = useState(9);
+  const [table, setTable] = useState('Players');
   const [render, setRender] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -109,6 +111,11 @@ function Roster() {
           setLoading={loading => setLoading(loading)}
         />
       </div>
+      <StatsButton 
+        players={players}
+        setPlayers={players => setPlayers(players)}
+        setTable={table => setTable(table)}
+      />
       <PlayerModal 
         open={open}
         players={details}
@@ -116,14 +123,14 @@ function Roster() {
       />
       {roster && (
         <PlayerTable 
-          type='Roster'
+          table='Roster'
           players={roster.players} 
           handleClick={id => handlePlayer('Remove', id)}
           handleModal={id => fetchFantasyDetails(id)}
         />
       )}
       <PlayerTable 
-        type='Players'
+        table={table}
         players={players} 
         handleClick={id => handlePlayer('Add', id)}
         handleModal={id => fetchFantasyDetails(id)}

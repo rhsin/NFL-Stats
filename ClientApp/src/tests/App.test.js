@@ -19,6 +19,12 @@ test('renders update button', () => {
   expect(button).toBeInTheDocument();
 });
 
+test('renders stats button', () => {  
+  render(<App />);
+  const button = screen.getByRole('button', {name: 'td-ratio'});
+  expect(button).toBeInTheDocument();
+});
+
 test('renders PlayerForm week textfield', () => {
   render(<App />);
   const textElement = screen.getByLabelText(/Week/i);

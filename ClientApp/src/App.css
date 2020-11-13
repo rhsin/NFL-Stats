@@ -15,7 +15,13 @@
 .button-update {
   font-size: 1rem;
   margin-right: .2rem;
-  margin-top: .17rem;
+  margin-top: .15rem;
+}
+
+.button-stats {
+  font-size: 1rem;
+  margin-right: .2rem;
+  margin-top: .15rem;
 }
 
 .button-player {
@@ -44,7 +50,7 @@
 }
 
 .form-stats {
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
 #total-pts {
