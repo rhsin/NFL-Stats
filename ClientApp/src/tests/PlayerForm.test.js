@@ -14,6 +14,7 @@ test('renders week select options', () => {
   );
   const textElement = screen.getByLabelText(/Week/i);
   const optionElement = screen.getByLabelText(/9/i);
+
   expect(textElement).toBeInTheDocument();
   expect(optionElement).toBeInTheDocument();
 });
@@ -28,6 +29,7 @@ test('renders position select options', () => {
   );
   const textElement = screen.getByLabelText(/Position/i);
   const optionElement = screen.getByLabelText(/QB/i);
+
   expect(textElement).toBeInTheDocument();
   expect(optionElement).toBeInTheDocument();
 });
@@ -41,6 +43,7 @@ test('renders search button', () => {
     />
   );
   const button = screen.getByRole('button', {name: 'search'});
+  
   expect(button).toBeInTheDocument();
 });
 

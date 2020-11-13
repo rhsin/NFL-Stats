@@ -10,18 +10,21 @@ const handleModal = jest.fn();
 test('renders accordion heading from props', () => {  
   render(<PlayerTable table='Test' players={players} />);
   const textElements = screen.getAllByText(/Test/);
+
   expect(textElements).toHaveLength(1);
 });
 
 test('renders table rows from props', () => {  
   render(<PlayerTable players={players} />);
   const textElement = screen.getByText(/Patrick Mahomes/i);
+
   expect(textElement).toBeInTheDocument();
 });
 
 test('renders fantasy table rows from props', () => {  
   render(<FantasyTable players={fantasyPlayers} />);
   const textElement = screen.getByText(/Travis Kelce/i);
+  
   expect(textElement).toBeInTheDocument();
 });
 
@@ -34,6 +37,7 @@ test('handlePlayer button calls handleClick', () => {
   );
   const button = screen.getByRole('button', {name: 'player'});
   user.click(button);
+
   expect(handleClick).toHaveBeenCalledTimes(1);
 });
 
@@ -46,6 +50,7 @@ test('player button calls handleModal', () => {
   );
   const button = screen.getByRole('button', {name: 'modal'});
   user.click(button);
+
   expect(handleModal).toHaveBeenCalledTimes(1);
 });
 

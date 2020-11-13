@@ -13,6 +13,7 @@ test('renders fantasy table on open', () => {
     />
   );
   const textElement = screen.getByText(/Points/i);
+
   expect(textElement).toBeInTheDocument();
 });
 
@@ -24,6 +25,7 @@ test('renders submit button', () => {
     />
   );
   const button = screen.getByRole('button', {name: 'Submit'});
+
   expect(button).toBeInTheDocument();
 });
 
@@ -37,6 +39,7 @@ test('setOpen called on close button click', () => {
   );
   const button = screen.getByRole('button', {name: 'Close'});
   user.click(button);
+  
   expect(setOpen).toHaveBeenCalledTimes(1);
 });
 

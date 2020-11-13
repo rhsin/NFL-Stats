@@ -14,6 +14,7 @@ test('renders TD Ratio button', () => {
     />
   );
   const button = screen.getByRole('button', {name: 'td-ratio'});
+  
   expect(button).toBeInTheDocument();
 });
 

@@ -7,10 +7,11 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import BarChartIcon from '@material-ui/icons/BarChart';
 import { url, positions, weeks } from './AppConstants';
 
 function PlayerForm(props) {
-  const { week, setPlayers, setWeek } = props;
+  const { week, fetchData, setPlayers, setWeek } = props;
 
   const [name, setName] = useState('');
   const [position, setPosition] = useState('QB');
@@ -28,6 +29,16 @@ function PlayerForm(props) {
 
   return (
     <>
+      <span className='button-update'>
+        <IconButton 
+          onClick={()=> fetchData()}
+          color='primary'
+          aria-label='roster'
+        >
+          <div className='update-text'>Update</div>
+          <BarChartIcon />
+        </IconButton>
+      </span>
       <span id='input-week'>
         <TextField
           id='select-week'

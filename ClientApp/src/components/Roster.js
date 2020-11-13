@@ -11,8 +11,6 @@ import StatsButton from './StatsButton';
 import PlayerModal from './PlayerModal';
 import LoadingAlert from './LoadingAlert';
 import Container from '@material-ui/core/Container';
-import IconButton from '@material-ui/core/IconButton';
-import BarChartIcon from '@material-ui/icons/BarChart';
 import { url } from './AppConstants';
 
 function Roster() {
@@ -89,26 +87,17 @@ function Roster() {
       <NavBar />
       {loading && <LoadingAlert type='Players' />}
       {render && <LoadingAlert type='Roster' />}
-      <IconButton 
-        onClick={()=> fetchFantasyData()}
-        color='primary'
-        aria-label='roster'
-      >
-        <div className='button-update'>Update</div>
-        <BarChartIcon />
-      </IconButton>
       <div className='form-players'>
         <PlayerForm 
           week={week}
+          fetchData={()=> fetchFantasyData()}
           setPlayers={players => setPlayers(players)}
           setWeek={week => setWeek(week)}
-          setLoading={loading => setLoading(loading)}
         />
       </div>
       <div className='form-stats'>
         <StatsForm 
           setPlayers={players => setPlayers(players)}
-          setLoading={loading => setLoading(loading)}
         />
       </div>
       <StatsButton 
