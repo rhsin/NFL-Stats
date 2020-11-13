@@ -14,6 +14,13 @@ test('renders accordion heading from props', () => {
   expect(textElements).toHaveLength(1);
 });
 
+test('renders table headings', () => {  
+  render(<PlayerTable players={players} />);
+  const textElements = screen.getAllByText(/Points/);
+
+  expect(textElements).toHaveLength(1);
+});
+
 test('renders table rows from props', () => {  
   render(<PlayerTable players={players} />);
   const textElement = screen.getByText(/Patrick Mahomes/i);

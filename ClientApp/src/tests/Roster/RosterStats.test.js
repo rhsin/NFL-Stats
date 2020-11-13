@@ -25,7 +25,7 @@ test('fetch fantasy roster on update button click', async () => {
   });
   render(<Roster />);
 
-  const button = screen.getByRole('button', {name: 'roster'});
+  const button = screen.getByRole('button', {name: 'update'});
   user.click(button);
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
 
@@ -80,7 +80,7 @@ test('fetch fantasy roster total on submit button click', async () => {
   });
   render(<Roster />);
 
-  const button = screen.getByRole('button', {name: 'roster'});
+  const button = screen.getByRole('button', {name: 'update'});
   user.click(button);
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
 

@@ -19,6 +19,19 @@ test('renders week select options', () => {
   expect(optionElement).toBeInTheDocument();
 });
 
+test('renders search player textfield', () => {
+  render(
+    <PlayerForm 
+      week={9}
+      setPlayers={()=> setPlayers()}
+      setWeek={()=> setWeek()}
+    />
+  );
+  const textElement = screen.getByLabelText(/Search Player/i);
+
+  expect(textElement).toBeInTheDocument();
+});
+
 test('renders position select options', () => {
   render(
     <PlayerForm 
@@ -32,6 +45,19 @@ test('renders position select options', () => {
 
   expect(textElement).toBeInTheDocument();
   expect(optionElement).toBeInTheDocument();
+});
+
+test('renders update button', () => {  
+  render(
+    <PlayerForm
+      week={9}
+      setPlayers={()=> setPlayers()}
+      setWeek={()=> setWeek()}
+    />
+  );
+  const button = screen.getByRole('button', {name: 'update'});
+  
+  expect(button).toBeInTheDocument();
 });
 
 test('renders search button', () => {  

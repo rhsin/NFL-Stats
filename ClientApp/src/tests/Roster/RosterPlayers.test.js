@@ -13,8 +13,9 @@ const searchUrl = url + 'Players/Find?position=QB&name=';
 const statsUrl = url + 'Players/Stats?field=Yards&type=Passing&value=3000';
 const addUrl = url + 'Rosters/Players/Add/1/455';
 const removeUrl = url + 'Rosters/Players/Remove/1/415';
+const seasonUrl = url + 'Players/Season/2019';
 
-test('renders player table rows', async () => {
+test('renders Roster with player table rows', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case rosterUrl:
@@ -30,6 +31,9 @@ test('renders player table rows', async () => {
   await waitForElementToBeRemoved(()=> screen.getByText(/Loading Roster/i));
 
   expect(axios.get).toHaveBeenCalledTimes(2);
+
+  expect(screen.getByText(/NFL Stats/i)).toBeInTheDocument();
+  expect(screen.getByText(/Players/i)).toBeInTheDocument();
   expect(screen.getByText(/Dalvin Cook/i)).toBeInTheDocument();
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
 });

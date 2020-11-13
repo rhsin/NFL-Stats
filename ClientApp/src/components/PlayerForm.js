@@ -33,7 +33,7 @@ function PlayerForm(props) {
         <IconButton 
           onClick={()=> fetchData()}
           color='primary'
-          aria-label='roster'
+          aria-label='update'
         >
           <div className='button-text'>Update</div>
           <BarChartIcon />

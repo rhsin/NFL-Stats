@@ -21,6 +21,13 @@ test('renders type select options', () => {
   expect(optionElement).toBeInTheDocument();
 });
 
+test('renders input value textfield', () => {
+  render(<StatsForm setPlayers={()=> setPlayers()} />);
+  const textElement = screen.getByLabelText(/Input Value/i);
+
+  expect(textElement).toBeInTheDocument();
+});
+
 test('renders search button', () => {  
   render(<StatsForm setPlayers={()=> setPlayers()} />);
   const button = screen.getByRole('button', {name: 'stats'});
