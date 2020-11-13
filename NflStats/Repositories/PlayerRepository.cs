@@ -13,7 +13,8 @@ namespace NflStats.Repositories
         public Task<IEnumerable<Player>> GetAll();
         public Task<IEnumerable<Player>> GetTop();
         public Task<IEnumerable<Player>> FindBy(string position, string name);
-        public Task<IEnumerable<Player>> FindByStats(string field,string type, int value);
+        public Task<IEnumerable<Player>> FindByStats(string field, string type, int value);
+        public Task SeedDefault();
     }
 
     public class PlayerRepository : IPlayerRepository
@@ -69,6 +70,17 @@ namespace NflStats.Repositories
                             ORDER BY {column} DESC";
 
             return await this.ExecutePlayerQuery(sql, parameters);
+        }
+
+        public async Task SeedDefault()
+        {
+            string sql = @"UPDATE Players
+                           SET Season = 2019";
+
+            using (var connection = new SqlConnection(_config.GetConnectionString("Default")))
+            {
+                await connection.ExecuteAsync(sql);
+            }
         }
 
         private async Task<IEnumerable<Player>> ExecutePlayerQuery(string sql, object parameters)

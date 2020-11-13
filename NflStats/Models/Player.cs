@@ -8,6 +8,7 @@ namespace NflStats.Models
         public string Position { get; set; }
         public string Team { get; set; }
         public float Points { get; set; }
+        public int? Season { get; set; }
         public float? Games { get; set; }
         public float? PassYds { get; set; }
         public float? PassTds { get; set; }

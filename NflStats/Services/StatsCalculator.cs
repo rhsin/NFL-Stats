@@ -12,7 +12,7 @@ namespace NflStats.Services
     public class StatsCalculator : IStatsCalculator
     {
         // Calculates each player's TD/Turnover (Int + Fumbles) Ratio and returns 
-        // Player list ordered by the ratio, set as the Points field.
+        // Player list ordered by the ratio, set as the Points field, if between 0, 100.
         public List<Player> TDRatio(List<Player> players)
         {
             foreach (var p in players.ToList())

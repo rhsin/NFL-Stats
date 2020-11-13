@@ -276,6 +276,16 @@ namespace NflStatsTests.Integration
             Assert.Equal("Players Already Seeded!", stringResponse);
         }
 
+        [Fact]
+        public async Task SeedRosters()
+        {
+            var response = await _client.PostAsync("api/Seeders/Run/Rosters", null);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.Equal("Rosters Already Seeded!", stringResponse);
+        }
+
         //[Fact]
         //public async Task RefreshPlayers()
         //{

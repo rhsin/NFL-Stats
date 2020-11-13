@@ -10,15 +10,15 @@ namespace NflStats.Services
 {
     public interface ICsvImporter
     {
-        public IEnumerable<Player> GetPlayerRecords();
+        public IEnumerable<Player> GetPlayerRecords(int year);
     }
 
     public class CsvImporter : ICsvImporter
     {
-        // Reads Csv file and converts each row into Player entity using Player ClassMap.
-        public IEnumerable<Player> GetPlayerRecords()
+        // Reads Csv file by year and converts each row into Player entity using Player ClassMap.
+        public IEnumerable<Player> GetPlayerRecords(int year)
         {
-            using (var reader = new StreamReader(@"C:\Users\Ryan\source\repos\NflStats\NflStats\Data\2019.csv"))
+            using (var reader = new StreamReader(@$"C:\Users\Ryan\source\repos\NflStats\NflStats\Data\{year}.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.RegisterClassMap<PlayerMap>();

@@ -15,6 +15,7 @@ namespace NflStats.Repositories
         public Task<IEnumerable<Roster>> GetAll();
         public Task AddPlayer(int rosterId, int playerId);
         public Task RemovePlayer(int rosterId, int playerId);
+        public Task SeedDefault();
     }
 
     public class RosterRepository : IRosterRepository
@@ -66,6 +67,17 @@ namespace NflStats.Repositories
             using (var connection = new SqlConnection(_config.GetConnectionString("Default")))
             {
                 await connection.ExecuteAsync(sql, parameters);
+            }
+        }
+
+        public async Task SeedDefault()
+        {
+            string sql = @"INSERT INTO Rosters (Team)
+                           VALUES ('Default')";
+
+            using (var connection = new SqlConnection(_config.GetConnectionString("Default")))
+            {
+                await connection.ExecuteAsync(sql);
             }
         }
     }
