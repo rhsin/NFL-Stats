@@ -29,6 +29,13 @@ namespace NflStats.Controllers
             return Ok(await _playerRepository.GetTop());
         }
 
+        // GET: api/Players/Season/2019
+        [HttpGet("Season/{season}")]
+        public async Task<ActionResult<IEnumerable<Player>>> GetSeason(int season)
+        {
+            return Ok(await _playerRepository.GetSeason(season));
+        }
+
         // GET: api/Players/Find
         // Finds Players with position/name values that contain the passed parameters using SQL LIKE operator.
         [HttpGet("Find")]

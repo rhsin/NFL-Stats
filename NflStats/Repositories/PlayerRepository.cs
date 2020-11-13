@@ -12,6 +12,7 @@ namespace NflStats.Repositories
     {
         public Task<IEnumerable<Player>> GetAll();
         public Task<IEnumerable<Player>> GetTop();
+        public Task<IEnumerable<Player>> GetSeason(int season);
         public Task<IEnumerable<Player>> FindBy(string position, string name);
         public Task<IEnumerable<Player>> FindByStats(string field, string type, int value);
         public Task SeedDefault();
@@ -38,11 +39,23 @@ namespace NflStats.Repositories
 
         public async Task<IEnumerable<Player>> GetTop()
         {
-            string sql = @"SELECT TOP 100 *
+            string sql = @"SELECT TOP 50 *
                            FROM Players
                            ORDER BY Points DESC";
 
             return await this.ExecutePlayerQuery(sql, null);
+        }
+
+        public async Task<IEnumerable<Player>> GetSeason(int season)
+        {
+            var parameters = new { Season = season };
+
+            string sql = @"SELECT TOP 100 *
+                           FROM Players
+                           WHERE Season = @Season
+                           ORDER BY Points DESC";
+
+            return await this.ExecutePlayerQuery(sql, parameters);
         }
 
         public async Task<IEnumerable<Player>> FindBy(string position, string name)

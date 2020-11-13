@@ -17,6 +17,7 @@ namespace NflStatsTests
 
         [Theory]
         [InlineData("api/Players")]
+        [InlineData("api/Players/Season/2019")]
         [InlineData("api/Players/1827")]
         [InlineData("api/Players/Find?position=QB")]
         [InlineData("api/Players/Stats?field=yards&type=QB&value=4900")]

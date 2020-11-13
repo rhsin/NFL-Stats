@@ -39,6 +39,7 @@ function PlayerTable(props) {
                 <TableCell>Player</TableCell>
                 <TableCell align='right'>Pos</TableCell>
                 <TableCell align='right'>Team</TableCell>
+                <TableCell align='right'>Season</TableCell>
                 <TableCell align='right'>Pass Yds</TableCell>
                 <TableCell align='right'>Pass TDs</TableCell>
                 <TableCell align='right'>Int</TableCell>
@@ -67,6 +68,7 @@ function PlayerTable(props) {
                   </TableCell>
                   <TableCell align='right'>{player.position}</TableCell>
                   <TableCell align='right'>{player.team}</TableCell>
+                  <TableCell align='right'>{player.season}</TableCell>
                   <TableCell align='right'>{player.passYds}</TableCell>
                   <TableCell align='right'>{player.passTds}</TableCell>
                   <TableCell align='right'>{player.passInt}</TableCell>

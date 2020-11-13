@@ -44,11 +44,26 @@ namespace NflStatsTests.Integration
             var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(100, players.Count());
+            Assert.Equal(50, players.Count());
             Assert.Contains("Christian McCaffrey", stringResponse);
             Assert.Contains("RB", stringResponse);
             Assert.Contains("CAR", stringResponse);
             Assert.Contains("469.2", stringResponse);
+        }
+
+        [Fact]
+        public async Task GetSeason()
+        {
+            var response = await _client.GetAsync("api/Players/Season/2018");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(100, players.Count());
+            Assert.Contains("Patrick Mahomes", stringResponse);
+            Assert.Contains("QB", stringResponse);
+            Assert.Contains("KAN", stringResponse);
+            Assert.Contains("415.08", stringResponse);
         }
 
         [Fact]
@@ -73,7 +88,7 @@ namespace NflStatsTests.Integration
             var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(71, players.Count());
+            Assert.Equal(217, players.Count());
             Assert.All(players, p => Assert.Equal("QB", p.Position));
             Assert.Contains("Dak Prescott", stringResponse);
             Assert.Contains("Jarrett Stidham", stringResponse);
@@ -87,7 +102,7 @@ namespace NflStatsTests.Integration
             var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Single(players);
+            Assert.Equal(3, players.Count());
             Assert.All(players, p => Assert.Equal("QB", p.Position));
             Assert.Contains("Patrick Mahomes", stringResponse);
         }
@@ -100,7 +115,7 @@ namespace NflStatsTests.Integration
             var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(2, players.Count());
+            Assert.Equal(5, players.Count());
             Assert.All(players, p => Assert.True(p.PassYds > 4900));
             Assert.Contains("Jameis Winston", stringResponse);
             Assert.Contains("Dak Prescott", stringResponse);
