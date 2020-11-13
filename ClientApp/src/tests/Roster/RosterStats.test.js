@@ -53,7 +53,7 @@ test('fetch data on ratio stats button click', async () => {
   render(<Roster />);
 
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
-  const ratioButton = screen.getByRole('button', {name: 'td-ratio'});
+  const ratioButton = screen.getByRole('button', {name: 'ratio'});
   user.click(ratioButton);
   await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
 

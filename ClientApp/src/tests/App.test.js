@@ -24,7 +24,7 @@ test('renders update button', () => {
 
 test('renders stats button', () => {  
   render(<App />);
-  const button = screen.getByRole('button', {name: 'td-ratio'});
+  const button = screen.getByRole('button', {name: 'ratio'});
 
   expect(button).toBeInTheDocument();
 });

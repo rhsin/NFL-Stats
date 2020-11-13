@@ -44,7 +44,7 @@ function StatsButton(props) {
   const handleReset = () => {
     setLoading(true);
     setTable('Players');
-    setLoading(false);
+    setTimeout(()=> setLoading(false), 3000);
   };
 
   return (
@@ -79,7 +79,7 @@ function StatsButton(props) {
       <IconButton 
         onClick={()=> handleClick()}
         color='primary'
-        aria-label='td-ratio'
+        aria-label='ratio'
       >
         <div className='button-text'>TD Ratio</div>
         <BarChartIcon />
