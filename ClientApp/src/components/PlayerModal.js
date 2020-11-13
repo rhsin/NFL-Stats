@@ -32,18 +32,18 @@ function PlayerModal(props) {
   
   return (
     <Dialog
-      className='player-modal'
+      className='modal-player'
       fullWidth={true}
       maxWidth='md'
       open={open}
       onClose={()=> setOpen()}
-      aria-labelledby='player-modal'
+      aria-labelledby='modal-player'
     >
       <DialogTitle>Fantasy Update</DialogTitle>
       <div className='card-modal'>
         <FantasyTable players={players} />
         <div className='modal-text'>
-          Total: <span id='total-pts'>{total}</span>
+          Total: <span id='total-text'>{total}</span>
         </div>
       </div>
       <DialogActions>

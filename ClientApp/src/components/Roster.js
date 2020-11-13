@@ -104,6 +104,7 @@ function Roster() {
         players={players}
         setPlayers={players => setPlayers(players)}
         setTable={table => setTable(table)}
+        setLoading={loading => setLoading(loading)}
       />
       <PlayerModal 
         open={open}

@@ -35,7 +35,7 @@ function PlayerForm(props) {
           color='primary'
           aria-label='roster'
         >
-          <div className='update-text'>Update</div>
+          <div className='button-text'>Update</div>
           <BarChartIcon />
         </IconButton>
       </span>

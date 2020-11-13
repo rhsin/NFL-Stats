@@ -16,13 +16,11 @@
   font-size: 1.5rem;
 }
 
-.update-text {
-  font-size: 1.1rem;
-  margin-right: .15rem;
-  margin-top: .15rem;
+.button-season {
+  margin-left: .35rem;
 }
 
-.button-stats {
+.button-text {
   font-size: 1rem;
   margin-right: .2rem;
   margin-top: .15rem;
@@ -32,7 +30,7 @@
   text-transform: capitalize;
 }
 
-.player-modal {
+.modal-player {
   margin: 1.5rem;
   padding: 1.5rem;
 }
@@ -54,10 +52,11 @@
 }
 
 .form-stats {
-  margin-top: .5rem;
+  margin-top: .2rem;
+  margin-bottom: 1.5rem;
 }
 
-#total-pts {
+#total-text {
   font-weight: 600;
   color: rgb(18, 18, 161);
   margin-left: .25rem;
@@ -89,4 +88,11 @@
 
 #input-value {
   width: 310px;
+}
+
+#select-season {
+  width: 60px;
+  margin-top: .25rem;
+  color: rgb(30, 30, 146);
+  font-weight: 550;
 }
