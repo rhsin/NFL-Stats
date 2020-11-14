@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import StatsButton from '../components/StatsButton';
-import { players } from './TestData';
 
 const setPlayers = jest.fn();
 const setTable = jest.fn();
@@ -8,7 +7,6 @@ const setTable = jest.fn();
 test('renders season select options', () => {  
   render(
     <StatsButton
-      players={players}
       setPlayers={()=> setPlayers()}
       setTable={()=> setTable()}
     />
@@ -20,10 +18,21 @@ test('renders season select options', () => {
   expect(optionElement).toBeInTheDocument();
 });
 
+test('renders season form button', () => {  
+  render(
+    <StatsButton
+      setPlayers={()=> setPlayers()}
+      setTable={()=> setTable()}
+    />
+  );
+  const button = screen.getByRole('button', {name: 'season'});
+  
+  expect(button).toBeInTheDocument();
+});
+
 test('renders ratio button', () => {  
   render(
     <StatsButton
-      players={players}
       setPlayers={()=> setPlayers()}
       setTable={()=> setTable()}
     />
@@ -36,7 +45,6 @@ test('renders ratio button', () => {
 test('renders reset button', () => {  
   render(
     <StatsButton
-      players={players}
       setPlayers={()=> setPlayers()}
       setTable={()=> setTable()}
     />

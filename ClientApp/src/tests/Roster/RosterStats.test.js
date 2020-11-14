@@ -10,7 +10,7 @@ jest.mock('axios');
 const rosterUrl = url + 'Rosters/1';
 const playerUrl = url + 'Players';
 const fantasyUrl = url + 'Stats/Fantasy/Rosters/1/9';
-const detailUrl = url + 'Stats/Fantasy/415/9';
+const detailUrl = url + 'Stats/Fantasy/2/9';
 const ratioUrl = url + 'Stats/Ratio/Passing';
 const checkUrl = url + 'Rosters/Fantasy';
 
@@ -20,7 +20,7 @@ test('fetch fantasy roster on update button click', async () => {
       case fantasyUrl:
         return Promise.resolve({data: fantasyPlayers});
       default:
-        return Promise.reject(new Error('Axios Not Called 3A'));
+        return Promise.reject(new Error('Axios Not Called: Update Button'));
     }
   });
   render(<Roster />);
@@ -39,7 +39,7 @@ test('fetch data on ratio stats button click', async () => {
       case playerUrl:
         return Promise.resolve({data: players});
       default:
-        return Promise.reject(new Error('Axios Not Called 3B'));
+        return Promise.reject(new Error('Axios Not Called: Ratio'));
     }
   });
   axios.post.mockImplementation((url) => {
@@ -47,14 +47,14 @@ test('fetch data on ratio stats button click', async () => {
       case ratioUrl:
         return Promise.resolve({data: statsPlayers});
       default:
-        return Promise.reject(new Error('Axios Not Called 3C'));
+        return Promise.reject(new Error('Axios Not Called: Ratio Button'));
     }
   });
   render(<Roster />);
 
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
-  const ratioButton = screen.getByRole('button', {name: 'ratio'});
-  user.click(ratioButton);
+  const button = screen.getByRole('button', {name: 'ratio'});
+  user.click(button);
   await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
 
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
@@ -67,7 +67,7 @@ test('fetch fantasy roster total on submit button click', async () => {
       case fantasyUrl:
         return Promise.resolve({data: fantasyPlayers});
       default:
-        return Promise.reject(new Error('Axios Not Called 3D'));
+        return Promise.reject(new Error('Axios Not Called: Fantasy Total'));
     }
   });
   axios.post.mockImplementation((url) => {
@@ -75,7 +75,7 @@ test('fetch fantasy roster total on submit button click', async () => {
       case checkUrl:
         return Promise.resolve({data: 15});
       default:
-        return Promise.reject(new Error('Axios Not Called 3E'));
+        return Promise.reject(new Error('Axios Not Called: Submit Button'));
     }
   });
   render(<Roster />);
@@ -102,7 +102,7 @@ test('fetch fantasy details on player button click', async () => {
       case detailUrl:
         return Promise.resolve({data: fantasyPlayer});
       default:
-        return Promise.reject(new Error('Axios Not Called 4'));
+        return Promise.reject(new Error('Axios Not Called: Player Button'));
     }
   });
   render(<Roster />);

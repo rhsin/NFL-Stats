@@ -1,7 +1,7 @@
 
 export const players = [
   {
-    id: 455,
+    id: 1,
     name: 'Patrick Mahomes',
     position: 'QB',
     team: 'KAN',
@@ -11,7 +11,7 @@ export const players = [
 
 export const rosterPlayers = [
   {
-    id: 415,
+    id: 2,
     name: 'Dalvin Cook',
     position: 'RB',
     team: 'MIN',
@@ -21,7 +21,7 @@ export const rosterPlayers = [
 
 export const newPlayers = [
   {
-    id: 408,
+    id: 3,
     name: 'Lamar Jackson',
     position: 'QB',
     team: 'BAL',
@@ -31,7 +31,7 @@ export const newPlayers = [
 
 export const fantasyPlayers = [
   {
-    id: 414,
+    id: 4,
     name: 'Travis Kelce',
     position: 'TE',
     team: 'KAN',
@@ -40,7 +40,7 @@ export const fantasyPlayers = [
 ];
 
 export const fantasyPlayer = {
-  id: 447,
+  id: 5,
   name: 'Alvin Kamara',
   position: 'RB',
   team: 'NOR',
@@ -49,10 +49,21 @@ export const fantasyPlayer = {
 
 export const statsPlayers = [
   {
-    id: 455,
+    id: 1,
     name: 'Patrick Mahomes',
     position: 'QB',
     team: 'KAN',
     points: 3.25
+  }
+];
+
+export const seasonPlayers = [
+  {
+    id: 6,
+    name: 'Keenan Allen',
+    position: 'WR',
+    team: 'LAC',
+    season: 2019,
+    points: 261.5
   }
 ];
