@@ -53,9 +53,10 @@ namespace NflStatsTests.Integration
         {
             var players = new List<Player>
             {
-                new Player { PassTds = 12, PassInt = 3, Fumbles = 3, Points = 0 },
-                new Player { PassTds = 25, PassInt = 6, Fumbles = 4, Points = 0 },
-                new Player { PassTds = 15, PassInt = 10, Fumbles = 5, Points = 0 }
+                new Player { Position = "QB", PassTds = 10, RushTds = 1, RecTds = 1, PassInt = 3, Fumbles = 3, Points = 0 },
+                new Player { Position = "QB", PassTds = 24, RushTds = 0, RecTds = 1, PassInt = 6, Fumbles = 4, Points = 0 },
+                new Player { Position = "QB", PassTds = 12, RushTds = 2, RecTds = 1, PassInt = 10, Fumbles = 5, Points = 0 },
+                new Player { Position = "WR", PassTds = 0, RushTds = 1, RecTds = 14, PassInt = 0, Fumbles = 6, Points = 0 }
             };
             var json = JsonConvert.SerializeObject(players);
             var data = new StringContent(json, Encoding.UTF8, "application/json");

@@ -18,9 +18,9 @@ namespace NflStats.Services
         {
             foreach (var p in players.ToList())
             {
-                float ratio = (float)p.PassTds / (float)(p.PassInt + p.Fumbles);
+                float ratio = (float)((p.PassTds + p.RushTds + p.RecTds) / (p.PassInt + p.Fumbles));
 
-                if (ratio > 0 && ratio < 100)
+                if (ratio > 0 && ratio < 100 && p.Position == "QB")
                 {
                     p.Points = ratio;
                 }
@@ -43,7 +43,7 @@ namespace NflStats.Services
 
                 p.Points = yards;
             }
-
+               
             return players.OrderByDescending(p => p.Points).ToList();
         }
     }
