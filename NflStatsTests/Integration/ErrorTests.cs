@@ -61,5 +61,21 @@ namespace NflStatsTests.Integration
             Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
             Assert.Equal("Fantasy Lineup Not Valid!", error.Message);
         }
+
+        [Fact]
+        public async Task AddPlayerError()
+        {
+            var response = await _client.PutAsync($"api/Rosters/Players/Add/1/a", null);
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task RemovePlayerError()
+        {
+            var response = await _client.PutAsync($"api/Rosters/Players/Remove/1/a", null);
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
     }
 }

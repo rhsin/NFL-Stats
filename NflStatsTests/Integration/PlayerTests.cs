@@ -8,7 +8,6 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
-using System.Text;
 
 namespace NflStatsTests.Integration
 {
@@ -53,20 +52,6 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
-        public async Task GetPlayer()
-        {
-            var response = await _client.GetAsync($"api/Players/{_id}");
-            var stringResponse = await response.Content.ReadAsStringAsync();
-            var player = JsonConvert.DeserializeObject<Player>(stringResponse);
-
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal("Dalvin Cook", player.Name);
-            Assert.Equal("RB", player.Position);
-            Assert.Equal("MIN", player.Team);
-            Assert.Equal(292.4, Math.Round(player.Points, 2));
-        }
-
-        [Fact]
         public async Task FindPlayerPosition()
         {
             var response = await _client.GetAsync("api/Players/Find?position=QB");
@@ -108,38 +93,17 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
-        public async Task GetFantasyPlayer()
+        public async Task GetPlayer()
         {
-            var response = await _client.GetAsync($"api/Stats/Fantasy/{_id}/8");
+            var response = await _client.GetAsync($"api/Players/{_id}");
             var stringResponse = await response.Content.ReadAsStringAsync();
             var player = JsonConvert.DeserializeObject<Player>(stringResponse);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal("Dalvin Cook", player.Name);
-            Assert.Equal(46, player.Points);
-        }
-
-        [Fact]
-        public async Task GetTDORatio()
-        {
-            var players = new List<Player>
-            {
-                new Player { PassTds = 12, PassInt = 3, Fumbles = 3, Points = 0 },
-                new Player { PassTds = 25, PassInt = 6, Fumbles = 4, Points = 0 },
-                new Player { PassTds = 15, PassInt = 10, Fumbles = 5, Points = 0 }
-            };
-            var json = JsonConvert.SerializeObject(players);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var response = await _client.PostAsync("api/Stats/Ratio/Passing", data);
-            var stringResponse = await response.Content.ReadAsStringAsync();
-            var playerStats = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
-
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Collection(playerStats,
-                item => Assert.Equal(2.5, item.Points),
-                item => Assert.Equal(2, item.Points),
-                item => Assert.Equal(1, item.Points));
+            Assert.Equal("RB", player.Position);
+            Assert.Equal("MIN", player.Team);
+            Assert.Equal(292.4, Math.Round(player.Points, 2));
         }
 
         [Fact]

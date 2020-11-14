@@ -63,6 +63,21 @@ namespace NflStats.Controllers
             return Ok("Players Seeded Successfully!");
         }
 
+        // POST: api/Seeders/Run/Roster
+        // Seeds initial Roster entities into Rosters table using CsvImporter.
+        [HttpPost("Run/Rosters")]
+        public IActionResult SeedRosters()
+        {
+            if (_context.Rosters.Any())
+            {
+                return BadRequest("Rosters Already Seeded!");
+            }
+
+            _rosterRepository.SeedDefault();
+
+            return Ok("Rosters Seeded Successfully!");
+        }
+
         // POST: api/Seeders/Refresh/Players
         // Removes all Player entities & Seeds new Players using CsvImporter.
         [HttpPost("Refresh/Players")]
@@ -115,21 +130,6 @@ namespace NflStats.Controllers
             _playerRepository.SeedDefault();
 
             return Ok("Player Default Values Updated Successfully!");
-        }
-
-        // POST: api/Seeders/Run/Roster
-        // Seeds initial Roster entities into Rosters table using CsvImporter.
-        [HttpPost("Run/Rosters")]
-        public IActionResult SeedRosters()
-        {
-            if (_context.Rosters.Any())
-            {
-                return BadRequest("Rosters Already Seeded!");
-            }
-
-            _rosterRepository.SeedDefault();
-
-            return Ok("Rosters Seeded Successfully!");
         }
     }
 }

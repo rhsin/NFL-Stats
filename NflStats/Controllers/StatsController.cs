@@ -48,5 +48,14 @@ namespace NflStats.Controllers
         {
             return Ok(_statsCalculator.TDRatio(players));
         }
+
+        // POST: api/Scrimmage
+        // Calculates each players Yards from Scrimmage (Rush + Rec) and returns 
+        // Player list ordered by the YFS, set as the Points field.
+        [HttpPost("Scrimmage")]
+        public ActionResult<IEnumerable<Player>> GetScrimmageYds(List<Player> players)
+        {
+            return Ok(_statsCalculator.ScrimmageYds(players));
+        }
     }
 }

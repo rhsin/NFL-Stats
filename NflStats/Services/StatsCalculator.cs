@@ -7,11 +7,12 @@ namespace NflStats.Services
     public interface IStatsCalculator
     {
         public List<Player> TDRatio(List<Player> players);
+        public List<Player> ScrimmageYds(List<Player> players);
     }
 
     public class StatsCalculator : IStatsCalculator
     {
-        // Calculates each player's TD/Turnover (Int + Fumbles) Ratio and returns 
+        // Calculates each players TD/Turnover (Int + Fumbles) Ratio and returns 
         // Player list ordered by the ratio, set as the Points field, if between 0, 100.
         public List<Player> TDRatio(List<Player> players)
         {
@@ -28,6 +29,20 @@ namespace NflStats.Services
                     players.Remove(p);
                 }
             }   
+
+            return players.OrderByDescending(p => p.Points).ToList();
+        }
+
+        // Calculates each players Yards from Scrimmage (Rush + Rec) and returns 
+        // Player list ordered by the YFS, set as the Points field.
+        public List<Player> ScrimmageYds(List<Player> players)
+        {
+            foreach (var p in players)
+            {
+                float yards = (float)p.RushYds + (float)p.RecYds;
+
+                p.Points = yards;
+            }
 
             return players.OrderByDescending(p => p.Points).ToList();
         }
