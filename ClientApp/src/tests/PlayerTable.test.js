@@ -9,30 +9,26 @@ const handleModal = jest.fn();
 
 test('renders accordion heading from props', () => {  
   render(<PlayerTable table='Test' players={players} />);
-  const textElements = screen.getAllByText(/Test/);
 
-  expect(textElements).toHaveLength(1);
+  expect(screen.getAllByText(/Test/)).toHaveLength(1);
 });
 
 test('renders table headings', () => {  
   render(<PlayerTable players={players} />);
-  const textElements = screen.getAllByText(/Points/);
 
-  expect(textElements).toHaveLength(1);
+  expect(screen.getAllByText(/Points/)).toHaveLength(1);
 });
 
 test('renders table rows from props', () => {  
   render(<PlayerTable players={players} />);
-  const textElement = screen.getByText(/Patrick Mahomes/i);
 
-  expect(textElement).toBeInTheDocument();
+  expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
 });
 
 test('renders fantasy table rows from props', () => {  
   render(<FantasyTable players={fantasyPlayers} />);
-  const textElement = screen.getByText(/Travis Kelce/i);
-  
-  expect(textElement).toBeInTheDocument();
+
+  expect(screen.getByText(/Travis Kelce/i)).toBeInTheDocument();
 });
 
 test('handlePlayer button calls handleClick', () => {  
@@ -42,8 +38,7 @@ test('handlePlayer button calls handleClick', () => {
       handleClick={()=> handleClick()}
     />
   );
-  const button = screen.getByRole('button', {name: 'player'});
-  user.click(button);
+  user.click(screen.getByRole('button', {name: 'player'}));
 
   expect(handleClick).toHaveBeenCalledTimes(1);
 });
@@ -55,8 +50,7 @@ test('player button calls handleModal', () => {
       handleModal={()=> handleModal()}
     />
   );
-  const button = screen.getByRole('button', {name: 'modal'});
-  user.click(button);
+  user.click(screen.getByRole('button', {name: 'modal'}));
 
   expect(handleModal).toHaveBeenCalledTimes(1);
 });

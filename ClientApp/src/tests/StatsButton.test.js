@@ -3,39 +3,33 @@ import StatsButton from '../components/StatsButton';
 
 test('renders season select options', () => {  
   render(<StatsButton />);
-  const textElement = screen.getAllByLabelText(/Season/i);
-  const optionElement = screen.getByLabelText(/2019/i);
 
-  expect(textElement).toHaveLength(2);
-  expect(optionElement).toBeInTheDocument();
+  expect(screen.getAllByLabelText(/Season/i)).toHaveLength(2);
+  expect(screen.getByLabelText(/2019/i)).toBeInTheDocument();
 });
 
 test('renders season form button', () => {  
   render(<StatsButton />);
-  const button = screen.getByRole('button', {name: 'season'});
 
-  expect(button).toBeInTheDocument();
+  expect(screen.getByRole('button', {name: 'season'})).toBeInTheDocument();
 });
 
 test('renders ratio button', () => {  
   render(<StatsButton />);
-  const button = screen.getByRole('button', {name: 'ratio'});
   
-  expect(button).toBeInTheDocument();
+  expect(screen.getByRole('button', {name: 'ratio'})).toBeInTheDocument();
 });
 
 test('renders yards button', () => {  
   render(<StatsButton />);
-  const button = screen.getByRole('button', {name: 'yards'});
   
-  expect(button).toBeInTheDocument();
+  expect(screen.getByRole('button', {name: 'yards'})).toBeInTheDocument();
 });
 
 test('renders reset button', () => {  
   render(<StatsButton />);
-  const button = screen.getByRole('button', {name: 'reset'});
-  
-  expect(button).toBeInTheDocument();
+
+  expect(screen.getByRole('button', {name: 'reset'})).toBeInTheDocument();
 });
 
 

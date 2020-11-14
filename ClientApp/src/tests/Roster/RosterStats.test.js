@@ -26,8 +26,7 @@ test('fetch fantasy roster on update button click', async () => {
   });
   render(<Roster />);
 
-  const button = screen.getByRole('button', {name: 'update'});
-  user.click(button);
+  user.click(screen.getByRole('button', {name: 'update'}));
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
 
   expect(axios.get).toHaveBeenCalledTimes(4);
@@ -54,8 +53,7 @@ test('fetch data on ratio stats button click', async () => {
   render(<Roster />);
 
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
-  const button = screen.getByRole('button', {name: 'ratio'});
-  user.click(button);
+  user.click(screen.getByRole('button', {name: 'ratio'}));
   await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
 
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
@@ -82,8 +80,7 @@ test('fetch data on scrimmage yards stats button click', async () => {
   render(<Roster />);
 
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
-  const button = screen.getByRole('button', {name: 'yards'});
-  user.click(button);
+  user.click(screen.getByRole('button', {name: 'yards'}));
   await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
 
   expect(screen.getByText(/Christian McCaffrey/i)).toBeInTheDocument();
@@ -109,12 +106,10 @@ test('fetch fantasy roster total on submit button click', async () => {
   });
   render(<Roster />);
 
-  const button = screen.getByRole('button', {name: 'update'});
-  user.click(button);
+  user.click(screen.getByRole('button', {name: 'update'}));
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
 
-  const submitButton = screen.getByRole('button', {name: 'Submit'});
-  user.click(submitButton);
+  user.click(screen.getByRole('button', {name: 'Submit'}));
   await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
   
   expect(screen.getByText(/Travis Kelce/i)).toBeInTheDocument();
@@ -137,8 +132,7 @@ test('fetch fantasy details on player button click', async () => {
   render(<Roster />);
 
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
-  const button = screen.getAllByRole('button', {name: 'modal'});
-  user.click(button[0]);
+  user.click(screen.getAllByRole('button', {name: 'modal'})[0]);
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   
   expect(screen.getByText(/Alvin Kamara/i)).toBeInTheDocument();

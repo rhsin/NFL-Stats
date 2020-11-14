@@ -9,8 +9,8 @@ jest.mock('axios');
 
 const rosterUrl = url + 'Rosters/1';
 const playerUrl = url + 'Players';
-const searchUrl = url + 'Players/Find?position=QB&name=';
-const statsUrl = url + 'Players/Stats?field=Yards&type=Passing&value=3000';
+const searchUrl = url + 'Players/Find?position=QB&name=Lamar';
+const statsUrl = url + 'Players/Stats?field=Yards&type=Passing&value=4000';
 const addUrl = url + 'Rosters/Players/Add/1/1';
 const removeUrl = url + 'Rosters/Players/Remove/1/1';
 const seasonUrl = url + 'Players/Season/2019';
@@ -31,7 +31,6 @@ test('renders Roster with player table rows', async () => {
   await waitForElementToBeRemoved(()=> screen.getByText(/Loading Roster/i));
 
   expect(axios.get).toHaveBeenCalledTimes(2);
-
   expect(screen.getByText(/NFL Stats/i)).toBeInTheDocument();
   expect(screen.getByText(/Players/i)).toBeInTheDocument();
   expect(screen.getByText(/Dalvin Cook/i)).toBeInTheDocument();
@@ -49,8 +48,8 @@ test('fetch data on search button click', async () => {
   });
   render(<Roster />);
 
-  const button = screen.getByRole('button', {name: 'search'});
-  user.click(button);
+  user.type(screen.getByLabelText(/Search Player/i), 'Lamar');
+  user.click(screen.getByRole('button', {name: 'search'}));
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
 
   expect(screen.getByText(/Lamar Jackson/i)).toBeInTheDocument();
@@ -67,8 +66,9 @@ test('fetch data on stats form button click', async () => {
   });
   render(<Roster />);
 
-  const button = screen.getByRole('button', {name: 'stats'});
-  user.click(button);
+  user.clear(screen.getByLabelText(/Input Value/i));
+  user.type(screen.getByLabelText(/Input Value/i), '4000');
+  user.click(screen.getByRole('button', {name: 'stats'}));
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
 
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
@@ -87,14 +87,12 @@ test('fetch data on season form button click then reset', async () => {
   });
   render(<Roster />);
 
-  const button = screen.getByRole('button', {name: 'season'});
-  user.click(button);
+  user.click(screen.getByRole('button', {name: 'season'}));
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
 
   expect(screen.getByText(/Keenan Allen/i)).toBeInTheDocument();
 
-  const resetButton = screen.getByRole('button', {name: 'reset'});
-  user.click(resetButton);
+  user.click(screen.getByRole('button', {name: 'reset'}));
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(3));
 
   expect(screen.getAllByText(/Players/i)).toHaveLength(2);
@@ -124,9 +122,8 @@ test('handlePlayer buttons sends put requests', async () => {
   render(<Roster />);
 
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
-  const button = screen.getAllByRole('button', {name: 'player'});
-  user.click(button[0]);
-  user.click(button[1]);
+  user.click(screen.getAllByRole('button', {name: 'player'})[0]);
+  user.click(screen.getAllByRole('button', {name: 'player'})[1]);
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   
   expect(axios.put).toHaveBeenCalledTimes(2);

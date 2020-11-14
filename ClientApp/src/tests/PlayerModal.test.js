@@ -12,9 +12,8 @@ test('renders fantasy table on open', () => {
       players={players}
     />
   );
-  const textElement = screen.getByText(/Points/i);
 
-  expect(textElement).toBeInTheDocument();
+  expect(screen.getByText(/Points/i)).toBeInTheDocument();
 });
 
 test('renders submit button', () => {  
@@ -24,9 +23,8 @@ test('renders submit button', () => {
       players={players}
     />
   );
-  const button = screen.getByRole('button', {name: 'Submit'});
 
-  expect(button).toBeInTheDocument();
+  expect(screen.getByRole('button', {name: 'Submit'})).toBeInTheDocument();
 });
 
 test('setOpen called on close button click', () => {  
@@ -37,8 +35,7 @@ test('setOpen called on close button click', () => {
       setOpen={()=> setOpen()}
     />
   );
-  const button = screen.getByRole('button', {name: 'Close'});
-  user.click(button);
+  user.click(screen.getByRole('button', {name: 'Close'}));
   
   expect(setOpen).toHaveBeenCalledTimes(1);
 });
