@@ -1,5 +1,7 @@
 // This stats button group sets players from data fetched from .NET API endpoints.
-// HandleClick retrieves players ordered by TD/Turnover Ratio calculated by .NET service class.
+// HandleSeason retrieves players from the selected season, ordered by points. 
+// HandleRatio retrieves players ordered by TD/Turnover Ratio calculated by .NET service class.
+// HandleYards retrieves players ordered by yards from scrimmage calculated by .NET service class.
 
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -16,10 +18,19 @@ function StatsButton(props) {
 
   const [season, setSeason] = useState(2019);
 
-  const handleClick = async () => {
+  const handleSeason = async () => {
     try {
-      const response = await axios.post(
-        `${url}Stats/Ratio/Passing`, players, {
+      const response = await axios.get(`${url}Players/Season/${season}`);
+      setPlayers(response.data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRatio = async () => {
+    try {
+      const response = await axios.post(`${url}Stats/Ratio/Passing`, players, {
           headers: { 'Content-Type': 'application/json' }
         }
       );
@@ -31,9 +42,13 @@ function StatsButton(props) {
     }
   };
 
-  const handleSelect = async () => {
+  const handleYards = async () => {
     try {
-      const response = await axios.get(`${url}Players/Season/${season}`);
+      const response = await axios.post(`${url}Stats/Scrimmage`, players, {
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+      setTable('Scrimmage Yards');
       setPlayers(response.data);
     }
     catch (error) {
@@ -68,7 +83,7 @@ function StatsButton(props) {
       </span>
       <span className='button-season'>
         <IconButton 
-          onClick={()=> handleSelect()}
+          onClick={()=> handleSeason()}
           edge='start'
           color='primary'
           aria-label='season'
@@ -77,11 +92,19 @@ function StatsButton(props) {
         </IconButton>
       </span>
       <IconButton 
-        onClick={()=> handleClick()}
+        onClick={()=> handleRatio()}
         color='primary'
         aria-label='ratio'
       >
         <div className='button-text'>TD Ratio</div>
+        <BarChartIcon />
+      </IconButton>
+      <IconButton 
+        onClick={()=> handleYards()}
+        color='primary'
+        aria-label='yards'
+      >
+        <div className='button-text'>Scrimmage Yds</div>
         <BarChartIcon />
       </IconButton>
       <IconButton 

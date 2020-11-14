@@ -17,8 +17,7 @@ function PlayerModal(props) {
 
   const handleClick = async () => {
     try {
-      const response = await axios.post(
-        `${url}Rosters/Fantasy`, players, {
+      const response = await axios.post(`${url}Rosters/Fantasy`, players, {
           headers: { 'Content-Type': 'application/json' }
         }
       );

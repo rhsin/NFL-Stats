@@ -18,7 +18,8 @@ function StatsForm({ setPlayers }) {
   const handleClick = async () => {
     try {
       const response = await axios.get(
-        `${url}Players/Stats?field=${field}&type=${type}&value=${value}`);
+        `${url}Players/Stats?field=${field}&type=${type}&value=${value}`
+      );
       setPlayers(response.data);
     }
     catch (error) {

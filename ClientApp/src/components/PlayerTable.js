@@ -16,11 +16,10 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import { column } from './AppConstants';
 
 function PlayerTable(props) {
   const { table, players, handleClick, handleModal } = props;
-
-  const stat = table === 'TD Ratio' ? 'TD/TO' : 'Points';
 
   return (
     <Accordion defaultExpanded={true}>
@@ -48,7 +47,7 @@ function PlayerTable(props) {
                 <TableCell align='right'>Rec Yds</TableCell>
                 <TableCell align='right'>Rec TDs</TableCell>
                 <TableCell align='right'>Fumbles</TableCell>
-                <TableCell align='right'>{stat}</TableCell>
+                <TableCell align='right'>{column(table)}</TableCell>
                 <TableCell align='right'>Roster</TableCell>
               </TableRow>
             </TableHead>

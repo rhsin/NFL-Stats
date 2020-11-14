@@ -1,16 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import StatsButton from '../components/StatsButton';
 
-const setPlayers = jest.fn();
-const setTable = jest.fn();
-
 test('renders season select options', () => {  
-  render(
-    <StatsButton
-      setPlayers={()=> setPlayers()}
-      setTable={()=> setTable()}
-    />
-  );
+  render(<StatsButton />);
   const textElement = screen.getAllByLabelText(/Season/i);
   const optionElement = screen.getByLabelText(/2019/i);
 
@@ -19,36 +11,28 @@ test('renders season select options', () => {
 });
 
 test('renders season form button', () => {  
-  render(
-    <StatsButton
-      setPlayers={()=> setPlayers()}
-      setTable={()=> setTable()}
-    />
-  );
+  render(<StatsButton />);
   const button = screen.getByRole('button', {name: 'season'});
-  
+
   expect(button).toBeInTheDocument();
 });
 
 test('renders ratio button', () => {  
-  render(
-    <StatsButton
-      setPlayers={()=> setPlayers()}
-      setTable={()=> setTable()}
-    />
-  );
+  render(<StatsButton />);
   const button = screen.getByRole('button', {name: 'ratio'});
   
   expect(button).toBeInTheDocument();
 });
 
+test('renders yards button', () => {  
+  render(<StatsButton />);
+  const button = screen.getByRole('button', {name: 'yards'});
+  
+  expect(button).toBeInTheDocument();
+});
+
 test('renders reset button', () => {  
-  render(
-    <StatsButton
-      setPlayers={()=> setPlayers()}
-      setTable={()=> setTable()}
-    />
-  );
+  render(<StatsButton />);
   const button = screen.getByRole('button', {name: 'reset'});
   
   expect(button).toBeInTheDocument();

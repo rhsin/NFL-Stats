@@ -3,7 +3,7 @@ import user from '@testing-library/user-event';
 import axios from 'axios';
 import Roster from '../../components/Roster';
 import { url } from '../../components/AppConstants';
-import { players, rosterPlayers, fantasyPlayers, fantasyPlayer, statsPlayers } from '../TestData';
+import { players, rosterPlayers, fantasyPlayers, fantasyPlayer, ratioPlayers, yardsPlayers } from '../TestData';
 
 jest.mock('axios');
 
@@ -12,6 +12,7 @@ const playerUrl = url + 'Players';
 const fantasyUrl = url + 'Stats/Fantasy/Rosters/1/9';
 const detailUrl = url + 'Stats/Fantasy/2/9';
 const ratioUrl = url + 'Stats/Ratio/Passing';
+const yardsUrl = url + 'Stats/Scrimmage';
 const checkUrl = url + 'Rosters/Fantasy';
 
 test('fetch fantasy roster on update button click', async () => {
@@ -45,7 +46,7 @@ test('fetch data on ratio stats button click', async () => {
   axios.post.mockImplementation((url) => {
     switch(url) {
       case ratioUrl:
-        return Promise.resolve({data: statsPlayers});
+        return Promise.resolve({data: ratioPlayers});
       default:
         return Promise.reject(new Error('Axios Not Called: Ratio Button'));
     }
@@ -59,6 +60,34 @@ test('fetch data on ratio stats button click', async () => {
 
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
   expect(screen.getByText(/3.25/i)).toBeInTheDocument();
+});
+
+test('fetch data on scrimmage yards stats button click', async () => {
+  axios.get.mockImplementation((url) => {
+    switch(url) {
+      case playerUrl:
+        return Promise.resolve({data: players});
+      default:
+        return Promise.reject(new Error('Axios Not Called: Yards'));
+    }
+  });
+  axios.post.mockImplementation((url) => {
+    switch(url) {
+      case yardsUrl:
+        return Promise.resolve({data: yardsPlayers});
+      default:
+        return Promise.reject(new Error('Axios Not Called: Yards Button'));
+    }
+  });
+  render(<Roster />);
+
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
+  const button = screen.getByRole('button', {name: 'yards'});
+  user.click(button);
+  await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
+
+  expect(screen.getByText(/Christian McCaffrey/i)).toBeInTheDocument();
+  expect(screen.getByText(/1965.00/i)).toBeInTheDocument();
 });
 
 test('fetch fantasy roster total on submit button click', async () => {

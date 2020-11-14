@@ -10,3 +10,14 @@ export const seasons = [2019, 2018, 2017];
 export const fields = ['Yards', 'Touchdowns', 'Turnovers'];
 
 export const types = ['Passing', 'Rushing', 'Receiving', 'Interceptions', 'Fumbles'];
+
+export const column = (table) => {
+  switch (table) {
+    case 'TD Ratio':
+      return 'TD/TO';
+    case 'Scrimmage Yards':
+      return 'YFS';
+    default:
+      return 'Points';
+  }
+};

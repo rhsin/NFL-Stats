@@ -19,7 +19,8 @@ function PlayerForm(props) {
   const handleClick = async () => {
     try {
       const response = await axios.get(
-        `${url}Players/Find?position=${position}&name=${name}`);
+        `${url}Players/Find?position=${position}&name=${name}`
+      );
       setPlayers(response.data);
     }
     catch (error) {

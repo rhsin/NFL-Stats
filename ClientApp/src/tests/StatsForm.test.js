@@ -1,10 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import StatsForm from '../components/StatsForm';
 
-const setPlayers = jest.fn();
-
 test('renders field select options', () => {
-  render(<StatsForm setPlayers={()=> setPlayers()} />);
+  render(<StatsForm />);
   const textElement = screen.getByLabelText(/Field/i);
   const optionElement = screen.getByLabelText(/Yards/i);
 
@@ -13,7 +11,7 @@ test('renders field select options', () => {
 });
 
 test('renders type select options', () => {
-  render(<StatsForm setPlayers={()=> setPlayers()} />);
+  render(<StatsForm />);
   const textElement = screen.getByLabelText(/Type/i);
   const optionElement = screen.getByLabelText(/Passing/i);
 
@@ -22,14 +20,14 @@ test('renders type select options', () => {
 });
 
 test('renders input value textfield', () => {
-  render(<StatsForm setPlayers={()=> setPlayers()} />);
+  render(<StatsForm />);
   const textElement = screen.getByLabelText(/Input Value/i);
 
   expect(textElement).toBeInTheDocument();
 });
 
 test('renders search button', () => {  
-  render(<StatsForm setPlayers={()=> setPlayers()} />);
+  render(<StatsForm />);
   const button = screen.getByRole('button', {name: 'stats'});
   
   expect(button).toBeInTheDocument();

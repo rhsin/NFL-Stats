@@ -47,7 +47,7 @@ export const fantasyPlayer = {
   points: 248.52
 };
 
-export const statsPlayers = [
+export const ratioPlayers = [
   {
     id: 1,
     name: 'Patrick Mahomes',
@@ -57,9 +57,19 @@ export const statsPlayers = [
   }
 ];
 
-export const seasonPlayers = [
+export const yardsPlayers = [
   {
     id: 6,
+    name: 'Christian McCaffrey',
+    position: 'RB',
+    team: 'CAR',
+    points: 1965.00
+  }
+];
+
+export const seasonPlayers = [
+  {
+    id: 7,
     name: 'Keenan Allen',
     position: 'WR',
     team: 'LAC',
