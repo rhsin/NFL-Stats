@@ -11,13 +11,13 @@
 ## Site
 Users can use the search form to query players by name, position, season, & stats. They can also save/delete players in their roster.
 
-![](/Roster.png?raw=true)
+![](/NflStats/Roster.png?raw=true)
 
 
 
 The stats button group has options to calculate specific values: Total Touchdowns, TD/Turnover ratio, & Scrimmage Yards.
 
-![](/Stats.png?raw=true)
+![](/NflStats/Stats.png?raw=true)
 
 
 

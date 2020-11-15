@@ -1,7 +1,6 @@
 ﻿using AngleSharp;
 using NflStats.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NflStats.Services
