@@ -15,6 +15,29 @@ namespace NflStatsTests.Unit
         }
 
         [Fact]
+        public void TotalTDs()
+        {
+            var players = new List<Player>
+            {
+                new Player { PassTds = 9, RushTds = 1, RecTds = 0, Points = 0 },
+                new Player { PassTds = 13, RushTds = 1, RecTds = 1, Points = 0 }
+            };
+            var result = _statsCalculator.TotalTDs(players);
+
+            Assert.Collection(result,
+                item =>
+                {
+                    Assert.Equal(15, item.Points);
+                    Assert.Equal(13, item.PassTds);
+                },
+                item =>
+                {
+                    Assert.Equal(10, item.Points);
+                    Assert.Equal(9, item.PassTds);
+                });
+        }
+
+        [Fact]
         public void TDRatio()
         {
             var players = new List<Player>

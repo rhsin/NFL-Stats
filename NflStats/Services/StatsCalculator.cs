@@ -6,14 +6,29 @@ namespace NflStats.Services
 {
     public interface IStatsCalculator
     {
+        public List<Player> TotalTDs(List<Player> players);
         public List<Player> TDRatio(List<Player> players);
         public List<Player> ScrimmageYds(List<Player> players);
     }
 
     public class StatsCalculator : IStatsCalculator
     {
-        // Calculates each players TD/Turnover (Int + Fumbles) Ratio and returns 
-        // Player list ordered by the ratio, set as the Points field, if between 0, 100.
+        // Calculates each players total touchdowns and returns Player 
+        // list ordered by the total, set as the Points field.
+        public List<Player> TotalTDs(List<Player> players)
+        {
+            foreach (var p in players)
+            {
+                float total = (float)(p.PassTds + p.RushTds + p.RecTds);
+
+                p.Points = total;
+            }
+
+            return players.OrderByDescending(p => p.Points).ToList();
+        }
+
+        // Calculates each players(QB) TD/Turnover Ratio and returns Player 
+        // list ordered by the ratio, set as the Points field, if between 0, 100.
         public List<Player> TDRatio(List<Player> players)
         {
             foreach (var p in players.ToList())
@@ -39,7 +54,7 @@ namespace NflStats.Services
         {
             foreach (var p in players)
             {
-                float yards = (float)p.RushYds + (float)p.RecYds;
+                float yards = (float)(p.RushYds + p.RecYds);
 
                 p.Points = yards;
             }

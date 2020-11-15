@@ -49,6 +49,29 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task GetTouchdowns()
+        {
+            var players = new List<Player>
+            {
+                new Player { PassTds = 19, RushTds = 10, RecTds = 0, Points = 0 },
+                new Player { PassTds = 30, RushTds = 1, RecTds = 1, Points = 0 },
+                new Player { PassTds = 0, RushTds = 5, RecTds = 12, Points = 0 }
+            };
+            var json = JsonConvert.SerializeObject(players);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _client.PostAsync("api/Stats/Touchdowns", data);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var playerStats = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Collection(playerStats,
+                item => Assert.Equal(32, item.Points),
+                item => Assert.Equal(29, item.Points),
+                item => Assert.Equal(17, item.Points));
+        }
+
+        [Fact]
         public async Task GetTDORatio()
         {
             var players = new List<Player>

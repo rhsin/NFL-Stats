@@ -40,9 +40,18 @@ namespace NflStats.Controllers
             return Ok(players);
         }
 
+        // POST: api/Stats/Touchdowns
+        // Calculates each players total touchdowns and returns Player 
+        // list ordered by the total, set as the Points field.
+        [HttpPost("Touchdowns")]
+        public ActionResult<IEnumerable<Player>> GetTouchdowns(List<Player> players)
+        {
+            return Ok(_statsCalculator.TotalTDs(players));
+        }
+
         // POST: api/Stats/Ratio/Passing
-        // Calculates each player's TD/Turnover (Int + Fumbles) Ratio and returns 
-        // Player list ordered by the ratio, set as the Points field.
+        // Calculates each players(QB) TD/Turnover Ratio and returns Player 
+        // list ordered by the ratio, set as the Points field, if between 0, 100.
         [HttpPost("Ratio/Passing")]
         public ActionResult<IEnumerable<Player>> GetTDRatio(List<Player> players)
         {

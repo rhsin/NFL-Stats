@@ -31,7 +31,8 @@ namespace NflStats.Middleware
                     StatusCode = context.Response.StatusCode,
                     Message = ex.Message,
                     StackTrace = ex.StackTrace
-                }.ToString());
+                }
+                .ToString());
             }
         }
     }

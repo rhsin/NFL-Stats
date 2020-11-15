@@ -44,8 +44,8 @@ namespace NflStatsTests
         }
 
         [Theory]
-        [InlineData("api/Rosters/Players/Add/1/1806")]
-        [InlineData("api/Rosters/Players/Remove/1/1806")]
+        [InlineData("api/Rosters/Players/Add/1/100000")]
+        [InlineData("api/Rosters/Players/Remove/1/100000")]
         public async Task TestPutEndpoints(string url)
         {
             var response = await _client.PutAsync(url, null);
