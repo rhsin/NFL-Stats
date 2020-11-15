@@ -72,7 +72,7 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
-        public async Task GetTDORatio()
+        public async Task GetTDRatio()
         {
             var players = new List<Player>
             {
@@ -84,7 +84,7 @@ namespace NflStatsTests.Integration
             var json = JsonConvert.SerializeObject(players);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _client.PostAsync("api/Stats/Ratio/Passing", data);
+            var response = await _client.PostAsync("api/Stats/Ratio", data);
             var stringResponse = await response.Content.ReadAsStringAsync();
             var playerStats = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
 

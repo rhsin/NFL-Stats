@@ -49,10 +49,10 @@ namespace NflStats.Controllers
             return Ok(_statsCalculator.TotalTDs(players));
         }
 
-        // POST: api/Stats/Ratio/Passing
+        // POST: api/Stats/Ratio
         // Calculates each players(QB) TD/Turnover Ratio and returns Player 
         // list ordered by the ratio, set as the Points field, if between 0, 100.
-        [HttpPost("Ratio/Passing")]
+        [HttpPost("Ratio")]
         public ActionResult<IEnumerable<Player>> GetTDRatio(List<Player> players)
         {
             return Ok(_statsCalculator.TDRatio(players));

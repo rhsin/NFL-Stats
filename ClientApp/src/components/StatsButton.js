@@ -1,7 +1,6 @@
 // This stats button group sets players from data fetched from .NET API endpoints.
-// HandleSeason retrieves players from the selected season, ordered by points. 
-// HandleRatio retrieves players ordered by TD/Turnover Ratio calculated by .NET service class.
-// HandleYards retrieves players ordered by yards from scrimmage calculated by .NET service class.
+// HandleClick retrieves players ordered by stat (TDs, TD/TO, YFS) calculated by .NET service class. 
+// HandleSeason retrieves players from the selected season, ordered by points.
 
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -18,37 +17,24 @@ function StatsButton(props) {
 
   const [season, setSeason] = useState(2019);
 
+  const handleClick = async (type, table) => {
+    try {
+      const response = await axios.post(`${url}Stats/${type}`, players, {
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
+      setTable(table);
+      setPlayers(response.data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSeason = async () => {
     try {
       const response = await axios.get(`${url}Players/Season/${season}`);
-      setPlayers(response.data);
-    }
-    catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleRatio = async () => {
-    try {
-      const response = await axios.post(`${url}Stats/Ratio/Passing`, players, {
-          headers: { 'Content-Type': 'application/json' }
-        }
-      );
-      setTable('TD Ratio');
-      setPlayers(response.data);
-    }
-    catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleYards = async () => {
-    try {
-      const response = await axios.post(`${url}Stats/Scrimmage`, players, {
-          headers: { 'Content-Type': 'application/json' }
-        }
-      );
-      setTable('Scrimmage Yards');
+      setTable('Players');
       setPlayers(response.data);
     }
     catch (error) {
@@ -92,7 +78,15 @@ function StatsButton(props) {
         </IconButton>
       </span>
       <IconButton 
-        onClick={()=> handleRatio()}
+        onClick={()=> handleClick('Touchdowns', 'Total Touchdowns')}
+        color='primary'
+        aria-label='touchdowns'
+      >
+        <div className='button-text'>Total TDs</div>
+        <BarChartIcon />
+      </IconButton>
+      <IconButton 
+        onClick={()=> handleClick('Ratio', 'TD Ratio')}
         color='primary'
         aria-label='ratio'
       >
@@ -100,7 +94,7 @@ function StatsButton(props) {
         <BarChartIcon />
       </IconButton>
       <IconButton 
-        onClick={()=> handleYards()}
+        onClick={()=> handleClick('Scrimmage', 'Scrimmage Yards')}
         color='primary'
         aria-label='yards'
       >

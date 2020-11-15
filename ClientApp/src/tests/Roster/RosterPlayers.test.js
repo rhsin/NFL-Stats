@@ -37,7 +37,7 @@ test('renders Roster with player table rows', async () => {
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
 });
 
-test('fetch data on search button click', async () => {
+test('fetch players on search button click', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case searchUrl:
@@ -55,7 +55,7 @@ test('fetch data on search button click', async () => {
   expect(screen.getByText(/Lamar Jackson/i)).toBeInTheDocument();
 });
 
-test('fetch data on stats form button click', async () => {
+test('fetch players on stats form button click', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case statsUrl:
@@ -74,7 +74,7 @@ test('fetch data on stats form button click', async () => {
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
 });
 
-test('fetch data on season form button click then reset', async () => {
+test('fetch players on season button click then reset', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case playerUrl:

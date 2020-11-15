@@ -21,7 +21,7 @@ test('renders input value textfield', () => {
   expect(screen.getByLabelText(/Input Value/i)).toBeInTheDocument();
 });
 
-test('renders search button', () => {  
+test('renders stats form button', () => {  
   render(<StatsForm />);
 
   expect(screen.getByRole('button', {name: 'stats'})).toBeInTheDocument();

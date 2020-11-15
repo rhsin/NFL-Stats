@@ -14,6 +14,12 @@ test('renders season form button', () => {
   expect(screen.getByRole('button', {name: 'season'})).toBeInTheDocument();
 });
 
+test('renders touchdowns button', () => {  
+  render(<StatsButton />);
+  
+  expect(screen.getByRole('button', {name: 'touchdowns'})).toBeInTheDocument();
+});
+
 test('renders ratio button', () => {  
   render(<StatsButton />);
   

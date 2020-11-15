@@ -13,6 +13,8 @@ export const types = ['Passing', 'Rushing', 'Receiving', 'Interceptions', 'Fumbl
 
 export const column = (table) => {
   switch (table) {
+    case 'Total Touchdowns':
+      return 'Total TDs';
     case 'TD Ratio':
       return 'TD/TO';
     case 'Scrimmage Yards':

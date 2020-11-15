@@ -47,6 +47,16 @@ export const fantasyPlayer = {
   points: 248.52
 };
 
+export const tdsPlayers = [
+  {
+    id: 1,
+    name: 'Patrick Mahomes',
+    position: 'QB',
+    team: 'KAN',
+    points: 52.00
+  }
+];
+
 export const ratioPlayers = [
   {
     id: 1,

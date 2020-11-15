@@ -3,7 +3,10 @@ import user from '@testing-library/user-event';
 import axios from 'axios';
 import Roster from '../../components/Roster';
 import { url } from '../../components/AppConstants';
-import { players, rosterPlayers, fantasyPlayers, fantasyPlayer, ratioPlayers, yardsPlayers } from '../TestData';
+import { 
+  players, rosterPlayers, fantasyPlayers, fantasyPlayer, 
+  tdsPlayers, ratioPlayers, yardsPlayers 
+} from '../TestData';
 
 jest.mock('axios');
 
@@ -11,7 +14,8 @@ const rosterUrl = url + 'Rosters/1';
 const playerUrl = url + 'Players';
 const fantasyUrl = url + 'Stats/Fantasy/Rosters/1/9';
 const detailUrl = url + 'Stats/Fantasy/2/9';
-const ratioUrl = url + 'Stats/Ratio/Passing';
+const tdsUrl = url + 'Stats/Touchdowns';
+const ratioUrl = url + 'Stats/Ratio';
 const yardsUrl = url + 'Stats/Scrimmage';
 const checkUrl = url + 'Rosters/Fantasy';
 
@@ -33,7 +37,34 @@ test('fetch fantasy roster on update button click', async () => {
   expect(screen.getByText(/Travis Kelce/i)).toBeInTheDocument();
 });
 
-test('fetch data on ratio stats button click', async () => {
+test('fetch players on touchdowns button click', async () => {
+  axios.get.mockImplementation((url) => {
+    switch(url) {
+      case playerUrl:
+        return Promise.resolve({data: players});
+      default:
+        return Promise.reject(new Error('Axios Not Called: Touchdowns'));
+    }
+  });
+  axios.post.mockImplementation((url) => {
+    switch(url) {
+      case tdsUrl:
+        return Promise.resolve({data: tdsPlayers});
+      default:
+        return Promise.reject(new Error('Axios Not Called: Touchdowns Button'));
+    }
+  });
+  render(<Roster />);
+
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
+  user.click(screen.getByRole('button', {name: 'touchdowns'}));
+  await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
+
+  expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
+  expect(screen.getByText(/52.00/i)).toBeInTheDocument();
+});
+
+test('fetch players on ratio button click', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case playerUrl:
@@ -60,7 +91,7 @@ test('fetch data on ratio stats button click', async () => {
   expect(screen.getByText(/3.25/i)).toBeInTheDocument();
 });
 
-test('fetch data on scrimmage yards stats button click', async () => {
+test('fetch players on yards button click', async () => {
   axios.get.mockImplementation((url) => {
     switch(url) {
       case playerUrl:
