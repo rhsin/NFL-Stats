@@ -66,7 +66,7 @@ function PlayerTable(props) {
                     </Button>
                   </TableCell>
                   <TableCell align='right'>{player.position}</TableCell>
-                  <TableCell align='right'>{player.team}</TableCell>
+                  <TableCell align='right'>{player.teamName}</TableCell>
                   <TableCell align='right'>{player.season}</TableCell>
                   <TableCell align='right'>{player.passYds}</TableCell>
                   <TableCell align='right'>{player.passTds}</TableCell>

@@ -102,7 +102,7 @@ namespace NflStatsTests.Integration
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal("Dalvin Cook", player.Name);
             Assert.Equal("RB", player.Position);
-            Assert.Equal("MIN", player.Team);
+            Assert.Equal("MIN", player.TeamName);
             Assert.Equal(292.4, Math.Round(player.Points, 2));
         }
 

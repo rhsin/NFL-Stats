@@ -25,7 +25,7 @@ function FantasyTable({ players }) {
                 {player.name}
               </TableCell>
               <TableCell align='right'>{player.position}</TableCell>
-              <TableCell align='right'>{player.team}</TableCell>
+              <TableCell align='right'>{player.teamName}</TableCell>
               <TableCell align='right'>{player.points}</TableCell>
             </TableRow>
           )}

@@ -18,7 +18,7 @@ namespace NflStats.Services
         // Reads Csv file by year and converts each row into Player entity using Player ClassMap.
         public IEnumerable<Player> GetPlayerRecords(int year)
         {
-            using (var reader = new StreamReader(@$"C:\Users\Ryan\source\repos\NflStats\NflStats\Data\{year}.csv"))
+            using (var reader = new StreamReader(@$"C:\Users\Ryan\source\repos\NflStats\NflStats\Data\CSV\{year}.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 csv.Configuration.RegisterClassMap<PlayerMap>();
@@ -35,7 +35,7 @@ namespace NflStats.Services
         {
             Map(m => m.Name).Name("Player");
             Map(m => m.Position).Name("Pos");
-            Map(m => m.Team).Name("Tm");
+            Map(m => m.TeamName).Name("Tm");
             Map(m => m.Points).Name("FantasyPoints");
             Map(m => m.Games).Name("G");
             Map(m => m.PassYds).Name("PassingYds");

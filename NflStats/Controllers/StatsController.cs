@@ -24,9 +24,7 @@ namespace NflStats.Controllers
         [HttpGet("Fantasy/{id}/{week}")]
         public async Task<ActionResult<Player>> GetFantasyPlayer(int id, int week)
         {
-            var player = await _fantasyPoints.GetPlayer(id, week);
-
-            return Ok(player);
+            return Ok(await _fantasyPoints.GetPlayer(id, week));
         }
 
         // GET: api/Stats/Fantasy/Rosters/1/8
@@ -35,9 +33,7 @@ namespace NflStats.Controllers
         [HttpGet("Fantasy/Rosters/{id}/{week}")]
         public async Task<ActionResult<IEnumerable<Player>>> GetFantasyRoster(int id, int week)
         {
-            var players = await _fantasyPoints.GetRoster(id, week);
-
-            return Ok(players);
+            return Ok(await _fantasyPoints.GetRoster(id, week));
         }
 
         // POST: api/Stats/Touchdowns
