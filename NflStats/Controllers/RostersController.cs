@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NflStats.Data;
 using NflStats.Models;
 using NflStats.Repositories;
 using NflStats.Services;
@@ -14,14 +12,11 @@ namespace NflStats.Controllers
     [ApiController]
     public class RostersController : ControllerBase
     {
-        private readonly ApplicationContext _context;
         private readonly IRosterRepository _rosterRepository;
         private readonly ILineupValidator _lineupValidator;
 
-        public RostersController(ApplicationContext context, IRosterRepository rosterRepository,
-            ILineupValidator lineupValidator)
+        public RostersController(IRosterRepository rosterRepository, ILineupValidator lineupValidator)
         {
-            _context = context;
             _rosterRepository = rosterRepository;
             _lineupValidator = lineupValidator;
         }
@@ -81,8 +76,6 @@ namespace NflStats.Controllers
         }
 
         // PUT: api/Rosters/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoster(int id, Roster roster)
         {
@@ -91,58 +84,27 @@ namespace NflStats.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(roster).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RosterExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _rosterRepository.Update(id, roster);
 
             return NoContent();
         }
 
         // POST: api/Rosters
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Roster>> PostRoster(Roster roster)
         {
-            _context.Rosters.Add(roster);
-            await _context.SaveChangesAsync();
+            await _rosterRepository.Create(roster);
 
             return CreatedAtAction("GetRoster", new { id = roster.Id }, roster);
         }
 
         // DELETE: api/Rosters/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Roster>> DeleteRoster(int id)
+        public async Task<IActionResult> DeleteRoster(int id)
         {
-            var roster = await _context.Rosters.FindAsync(id);
-            if (roster == null)
-            {
-                return NotFound();
-            }
+            await _rosterRepository.Delete(id);
 
-            _context.Rosters.Remove(roster);
-            await _context.SaveChangesAsync();
-
-            return roster;
-        }
-
-        private bool RosterExists(int id)
-        {
-            return _context.Rosters.Any(e => e.Id == id);
+            return NoContent();
         }
     }
 }

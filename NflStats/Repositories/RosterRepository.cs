@@ -15,6 +15,9 @@ namespace NflStats.Repositories
         public Task<IEnumerable<Roster>> GetAll();
         public Task AddPlayer(int rosterId, int playerId);
         public Task RemovePlayer(int rosterId, int playerId);
+        public Task Create(Roster roster);
+        public Task Update(int id, Roster roster);
+        public Task Delete(int id);
         public Task SeedDefault();
     }
 
@@ -68,6 +71,29 @@ namespace NflStats.Repositories
             {
                 await connection.ExecuteAsync(sql, parameters);
             }
+        }
+
+        public async Task Create(Roster roster)
+        {
+            _context.Rosters.Add(roster);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Update(int id, Roster roster)
+        {
+            _context.Entry(roster).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Delete(int id)
+        {
+            var roster = await _context.Rosters.FindAsync(id);
+
+            _context.Rosters.Remove(roster);
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task SeedDefault()
