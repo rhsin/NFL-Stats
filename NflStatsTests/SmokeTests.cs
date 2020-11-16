@@ -35,7 +35,9 @@ namespace NflStatsTests
         [Theory]
         [InlineData("api/Seeders/Run/Players")]
         [InlineData("api/Seeders/Run/Rosters")]
+        [InlineData("api/Seeders/Run/Teams")]
         //[InlineData("api/Seeders/Refresh/Players")]
+        //[InlineData("api/Seeders/Refresh/Teams")]
         public async Task TestPostEndpoints(string url)
         {
             var response = await _client.PostAsync(url, null);

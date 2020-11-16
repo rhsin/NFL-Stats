@@ -63,6 +63,24 @@ namespace NflStats.Controllers
             return Ok("Players Seeded Successfully!");
         }
 
+        // POST: api/Seeders/Run/Teams
+        // Seeds initial Team entities into Teams table using CsvImporter.
+        [HttpPost("Run/Teams")]
+        public IActionResult SeedTeams()
+        {
+            if (_context.Teams.Any())
+            {
+                return BadRequest("Teams Already Seeded!");
+            }
+
+            var teams = _csvImporter.GetTeamRecords();
+
+            _context.Teams.AddRange(teams);
+            _context.SaveChanges();
+
+            return Ok("Teams Seeded Successfully!");
+        }
+
         // POST: api/Seeders/Run/Roster
         // Seeds initial Roster entities into Rosters table using CsvImporter.
         [HttpPost("Run/Rosters")]
@@ -102,6 +120,20 @@ namespace NflStats.Controllers
             _context.SaveChanges();
 
             return Ok("Players Refreshed Successfully!");
+        }
+
+        // POST: api/Seeders/Refresh/Teams
+        // Removes all Team entities & Seeds new Teams using CsvImporter.
+        [HttpPost("Refresh/Teams")]
+        public IActionResult RefreshTeams()
+        {
+            var teams = _csvImporter.GetTeamRecords();
+
+            _context.Teams.RemoveRange(_context.Teams);
+            _context.Teams.AddRange(teams);
+            _context.SaveChanges();
+
+            return Ok("Teams Refreshed Successfully!");
         }
 
         // POST: api/Seeders/Add/Players/2018
