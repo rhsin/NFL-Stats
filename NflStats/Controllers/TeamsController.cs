@@ -74,34 +74,6 @@ namespace NflStats.Controllers
             return NoContent();
         }
 
-        // POST: api/Teams
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<Team>> PostTeam(Team team)
-        {
-            _context.Teams.Add(team);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetTeam", new { id = team.Id }, team);
-        }
-
-        // DELETE: api/Teams/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Team>> DeleteTeam(int id)
-        {
-            var team = await _context.Teams.FindAsync(id);
-            if (team == null)
-            {
-                return NotFound();
-            }
-
-            _context.Teams.Remove(team);
-            await _context.SaveChangesAsync();
-
-            return team;
-        }
-
         private bool TeamExists(int id)
         {
             return _context.Teams.Any(e => e.Id == id);

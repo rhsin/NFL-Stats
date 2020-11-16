@@ -29,7 +29,7 @@ namespace NflStatsTests.Integration
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal(32, teams.Count());
-            Assert.Contains("Las Vegas Raiders", stringResponse);
+            Assert.Contains("Los Angeles Chargers", stringResponse);
             Assert.Contains("AFC West", stringResponse);
         }
 

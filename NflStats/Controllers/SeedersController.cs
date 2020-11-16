@@ -159,7 +159,7 @@ namespace NflStats.Controllers
         [HttpPost("Default/Players")]
         public IActionResult SeedPlayersDefault()
         {
-            _playerRepository.SeedDefault();
+            _playerRepository.SeedDefaultTeam();
 
             return Ok("Player Default Values Updated Successfully!");
         }

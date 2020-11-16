@@ -93,6 +93,21 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task FindByTeam()
+        {
+            var response = await _client.GetAsync("api/Players/Team?teamId=1&season=2019");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var players = JsonConvert.DeserializeObject<List<Player>>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(15, players.Count());
+            Assert.All(players, p => Assert.Equal(1, p.TeamId));
+            Assert.All(players, p => Assert.Equal(2019, p.Season));
+            Assert.Contains("Kyler Murray", stringResponse);
+            Assert.Contains("Larry Fitzgerald", stringResponse);
+        }
+
+        [Fact]
         public async Task GetPlayer()
         {
             var response = await _client.GetAsync($"api/Players/{_id}");

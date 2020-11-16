@@ -15,7 +15,9 @@ namespace NflStats.Repositories
         public Task<IEnumerable<Player>> GetSeason(int season);
         public Task<IEnumerable<Player>> FindBy(string position, string name);
         public Task<IEnumerable<Player>> FindByStats(string field, string type, int value);
-        public Task SeedDefault();
+        public Task<IEnumerable<Player>> FindByTeam(int teamId, int season);
+        public Task SeedDefaultSeason();
+        public Task SeedDefaultTeam();
     }
 
     public class PlayerRepository : IPlayerRepository
@@ -85,7 +87,35 @@ namespace NflStats.Repositories
             return await this.ExecutePlayerQuery(sql, parameters);
         }
 
-        public async Task SeedDefault()
+        public async Task<IEnumerable<Player>> FindByTeam(int teamId, int season)
+        {
+            var parameters = new { TeamId = teamId, Season = season };
+
+            string sql = @"SELECT TOP 100 *
+                           FROM Players
+                           WHERE TeamId = @TeamId
+                           AND Season = @Season
+                           AND Points > 0
+                           ORDER BY Position";
+
+            return await this.ExecutePlayerQuery(sql, parameters);
+        }
+
+        public async Task SeedDefaultTeam()
+        {
+            string sql = @"UPDATE Players
+                           SET Players.TeamId = t.Id
+                           FROM Players AS p
+                             INNER JOIN Teams AS t
+                             ON p.TeamName = t.Alias";
+
+            using (var connection = new SqlConnection(_config.GetConnectionString("Default")))
+            {
+                await connection.ExecuteAsync(sql);
+            }
+        }
+
+        public async Task SeedDefaultSeason()
         {
             string sql = @"UPDATE Players
                            SET Season = 2019";

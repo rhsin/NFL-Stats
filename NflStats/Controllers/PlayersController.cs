@@ -48,6 +48,14 @@ namespace NflStats.Controllers
             return Ok(await _playerRepository.FindByStats(field, type, value));
         }
 
+        // GET: api/Players/Team
+        // Finds Players with teamId/season values that contain the passed parameters using SQL query.
+        [HttpGet("Team")]
+        public async Task<ActionResult<IEnumerable<Player>>> FindByTeam(int teamId, int season)
+        {
+            return Ok(await _playerRepository.FindByTeam(teamId, season));
+        }
+
         // GET: api/Players/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Player>> GetPlayer(int id)
