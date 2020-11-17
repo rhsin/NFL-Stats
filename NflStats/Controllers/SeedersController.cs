@@ -16,14 +16,17 @@ namespace NflStats.Controllers
         private readonly ICsvImporter _csvImporter;
         private readonly IPlayerRepository _playerRepository;
         private readonly IRosterRepository _rosterRepository;
+        private readonly ITeamStatRepository _teamStatRepository;
 
         public SeedersController(ApplicationContext context, ICsvImporter csvImporter,
-            IPlayerRepository playerRepository, IRosterRepository rosterRepository)
+            IPlayerRepository playerRepository, IRosterRepository rosterRepository,
+            ITeamStatRepository teamStatRepository)
         {
             _context = context;
             _csvImporter = csvImporter;
             _playerRepository = playerRepository;
             _rosterRepository = rosterRepository;
+            _teamStatRepository = teamStatRepository;
         }
 
         // GET: api/Seeders/Csv/Players/2019
@@ -206,6 +209,16 @@ namespace NflStats.Controllers
             _playerRepository.SeedDefaultTeam();
 
             return Ok("Player Default Values Updated Successfully!");
+        }
+
+        // POST: api/Seeders/Default/TeamStats
+        // Updates all TeamStat entities with default values.
+        [HttpPost("Default/TeamStats")]
+        public IActionResult SeedTeamStatsDefault()
+        {
+            _teamStatRepository.SeedDefaultTeam();
+
+            return Ok("TeamStat Default Values Updated Successfully!");
         }
     }
 }

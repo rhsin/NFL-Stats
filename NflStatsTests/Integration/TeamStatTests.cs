@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -31,6 +30,7 @@ namespace NflStatsTests.Integration
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal(96, teamStats.Count());
             Assert.All(teamStats, ts => Assert.NotEmpty(ts.TeamName));
+            Assert.All(teamStats, ts => Assert.NotNull(ts.TeamId));
             Assert.Contains("Carolina Panthers", stringResponse);
             Assert.Contains("Oakland Raiders", stringResponse);
         }
@@ -44,6 +44,7 @@ namespace NflStatsTests.Integration
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal("Baltimore Ravens", teamStat.TeamName);
+            Assert.Equal(29, teamStat.TeamId);
             Assert.Equal(6521, teamStat.TotalYds);
             Assert.Equal(3296, teamStat.RushYds);
         }

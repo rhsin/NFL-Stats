@@ -33,11 +33,6 @@ namespace NflStats.Controllers
             var teams = await _teamRepository.GetAll();
             var team = teams.First(t => t.Id == id);
 
-            if (team == null)
-            {
-                return NotFound();
-            }
-
             return Ok(team);
         }
 

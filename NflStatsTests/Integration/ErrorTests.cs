@@ -79,6 +79,22 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task GetTeamError()
+        {
+            var response = await _client.GetAsync($"api/Team/100000");
+
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task GetTeamStatError()
+        {
+            var response = await _client.GetAsync($"api/TeamStats/100000");
+
+            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+        }
+
+        [Fact]
         public async Task PutRosterError()
         {
             var roster = new Roster { Id = 1000, Team = "Team Ryan" };
