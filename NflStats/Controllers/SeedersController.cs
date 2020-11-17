@@ -33,6 +33,13 @@ namespace NflStats.Controllers
             return _csvImporter.GetPlayerRecords(year);
         }
 
+        // GET: api/Seeders/Csv/TeamStat/2019
+        [HttpGet("Csv/TeamStat/{year}")]
+        public IEnumerable<TeamStat> GetTeamStatRecords(int year)
+        {
+            return _csvImporter.GetTeamStatRecords(year);
+        }
+
         // POST: api/Seeders/Run/Players
         // Seeds initial Player entities into Players table using CsvImporter.
         [HttpPost("Run/Players")]
@@ -79,6 +86,43 @@ namespace NflStats.Controllers
             _context.SaveChanges();
 
             return Ok("Teams Seeded Successfully!");
+        }
+
+        // POST: api/Seeders/Run/TeamStats
+        // Seeds initial TeamStat entities into TeamStats table using CsvImporter.
+        [HttpPost("Run/TeamStats")]
+        public IActionResult SeedTeamStats()
+        {
+            if (_context.TeamStats.Any())
+            {
+                return BadRequest("TeamStats Already Seeded!");
+            }
+
+            var teamStats2019 = _csvImporter.GetTeamStatRecords(2019);
+            var teamStats2018 = _csvImporter.GetTeamStatRecords(2018);
+            var teamStats2017 = _csvImporter.GetTeamStatRecords(2017);
+
+            foreach (var ts in teamStats2019)
+            {
+                ts.Season = 2019;
+            }
+
+            foreach (var ts in teamStats2018)
+            {
+                ts.Season = 2018;
+            }
+
+            foreach (var ts in teamStats2017)
+            {
+                ts.Season = 2017;
+            }
+
+            _context.TeamStats.AddRange(teamStats2019);
+            _context.TeamStats.AddRange(teamStats2018);
+            _context.TeamStats.AddRange(teamStats2017);
+            _context.SaveChanges();
+
+            return Ok("TeamStats Seeded Successfully!");
         }
 
         // POST: api/Seeders/Run/Roster

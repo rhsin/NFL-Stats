@@ -12,6 +12,7 @@ namespace NflStats.Services
     {
         public IEnumerable<Player> GetPlayerRecords(int year);
         public IEnumerable<Team> GetTeamRecords();
+        public IEnumerable<TeamStat> GetTeamStatRecords(int year);
     }
 
     public class CsvImporter : ICsvImporter
@@ -37,6 +38,19 @@ namespace NflStats.Services
             {
                 csv.Configuration.RegisterClassMap<TeamMap>();
                 var records = csv.GetRecords<Team>();
+
+                return records.ToList();
+            }
+        }
+
+        // Reads Csv file by year and converts each row into TeamStat entity using TeamStat ClassMap.
+        public IEnumerable<TeamStat> GetTeamStatRecords(int year)
+        {
+            using (var reader = new StreamReader(@$"C:\Users\Ryan\source\repos\NflStats\NflStats\Data\CSV\team_{year}.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                csv.Configuration.RegisterClassMap<TeamStatMap>();
+                var records = csv.GetRecords<TeamStat>();
 
                 return records.ToList();
             }

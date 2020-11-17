@@ -44,5 +44,15 @@ namespace NflStatsTests.Unit
             Assert.Equal(32, teams.Count());
             Assert.All(teams, t => Assert.NotNull(t.Name));
         }
+
+        [Fact]
+        public void GetTeamStatRecords2019()
+        {
+            var teamStats = _csvImporter.GetTeamStatRecords(2019);
+
+            Assert.IsType<List<TeamStat>>(teamStats);
+            Assert.Equal(32, teamStats.Count());
+            Assert.All(teamStats, ts => Assert.NotNull(ts.TeamName));
+        }
     }
 }

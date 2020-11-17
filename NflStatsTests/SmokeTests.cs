@@ -27,6 +27,8 @@ namespace NflStatsTests
         [InlineData("api/Rosters/1")]
         [InlineData("api/Teams")]
         [InlineData("api/Teams/1")]
+        [InlineData("api/TeamStats")]
+        [InlineData("api/TeamStats/1")]
         [InlineData("api/Teams/Find?division=AFC West")]
         [InlineData("api/Stats/Fantasy/Rosters/1/8")]
         public async Task TestGetEndpoints(string url)
@@ -40,6 +42,7 @@ namespace NflStatsTests
         [InlineData("api/Seeders/Run/Players")]
         [InlineData("api/Seeders/Run/Rosters")]
         [InlineData("api/Seeders/Run/Teams")]
+        [InlineData("api/Seeders/Run/TeamStats")]
         //[InlineData("api/Seeders/Refresh/Players")]
         //[InlineData("api/Seeders/Refresh/Teams")]
         public async Task TestPostEndpoints(string url)
