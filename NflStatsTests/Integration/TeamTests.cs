@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -49,6 +50,25 @@ namespace NflStatsTests.Integration
             Assert.Equal("NFC West", team.Division);
             Assert.Equal(49, team.Players.Count());
             Assert.Contains("Kyler Murray", stringResponse);
+        }
+
+        [Fact]
+        public async Task PutTeam()
+        {
+            var team = new Team 
+            { 
+                Id = 1,
+                Name = "Arizona Cardinals",
+                Alias = "ARI",
+                Conference = "NFC",
+                Division = "NFC West" 
+            };
+            var json = JsonConvert.SerializeObject(team);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _client.PutAsync("api/Teams/1", data);
+
+            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Fact]

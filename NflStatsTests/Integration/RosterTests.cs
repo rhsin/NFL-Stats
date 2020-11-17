@@ -29,6 +29,7 @@ namespace NflStatsTests.Integration
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Contains("team", stringResponse);
             Assert.Contains("players", stringResponse);
+            Assert.Contains("Team Ryan", stringResponse);
         }
 
         [Fact]
@@ -40,6 +41,7 @@ namespace NflStatsTests.Integration
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Contains("team", stringResponse);
             Assert.Contains("players", stringResponse);
+            Assert.Contains("Team Ryan", stringResponse);
         }
 
         [Fact]
@@ -98,6 +100,18 @@ namespace NflStatsTests.Integration
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.True(points > 200);
+        }
+
+        [Fact]
+        public async Task PutRoster()
+        {
+            var roster = new Roster { Id = 1, Team = "Team Ryan" };
+            var json = JsonConvert.SerializeObject(roster);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _client.PutAsync("api/Rosters/1", data);
+
+            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
         }
 
         [Fact]
