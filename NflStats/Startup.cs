@@ -44,6 +44,7 @@ namespace NflStats
             services.AddScoped<IWebScraper, WebScraper>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
             services.AddScoped<IRosterRepository, RosterRepository>();
+            services.AddScoped<ITeamRepository, TeamRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

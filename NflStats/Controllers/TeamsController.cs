@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NflStats.Data;
 using NflStats.Models;
 using NflStats.Repositories;
 using NflStats.Services;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NflStats.Controllers
@@ -14,37 +11,35 @@ namespace NflStats.Controllers
     [ApiController]
     public class TeamsController : ControllerBase
     {
-        private readonly ApplicationContext _context;
+        private readonly ITeamRepository _teamRepository;
 
-        public TeamsController(ApplicationContext context)
+        public TeamsController(ITeamRepository teamRepository)
         {
-            _context = context;
+            _teamRepository = teamRepository;
         }
 
         // GET: api/Teams
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Team>>> GetTeams()
         {
-            return await _context.Teams.ToListAsync();
+            return Ok(await _teamRepository.GetAll());
         }
 
         // GET: api/Teams/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Team>> GetTeam(int id)
         {
-            var team = await _context.Teams.FindAsync(id);
+            var team = await _teamRepository.FindById(id);
 
             if (team == null)
             {
                 return NotFound();
             }
 
-            return team;
+            return Ok(team);
         }
 
         // PUT: api/Teams/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTeam(int id, Team team)
         {
@@ -52,31 +47,10 @@ namespace NflStats.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(team).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TeamExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            
+            await _teamRepository.Update(id, team);
 
             return NoContent();
-        }
-
-        private bool TeamExists(int id)
-        {
-            return _context.Teams.Any(e => e.Id == id);
         }
     }
 }

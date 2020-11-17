@@ -29,8 +29,10 @@ namespace NflStatsTests.Integration
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal(32, teams.Count());
+            Assert.All(teams, t => Assert.NotEmpty(t.Players));
             Assert.Contains("Los Angeles Chargers", stringResponse);
             Assert.Contains("AFC West", stringResponse);
+            Assert.Contains("Philip Rivers", stringResponse);
         }
 
         [Fact]
@@ -45,6 +47,8 @@ namespace NflStatsTests.Integration
             Assert.Equal("ARI", team.Alias);
             Assert.Equal("NFC", team.Conference);
             Assert.Equal("NFC West", team.Division);
+            Assert.Equal(49, team.Players.Count());
+            Assert.Contains("Kyler Murray", stringResponse);
         }
 
         [Fact]
