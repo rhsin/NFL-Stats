@@ -91,6 +91,26 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task PostRosterError()
+        {
+            var roster = new { Id = "a", Team = "Team Ryan" };
+            var json = JsonConvert.SerializeObject(roster);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _client.PutAsync("api/Rosters/1", data);
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteRosterError()
+        {
+            var response = await _client.DeleteAsync("api/Rosters/aaa");
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
         public async Task PutTeamError()
         {
             var team = new Team { Id = 1000, Conference = "NFC" };

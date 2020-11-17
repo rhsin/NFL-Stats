@@ -115,6 +115,28 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task PostRoster()
+        {
+            var roster = new Roster { Id = 100, Team = "Team Test" };
+            var json = JsonConvert.SerializeObject(roster);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _client.PostAsync("api/Rosters", data);
+            var stringResponse = await response.Content.ReadAsStringAsync();
+
+            Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            Assert.Contains("Team Test", stringResponse);
+        }
+
+        [Fact]
+        public async Task DeleteRoster()
+        {
+            var response = await _client.DeleteAsync("api/Rosters/100");
+
+            Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        }
+
+        [Fact]
         public async Task SeedRosters()
         {
             var response = await _client.PostAsync("api/Seeders/Run/Rosters", null);

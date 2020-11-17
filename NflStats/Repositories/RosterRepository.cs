@@ -77,7 +77,18 @@ namespace NflStats.Repositories
         {
             _context.Rosters.Add(roster);
 
-            await _context.SaveChangesAsync();
+            await _context.Database.OpenConnectionAsync();
+
+            try
+            {
+                await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Rosters ON");
+                await _context.SaveChangesAsync();
+                await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT dbo.Rosters OFF");
+            }
+            finally
+            {
+                await _context.Database.CloseConnectionAsync();
+            }
         }
 
         public async Task Update(int id, Roster roster)
