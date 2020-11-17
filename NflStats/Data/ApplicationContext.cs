@@ -12,6 +12,7 @@ namespace NflStats.Data
 
         public DbSet<Player> Players { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<TeamStat> TeamStats { get; set; }
         public DbSet<Roster> Rosters { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,6 +26,11 @@ namespace NflStats.Data
                 .HasOne<Roster>(p => p.Roster)
                 .WithMany(r => r.Players)
                 .HasForeignKey(p => p.RosterId);
+
+            modelBuilder.Entity<TeamStat>()
+                .HasOne<Team>(ts => ts.Team)
+                .WithMany(t => t.TeamStats)
+                .HasForeignKey(ts => ts.TeamId);
         }
     }
 }

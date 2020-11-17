@@ -11,5 +11,6 @@ namespace NflStats.Models
         public string Division { get; set; }
 
         public ICollection<Player> Players { get; set; }
+        public ICollection<TeamStat> TeamStats { get; set; }
     }
 }

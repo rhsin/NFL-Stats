@@ -73,4 +73,21 @@ namespace NflStats.Services
             Map(m => m.Division).Name("team_division");
         }
     }
+
+    public class TeamStatMap : ClassMap<TeamStat>
+    {
+        public TeamStatMap()
+        {
+            Map(m => m.TeamName).Name("Tm");
+            Map(m => m.Points).Name("PF");
+            Map(m => m.TotalYds).Name("TotalYds");
+            Map(m => m.Turnovers).Name("TO");
+            Map(m => m.PassYds).Name("PassYds");
+            Map(m => m.PassTds).Name("PassTD");
+            Map(m => m.RushYds).Name("RushYds");
+            Map(m => m.RushTds).Name("RushTD");
+            Map(m => m.YdsPerAtt).Name("Y/A");
+            Map(m => m.PenYds).Name("PenYds");
+        }
+    }
 }
