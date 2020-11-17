@@ -3,7 +3,7 @@ import user from '@testing-library/user-event';
 import axios from 'axios';
 import Roster from '../../components/Roster';
 import { url } from '../../components/AppConstants';
-import { players, rosterPlayers, newPlayers, seasonPlayers } from '../TestData';
+import { players, rosterPlayers, newPlayers, seasonPlayers, division } from '../TestData';
 
 jest.mock('axios');
 
@@ -14,6 +14,7 @@ const statsUrl = url + 'Players/Stats?field=Yards&type=Passing&value=4000';
 const addUrl = url + 'Rosters/Players/Add/1/1';
 const removeUrl = url + 'Rosters/Players/Remove/1/1';
 const seasonUrl = url + 'Players/Season/2019';
+const divisionUrl = url + 'Teams/Find?division=AFC West';
 
 test('renders Roster with player table rows', async () => {
   axios.get.mockImplementation((url) => {
@@ -90,7 +91,6 @@ test('fetch players on season button click then reset', async () => {
   render(<Roster />);
 
   user.click(screen.getByRole('button', {name: 'season'}));
-  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
 
   expect(screen.getByText(/Keenan Allen/i)).toBeInTheDocument();
@@ -99,6 +99,25 @@ test('fetch players on season button click then reset', async () => {
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(3));
 
   expect(screen.getAllByText(/Players/i)).toHaveLength(2);
+});
+
+test('fetch players on division button click', async () => {
+  axios.get.mockImplementation((url) => {
+    switch(url) {
+      case playerUrl:
+        return Promise.resolve({data: players});
+      case divisionUrl:
+        return Promise.resolve({data: division});
+      default:
+        return Promise.reject(new Error('Axios Not Called: Division Button'));
+    }
+  });
+  render(<Roster />);
+
+  user.click(screen.getByRole('button', {name: 'division'}));
+  await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
+
+  expect(screen.getByText(/Philip Rivers/i)).toBeInTheDocument();
 });
 
 test('handlePlayer buttons sends put requests', async () => {

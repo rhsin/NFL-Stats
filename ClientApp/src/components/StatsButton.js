@@ -10,12 +10,13 @@ import IconButton from '@material-ui/core/IconButton';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import { url, seasons } from './AppConstants';
+import { url, seasons, divisions } from './AppConstants';
 
 function StatsButton(props) {
   const { players, setPlayers, setTable, setLoading, setRender } = props;
 
   const [season, setSeason] = useState(2019);
+  const [division, setDivision] = useState('AFC West');
 
   const handleClick = async (type, table) => {
     try {
@@ -38,6 +39,18 @@ function StatsButton(props) {
       const response = await axios.get(`${url}Players/Season/${season}`);
       setTable('Players');
       setPlayers(response.data);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDivision = async () => {
+    try {
+      const response = await axios.get(`${url}Teams/Find?division=${division}`);
+      const players = response.data.map(item => item.players).flat();
+      setTable('Players');
+      setPlayers(players);
     }
     catch (error) {
       console.log(error);
@@ -75,6 +88,33 @@ function StatsButton(props) {
           edge='start'
           color='primary'
           aria-label='season'
+        >
+          <DoubleArrowIcon />
+        </IconButton>
+      </span>
+      <span id='input-division'>
+        <TextField
+          id='select-division'
+          select
+          label='Division'
+          value={division}
+          onChange={e => setDivision(e.target.value)}
+          variant='outlined'
+          size='small'
+        >
+          {divisions.map(division => 
+            <MenuItem key={division} value={division}>
+              {division}
+            </MenuItem>
+          )}
+        </TextField>
+      </span>
+      <span className='button-division'>
+        <IconButton 
+          onClick={()=> handleDivision()}
+          edge='start'
+          color='primary'
+          aria-label='division'
         >
           <DoubleArrowIcon />
         </IconButton>

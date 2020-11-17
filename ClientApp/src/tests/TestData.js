@@ -87,3 +87,16 @@ export const seasonPlayers = [
     points: 261.5
   }
 ];
+
+export const division = [
+  {
+    players: {
+      id: 8,
+      name: 'Philip Rivers',
+      position: 'QB',
+      team: 'LAC',
+      season: 2019,
+      points: 233.5
+    }
+  }
+];

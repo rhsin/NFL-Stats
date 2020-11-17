@@ -10,7 +10,7 @@ namespace NflStats.Repositories
     public interface ITeamRepository
     {
         public Task<IEnumerable<Team>> GetAll();
-        public Task<Team> FindById(int id);
+        public Task<IEnumerable<Team>> FindByDivision(string division);
         public Task Update(int id, Team team);
     }
 
@@ -42,7 +42,7 @@ namespace NflStats.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Team> FindById(int id)
+        public async Task<IEnumerable<Team>> FindByDivision(string division)
         {
             return await _context.Teams
                 .Include(t => t.Players)
@@ -54,11 +54,12 @@ namespace NflStats.Repositories
                     Conference = t.Conference,
                     Division = t.Division,
                     Players = t.Players
-                        .Where(p => p.Points > 0)
-                        .OrderBy(p => p.Position)
+                        .Where(p => p.Points > 150)
+                        .OrderByDescending(p => p.Points)
                         .ToList()
                 })
-                .FirstAsync(t => t.Id == id);
+                .Where(t => t.Division == division)
+                .ToListAsync();
         }
 
         public async Task Update(int id, Team team)

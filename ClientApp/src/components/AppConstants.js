@@ -11,6 +11,8 @@ export const fields = ['Yards', 'Touchdowns', 'Turnovers'];
 
 export const types = ['Passing', 'Rushing', 'Receiving', 'Interceptions', 'Fumbles'];
 
+export const divisions = ['AFC East', 'AFC North', 'AFC South', 'AFC West', 'NFC East', 'NFC North', 'NFC South', 'NFC West'];
+
 export const column = (table) => {
   switch (table) {
     case 'Total Touchdowns':

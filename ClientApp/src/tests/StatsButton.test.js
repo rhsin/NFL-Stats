@@ -14,6 +14,19 @@ test('renders season form button', () => {
   expect(screen.getByRole('button', {name: 'season'})).toBeInTheDocument();
 });
 
+test('renders division select options', () => {  
+  render(<StatsButton />);
+
+  expect(screen.getAllByLabelText(/Division/i)).toHaveLength(2);
+  expect(screen.getByLabelText(/AFC West/i)).toBeInTheDocument();
+});
+
+test('renders division form button', () => {  
+  render(<StatsButton />);
+
+  expect(screen.getByRole('button', {name: 'division'})).toBeInTheDocument();
+});
+
 test('renders touchdowns button', () => {  
   render(<StatsButton />);
   

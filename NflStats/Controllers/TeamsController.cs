@@ -3,6 +3,7 @@ using NflStats.Models;
 using NflStats.Repositories;
 using NflStats.Services;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace NflStats.Controllers
@@ -29,7 +30,8 @@ namespace NflStats.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Team>> GetTeam(int id)
         {
-            var team = await _teamRepository.FindById(id);
+            var teams = await _teamRepository.GetAll();
+            var team = teams.First(t => t.Id == id);
 
             if (team == null)
             {
@@ -37,6 +39,13 @@ namespace NflStats.Controllers
             }
 
             return Ok(team);
+        }
+
+        // GET: api/Teams/Find
+        [HttpGet("Find")]
+        public async Task<ActionResult<IEnumerable<Team>>> FindTeam(string division)
+        {
+            return Ok(await _teamRepository.FindByDivision(division));
         }
 
         // PUT: api/Teams/5

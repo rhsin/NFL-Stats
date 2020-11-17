@@ -20,6 +20,10 @@
   margin-left: .35rem;
 }
 
+.button-division {
+  margin-left: .35rem;
+}
+
 .button-text {
   font-size: 1rem;
   margin-right: .2rem;
@@ -94,5 +98,12 @@
   width: 60px;
   margin-top: .25rem;
   color: rgb(30, 30, 146);
+  font-weight: 550;
+}
+
+#select-division {
+  width: 85px;
+  margin-top: .25rem;
+  color: rgb(34, 17, 185);
   font-weight: 550;
 }
