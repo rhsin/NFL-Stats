@@ -10,13 +10,14 @@ import IconButton from '@material-ui/core/IconButton';
 import DoubleArrowIcon from '@material-ui/icons/DoubleArrow';
 import { url, fields, types } from './AppConstants';
 
-function StatsForm({ setPlayers }) {
+function StatsForm({ setPlayers, setRender }) {
   const [field, setField] = useState('Yards');
   const [type, setType] = useState('Passing');
   const [value, setValue] = useState(3000);
 
   const handleClick = async () => {
     try {
+      setRender(true);
       const response = await axios.get(
         `${url}Players/Stats?field=${field}&type=${type}&value=${value}`
       );
@@ -25,6 +26,7 @@ function StatsForm({ setPlayers }) {
     catch (error) {
       console.log(error);
     }
+    setRender(false);
   };
 
   return (

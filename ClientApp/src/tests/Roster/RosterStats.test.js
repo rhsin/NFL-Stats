@@ -58,6 +58,7 @@ test('fetch players on touchdowns button click', async () => {
 
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   user.click(screen.getByRole('button', {name: 'touchdowns'}));
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
 
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
@@ -85,6 +86,7 @@ test('fetch players on ratio button click', async () => {
 
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   user.click(screen.getByRole('button', {name: 'ratio'}));
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
 
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
@@ -112,6 +114,7 @@ test('fetch players on yards button click', async () => {
 
   await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   user.click(screen.getByRole('button', {name: 'yards'}));
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   await waitFor(()=> expect(axios.post).toHaveBeenCalledTimes(1));
 
   expect(screen.getByText(/Christian McCaffrey/i)).toBeInTheDocument();

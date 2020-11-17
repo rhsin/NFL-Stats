@@ -50,6 +50,7 @@ test('fetch players on search button click', async () => {
 
   user.type(screen.getByLabelText(/Search Player/i), 'Lamar');
   user.click(screen.getByRole('button', {name: 'search'}));
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
 
   expect(screen.getByText(/Lamar Jackson/i)).toBeInTheDocument();
@@ -69,6 +70,7 @@ test('fetch players on stats form button click', async () => {
   user.clear(screen.getByLabelText(/Input Value/i));
   user.type(screen.getByLabelText(/Input Value/i), '4000');
   user.click(screen.getByRole('button', {name: 'stats'}));
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
 
   expect(screen.getByText(/Patrick Mahomes/i)).toBeInTheDocument();
@@ -88,6 +90,7 @@ test('fetch players on season button click then reset', async () => {
   render(<Roster />);
 
   user.click(screen.getByRole('button', {name: 'season'}));
+  await waitForElementToBeRemoved(()=> screen.getAllByText(/Loading/i));
   await waitFor(()=> expect(axios.get).toHaveBeenCalledTimes(2));
 
   expect(screen.getByText(/Keenan Allen/i)).toBeInTheDocument();

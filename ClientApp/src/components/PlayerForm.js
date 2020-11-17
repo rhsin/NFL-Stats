@@ -11,13 +11,14 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import { url, positions, weeks } from './AppConstants';
 
 function PlayerForm(props) {
-  const { week, fetchData, setPlayers, setWeek } = props;
+  const { week, fetchData, setPlayers, setWeek, setRender } = props;
 
   const [name, setName] = useState('');
   const [position, setPosition] = useState('QB');
 
   const handleClick = async () => {
     try {
+      setRender(true);
       const response = await axios.get(
         `${url}Players/Find?position=${position}&name=${name}`
       );
@@ -26,6 +27,7 @@ function PlayerForm(props) {
     catch (error) {
       console.log(error);
     }
+    setRender(false);
   };
 
   return (

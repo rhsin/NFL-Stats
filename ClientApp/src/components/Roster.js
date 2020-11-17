@@ -90,11 +90,13 @@ function Roster() {
           fetchData={()=> fetchFantasyData()}
           setPlayers={players => setPlayers(players)}
           setWeek={week => setWeek(week)}
+          setRender={render => setRender(render)}
         />
       </div>
       <div className='form-stats'>
         <StatsForm 
           setPlayers={players => setPlayers(players)}
+          setRender={render => setRender(render)}
         />
       </div>
       <StatsButton 
@@ -102,6 +104,7 @@ function Roster() {
         setPlayers={players => setPlayers(players)}
         setTable={table => setTable(table)}
         setLoading={loading => setLoading(loading)}
+        setRender={render => setRender(render)}
       />
       <PlayerModal 
         open={open}

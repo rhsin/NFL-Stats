@@ -13,12 +13,13 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import { url, seasons } from './AppConstants';
 
 function StatsButton(props) {
-  const { players, setPlayers, setTable, setLoading } = props;
+  const { players, setPlayers, setTable, setLoading, setRender } = props;
 
   const [season, setSeason] = useState(2019);
 
   const handleClick = async (type, table) => {
     try {
+      setRender(true);
       const response = await axios.post(`${url}Stats/${type}`, players, {
           headers: { 'Content-Type': 'application/json' }
         }
@@ -29,6 +30,7 @@ function StatsButton(props) {
     catch (error) {
       console.log(error);
     }
+    setRender(false);
   };
 
   const handleSeason = async () => {
