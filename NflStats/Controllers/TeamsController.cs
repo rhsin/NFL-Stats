@@ -31,9 +31,14 @@ namespace NflStats.Controllers
         public async Task<ActionResult<Team>> GetTeam(int id)
         {
             var teams = await _teamRepository.GetAll();
-            var team = teams.First(t => t.Id == id);
+            var team = teams.FirstOrDefault(t => t.Id == id);
 
-            return Ok(team);
+            if (team == null)
+            {
+                return NotFound();
+            }
+
+            return team;
         }
 
         // GET: api/Teams/Find

@@ -33,9 +33,14 @@ namespace NflStats.Controllers
         public async Task<ActionResult<Roster>> GetRoster(int id)
         {
             var rosters = await _rosterRepository.GetAll();
-            var roster = rosters.First(r => r.Id == id);
+            var roster = rosters.FirstOrDefault(r => r.Id == id);
 
-            return Ok(roster);
+            if (roster == null)
+            {
+                return NotFound();
+            }
+
+            return roster;
         }
 
         // PUT: api/Rosters/Players/Add/1/10

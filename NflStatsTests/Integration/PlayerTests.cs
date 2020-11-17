@@ -37,6 +37,20 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task GetPlayer()
+        {
+            var response = await _client.GetAsync($"api/Players/{_id}");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var player = JsonConvert.DeserializeObject<Player>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal("Dalvin Cook", player.Name);
+            Assert.Equal("RB", player.Position);
+            Assert.Equal("MIN", player.TeamName);
+            Assert.Equal(292.4, Math.Round(player.Points, 2));
+        }
+
+        [Fact]
         public async Task GetSeason()
         {
             var response = await _client.GetAsync("api/Players/Season/2018");
@@ -105,20 +119,6 @@ namespace NflStatsTests.Integration
             Assert.All(players, p => Assert.Equal(2019, p.Season));
             Assert.Contains("Kyler Murray", stringResponse);
             Assert.Contains("Larry Fitzgerald", stringResponse);
-        }
-
-        [Fact]
-        public async Task GetPlayer()
-        {
-            var response = await _client.GetAsync($"api/Players/{_id}");
-            var stringResponse = await response.Content.ReadAsStringAsync();
-            var player = JsonConvert.DeserializeObject<Player>(stringResponse);
-
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal("Dalvin Cook", player.Name);
-            Assert.Equal("RB", player.Position);
-            Assert.Equal("MIN", player.TeamName);
-            Assert.Equal(292.4, Math.Round(player.Points, 2));
         }
 
         [Fact]

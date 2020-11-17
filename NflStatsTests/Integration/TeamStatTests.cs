@@ -50,6 +50,20 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task FindTeamStat()
+        {
+            var response = await _client.GetAsync($"api/TeamStats/Find?team=colts&season=2017");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var teamStat = JsonConvert.DeserializeObject<TeamStat>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal("Indianapolis Colts", teamStat.TeamName);
+            Assert.Equal(2017, teamStat.Season);
+            Assert.Equal(18, teamStat.TeamId);
+            Assert.Equal(4553, teamStat.TotalYds);
+        }
+
+        [Fact]
         public async Task SeedTeamStats()
         {
             var response = await _client.PostAsync("api/Seeders/Run/TeamStats", null);

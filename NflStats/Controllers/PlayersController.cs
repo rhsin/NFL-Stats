@@ -25,6 +25,21 @@ namespace NflStats.Controllers
             return Ok(await _playerRepository.GetTop());
         }
 
+        // GET: api/Players/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Player>> GetPlayer(int id)
+        {
+            var players = await _playerRepository.GetAll();
+            var player = players.FirstOrDefault(p => p.Id == id);
+
+            if (player == null)
+            {
+                return NotFound();
+            }
+
+            return player;
+        }
+
         // GET: api/Players/Season/2019
         [HttpGet("Season/{season}")]
         public async Task<ActionResult<IEnumerable<Player>>> GetSeason(int season)
@@ -54,16 +69,6 @@ namespace NflStats.Controllers
         public async Task<ActionResult<IEnumerable<Player>>> FindByTeam(int teamId, int season)
         {
             return Ok(await _playerRepository.FindByTeam(teamId, season));
-        }
-
-        // GET: api/Players/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Player>> GetPlayer(int id)
-        {
-            var players = await _playerRepository.GetAll();
-            var player = players.First(p => p.Id == id);
-
-            return Ok(player);
         }
     }
 }

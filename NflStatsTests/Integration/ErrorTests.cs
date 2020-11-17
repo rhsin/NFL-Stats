@@ -22,14 +22,14 @@ namespace NflStatsTests.Integration
         [Fact]
         public async Task ErrorResponse()
         {
-            var response = await _client.GetAsync("api/Rosters/1000");
+            var response = await _client.DeleteAsync("api/Rosters/10000");
             var stringResponse = await response.Content.ReadAsStringAsync();
             var error = JsonConvert.DeserializeObject<Error>(stringResponse);
 
             Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
             Assert.Equal(500, error.StatusCode);
-            Assert.Equal("Sequence contains no matching element", error.Message);
-            Assert.Contains("RostersController.GetRoster", error.StackTrace);
+            Assert.Equal("Value cannot be null. (Parameter 'entity')", error.Message);
+            Assert.Contains("RostersController.DeleteRoster", error.StackTrace);
         }
 
         [Fact]
@@ -79,6 +79,22 @@ namespace NflStatsTests.Integration
         }
 
         [Fact]
+        public async Task GetPlayerError()
+        {
+            var response = await _client.GetAsync($"api/Player/100000");
+
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task GetRosterError()
+        {
+            var response = await _client.GetAsync($"api/Roster/100000");
+
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        [Fact]
         public async Task GetTeamError()
         {
             var response = await _client.GetAsync($"api/Team/100000");
@@ -91,7 +107,7 @@ namespace NflStatsTests.Integration
         {
             var response = await _client.GetAsync($"api/TeamStats/100000");
 
-            Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
+            Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
         [Fact]
@@ -114,14 +130,6 @@ namespace NflStatsTests.Integration
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
             var response = await _client.PutAsync("api/Rosters/1", data);
-
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-        }
-
-        [Fact]
-        public async Task DeleteRosterError()
-        {
-            var response = await _client.DeleteAsync("api/Rosters/aaa");
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }

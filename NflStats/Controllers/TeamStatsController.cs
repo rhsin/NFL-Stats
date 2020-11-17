@@ -31,9 +31,22 @@ namespace NflStats.Controllers
         public async Task<ActionResult<TeamStat>> GetTeamStat(int id)
         {
             var teamStats = await _teamStatRepository.GetAll();
-            var teamStat = teamStats.First(ts => ts.Id == id);
+            var teamStat = teamStats.FirstOrDefault(ts => ts.Id == id);
 
-            return Ok(teamStat);
+            if (teamStat == null)
+            {
+                return NotFound();
+            }
+
+            return teamStat;
+        }
+
+        // GET: api/TeamStats/Find
+        // Finds TeamStats by TeamName and Season from passed values, with TeamName containing team parameter.
+        [HttpGet("Find")]
+        public async Task<ActionResult<TeamStat>> FindTeamStat(string team, int season)
+        {
+            return Ok(await _teamStatRepository.FindBy(team, season));
         }
     }
 }
