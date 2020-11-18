@@ -14,6 +14,8 @@ namespace NflStats.Repositories
     {
         public Task<IEnumerable<TeamStat>> GetAll();
         public Task<TeamStat> FindBy(string team, int season);
+        public Task<IEnumerable<object>> GetTeamLeaders(string team, int season);
+        public Task<object> FindTeamLeaders(string team, int season);
         public Task SeedDefaultTeam();
     }
 
@@ -56,11 +58,57 @@ namespace NflStats.Repositories
                 .FirstAsync();
 
             teamStat.Team.Players = teamStat.Team.Players
-                .Where(p => p.Points > 100)
+                .Where(p => p.Season == season)
+                .Where(p => p.Points > 50)
                 .OrderByDescending(p => p.Points)
                 .ToList();
 
             return teamStat;
+        }
+
+        public async Task<IEnumerable<object>> GetTeamLeaders(string team, int season)
+        {
+            var teamStat = await _context.TeamStats                
+                .Where(ts => ts.TeamName.Contains(team))
+                .Where(ts => ts.Season == season)
+                .FirstAsync(); 
+
+            var players = await _context.Players
+                .Where(p => p.TeamId == teamStat.TeamId)
+                .Where(p => p.Season == season)
+                .ToListAsync();
+
+            foreach (var p in players)
+            {
+                var ratio = (float)((p.PassYds + p.RushYds + p.RecYds) / teamStat.TotalYds);
+
+                p.Points = ratio;
+            }
+
+            return players
+                .OrderByDescending(p => p.Points)
+                .GroupBy(p => p.Position)
+                .Select(g => new 
+                { 
+                    Position = g.Key,
+                    Player = g.Where(p => p.Points == g.Max(p => p.Points))
+                });
+        }
+
+        public async Task<object> FindTeamLeaders(string team, int season)
+        {
+            var parameters = new { Team = $"%{team}%", Season = season };
+
+            string sql = @"SELECT *
+                           FROM TeamStats AS ts
+                           INNER JOIN Players AS p
+                           ON ts.TeamId = p.TeamId
+                           WHERE LOWER(ts.TeamName) LIKE LOWER(@Team)
+                           AND ts.Season = @Season
+                           AND p.Points > 150
+                           ORDER BY p.Points DESC";
+
+            return await this.ExecuteQuery(sql, parameters);
         }
 
         public async Task SeedDefaultTeam()
@@ -74,6 +122,16 @@ namespace NflStats.Repositories
             using (var connection = new SqlConnection(_config.GetConnectionString("Default")))
             {
                 await connection.ExecuteAsync(sql);
+            }
+        }
+
+        private async Task<object> ExecuteQuery(string sql, object parameters)
+        {
+            using (var connection = new SqlConnection(_config.GetConnectionString("Default")))
+            {
+                var result = await connection.QueryAsync<object>(sql, parameters);
+
+                return result;
             }
         }
     }

@@ -19,7 +19,7 @@ namespace NflStats.Services
         {
             foreach (var p in players)
             {
-                float total = (float)(p.PassTds + p.RushTds + p.RecTds);
+                var total = (float)(p.PassTds + p.RushTds + p.RecTds);
 
                 p.Points = total;
             }
@@ -33,7 +33,7 @@ namespace NflStats.Services
         {
             foreach (var p in players.ToList())
             {
-                float ratio = (float)((p.PassTds + p.RushTds + p.RecTds) / (p.PassInt + p.Fumbles));
+                var ratio = (float)((p.PassTds + p.RushTds + p.RecTds) / (p.PassInt + p.Fumbles));
 
                 if (ratio > 0 && ratio < 100 && p.Position == "QB")
                 {
@@ -54,7 +54,7 @@ namespace NflStats.Services
         {
             foreach (var p in players)
             {
-                float yards = (float)(p.RushYds + p.RecYds);
+                var yards = (float)(p.RushYds + p.RecYds);
 
                 p.Points = yards;
             }

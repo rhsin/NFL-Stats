@@ -30,6 +30,8 @@ namespace NflStatsTests
         [InlineData("api/TeamStats")]
         [InlineData("api/TeamStats/75")]
         [InlineData("api/TeamStats/Find?team=falcons&season=2018")]
+        [InlineData("api/TeamStats/Leaders/Team?team=falcons&season=2018")]
+        [InlineData("api/TeamStats/Leaders/Find?team=arizona&season=2019")]
         [InlineData("api/Teams/Find?division=NFC West")]
         [InlineData("api/Stats/Fantasy/Rosters/1/9")]
         public async Task TestGetEndpoints(string url)

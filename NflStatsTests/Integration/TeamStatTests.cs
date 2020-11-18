@@ -61,6 +61,35 @@ namespace NflStatsTests.Integration
             Assert.Equal(2017, teamStat.Season);
             Assert.Equal(18, teamStat.TeamId);
             Assert.Equal(4553, teamStat.TotalYds);
+            Assert.Equal(7, teamStat.Team.Players.Count());
+        }
+
+        [Fact]
+        public async Task GetTeamLeaders()
+        {
+            var response = await _client.GetAsync($"api/TeamStats/Leaders/Team?team=colt&season=2018");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var teamStats = JsonConvert.DeserializeObject<List<object>>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(5, teamStats.Count());
+            Assert.Contains("player", stringResponse);
+            Assert.Contains("Andrew Luck", stringResponse);
+            Assert.Contains("T.Y. Hilton", stringResponse);
+        }
+
+        [Fact]
+        public async Task FindTeamLeaders()
+        {
+            var response = await _client.GetAsync($"api/TeamStats/Leaders/Find?team=chief&season=2018");
+            var stringResponse = await response.Content.ReadAsStringAsync();
+            var teamStats = JsonConvert.DeserializeObject<List<object>>(stringResponse);
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(11, teamStats.Count());
+            Assert.Contains("Kansas City Chiefs", stringResponse);
+            Assert.Contains("Patrick Mahomes", stringResponse);
+            Assert.Contains("Tyreek Hill", stringResponse);
         }
 
         [Fact]

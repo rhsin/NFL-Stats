@@ -48,5 +48,19 @@ namespace NflStats.Controllers
         {
             return Ok(await _teamStatRepository.FindBy(team, season));
         }
+
+        // GET: api/TeamStats/Leaders/Team
+        [HttpGet("Leaders/Team")]
+        public async Task<IActionResult> GetTeamLeaders(string team, int season)
+        {
+            return Ok(await _teamStatRepository.GetTeamLeaders(team, season));
+        }
+
+        // GET: api/TeamStats/Leaders/Find
+        [HttpGet("Leaders/Find")]
+        public async Task<IActionResult> FindTeamLeaders(string team, int season)
+        {
+            return Ok(await _teamStatRepository.FindTeamLeaders(team, season));
+        }
     }
 }
