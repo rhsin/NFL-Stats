@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Newtonsoft.Json;
 using NflStats.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -69,14 +70,29 @@ namespace NflStatsTests.Integration
         {
             var response = await _client.GetAsync($"api/TeamStats/Leaders/Team?team=colt&season=2018");
             var stringResponse = await response.Content.ReadAsStringAsync();
-            var teamStats = JsonConvert.DeserializeObject<List<object>>(stringResponse);
+            var teamStats = JsonConvert.DeserializeObject<Dictionary<string, Player>>(stringResponse);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(5, teamStats.Count());
-            Assert.Contains("player", stringResponse);
-            Assert.Contains("Andrew Luck", stringResponse);
-            Assert.Contains("T.Y. Hilton", stringResponse);
+            Assert.Equal(4, teamStats.Count());
+            Assert.True(teamStats.ContainsKey("RB"));
+            Assert.Equal("Andrew Luck", teamStats["QB"].Name);
+            Assert.Equal("T.Y. Hilton", teamStats["WR"].Name);
+            Assert.Equal(.768, Math.Round(teamStats["QB"].Points, 3));
         }
+
+        //[Fact]
+        //public async Task GetTeamLeaders()
+        //{
+        //    var response = await _client.GetAsync($"api/TeamStats/Leaders/Team?team=colt&season=2018");
+        //    var stringResponse = await response.Content.ReadAsStringAsync();
+        //    var teamStats = JsonConvert.DeserializeObject<List<object>>(stringResponse);
+
+        //    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        //    Assert.Equal(4, teamStats.Count());
+        //    Assert.Contains("player", stringResponse);
+        //    Assert.Contains("Andrew Luck", stringResponse);
+        //    Assert.Contains("T.Y. Hilton", stringResponse);
+        //}
 
         [Fact]
         public async Task FindTeamLeaders()
@@ -86,7 +102,7 @@ namespace NflStatsTests.Integration
             var teamStats = JsonConvert.DeserializeObject<List<object>>(stringResponse);
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(11, teamStats.Count());
+            Assert.Equal(7, teamStats.Count());
             Assert.Contains("Kansas City Chiefs", stringResponse);
             Assert.Contains("Patrick Mahomes", stringResponse);
             Assert.Contains("Tyreek Hill", stringResponse);

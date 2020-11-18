@@ -14,7 +14,7 @@ namespace NflStats.Repositories
     {
         public Task<IEnumerable<TeamStat>> GetAll();
         public Task<TeamStat> FindBy(string team, int season);
-        public Task<IEnumerable<object>> GetTeamLeaders(string team, int season);
+        public Task<Dictionary<string, Player>> GetTeamLeaders(string team, int season);
         public Task<object> FindTeamLeaders(string team, int season);
         public Task SeedDefaultTeam();
     }
@@ -66,7 +66,7 @@ namespace NflStats.Repositories
             return teamStat;
         }
 
-        public async Task<IEnumerable<object>> GetTeamLeaders(string team, int season)
+        public async Task<Dictionary<string, Player>> GetTeamLeaders(string team, int season)
         {
             var teamStat = await _context.TeamStats                
                 .Where(ts => ts.TeamName.Contains(team))
@@ -86,13 +86,21 @@ namespace NflStats.Repositories
             }
 
             return players
+                .Where(p => p.Position != "0")
                 .OrderByDescending(p => p.Points)
                 .GroupBy(p => p.Position)
-                .Select(g => new 
-                { 
-                    Position = g.Key,
-                    Player = g.Where(p => p.Points == g.Max(p => p.Points))
-                });
+                .ToDictionary(g => g.Key,
+                    g => g.Where(p => p.Points == g.Max(p => p.Points)).Single());
+
+            //return players
+            //    .Where(p => p.Position != "0")
+            //    .OrderByDescending(p => p.Points)
+            //    .GroupBy(p => p.Position)
+            //    .Select(g => new 
+            //    { 
+            //        Position = g.Key,
+            //        Player = g.Where(p => p.Points == g.Max(p => p.Points)).Single()
+            //    });
         }
 
         public async Task<object> FindTeamLeaders(string team, int season)
@@ -105,7 +113,8 @@ namespace NflStats.Repositories
                            ON ts.TeamId = p.TeamId
                            WHERE LOWER(ts.TeamName) LIKE LOWER(@Team)
                            AND ts.Season = @Season
-                           AND p.Points > 150
+                           AND p.Season = @Season
+                           AND p.Points > 80
                            ORDER BY p.Points DESC";
 
             return await this.ExecuteQuery(sql, parameters);
