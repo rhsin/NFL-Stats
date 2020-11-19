@@ -81,7 +81,7 @@ function Roster() {
   };
 
   return (
-    <Container maxWidth='lg'>
+    <Container maxWidth='xl'>
       <NavBar />
       {loading && <LoadingAlert type='Players' />}
       {render && <LoadingAlert type='Roster' />}

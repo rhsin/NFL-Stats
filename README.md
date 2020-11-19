@@ -9,16 +9,14 @@
 
 
 ## Site
-Users can use the search form to query players by name, position, season, & stats. They can also save/delete players in their roster.
+Users can use the search form to query players by name, position, season, division, & stats. They can also save/delete players in their roster for fantasy updates. Queried players can be viewed through the player bar chart & data table. 
 
 ![](/NflStats/Roster.png?raw=true)
-
 
 
 The stats button group has options to calculate specific values: Total Touchdowns, TD/Turnover ratio, & Scrimmage Yards.
 
 ![](/NflStats/Stats.png?raw=true)
-
 
 
 ## Mobile support
