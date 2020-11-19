@@ -14,8 +14,8 @@ namespace NflStats.Repositories
     {
         public Task<IEnumerable<TeamStat>> GetAll();
         public Task<TeamStat> FindBy(string team, int season);
-        public Task<Dictionary<string, Player>> GetTeamLeaders(string team, int season);
-        public Task<object> FindTeamLeaders(string team, int season);
+        public Task<IDictionary<string, Player>> GetTeamLeaders(string team, int season);
+        public Task<IEnumerable<object>> FindTeamLeaders(string team, int season);
         public Task SeedDefaultTeam();
     }
 
@@ -66,7 +66,7 @@ namespace NflStats.Repositories
             return teamStat;
         }
 
-        public async Task<Dictionary<string, Player>> GetTeamLeaders(string team, int season)
+        public async Task<IDictionary<string, Player>> GetTeamLeaders(string team, int season)
         {
             var teamStat = await _context.TeamStats                
                 .Where(ts => ts.TeamName.Contains(team))
@@ -103,7 +103,7 @@ namespace NflStats.Repositories
             //    });
         }
 
-        public async Task<object> FindTeamLeaders(string team, int season)
+        public async Task<IEnumerable<object>> FindTeamLeaders(string team, int season)
         {
             var parameters = new { Team = $"%{team}%", Season = season };
 
@@ -134,7 +134,7 @@ namespace NflStats.Repositories
             }
         }
 
-        private async Task<object> ExecuteQuery(string sql, object parameters)
+        private async Task<IEnumerable<object>> ExecuteQuery(string sql, object parameters)
         {
             using (var connection = new SqlConnection(_config.GetConnectionString("Default")))
             {

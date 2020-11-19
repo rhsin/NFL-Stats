@@ -30,8 +30,6 @@ This app uses a responsive grid to cater to different devices & sizes.
 - [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-2019) v15.0.0
 - [React](https://reactjs.org/) v17.0.1
 - [Material UI](https://material-ui.com/) v4.11.0
-- [XUnit](https://xunit.net/) v2.4.0
-- [React Testing Library](https://testing-library.com/) v11.1.0
 
 
 ## Contact

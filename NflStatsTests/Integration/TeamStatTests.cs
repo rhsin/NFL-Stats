@@ -80,20 +80,6 @@ namespace NflStatsTests.Integration
             Assert.Equal(.768, Math.Round(teamStats["QB"].Points, 3));
         }
 
-        //[Fact]
-        //public async Task GetTeamLeaders()
-        //{
-        //    var response = await _client.GetAsync($"api/TeamStats/Leaders/Team?team=colt&season=2018");
-        //    var stringResponse = await response.Content.ReadAsStringAsync();
-        //    var teamStats = JsonConvert.DeserializeObject<List<object>>(stringResponse);
-
-        //    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        //    Assert.Equal(4, teamStats.Count());
-        //    Assert.Contains("player", stringResponse);
-        //    Assert.Contains("Andrew Luck", stringResponse);
-        //    Assert.Contains("T.Y. Hilton", stringResponse);
-        //}
-
         [Fact]
         public async Task FindTeamLeaders()
         {
@@ -117,5 +103,19 @@ namespace NflStatsTests.Integration
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             Assert.Equal("TeamStats Already Seeded!", stringResponse);
         }
+
+        //[Fact]
+        //public async Task GetTeamLeaders()
+        //{
+        //    var response = await _client.GetAsync($"api/TeamStats/Leaders/Team?team=colt&season=2018");
+        //    var stringResponse = await response.Content.ReadAsStringAsync();
+        //    var teamStats = JsonConvert.DeserializeObject<List<object>>(stringResponse);
+
+        //    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        //    Assert.Equal(4, teamStats.Count());
+        //    Assert.Contains("player", stringResponse);
+        //    Assert.Contains("Andrew Luck", stringResponse);
+        //    Assert.Contains("T.Y. Hilton", stringResponse);
+        //}
     }
 }
