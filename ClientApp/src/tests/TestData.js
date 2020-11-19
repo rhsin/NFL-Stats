@@ -5,6 +5,7 @@ export const players = [
     name: 'Patrick Mahomes',
     position: 'QB',
     team: 'KAN',
+    passYds: 5097,
     points: 285.04
   }
 ];

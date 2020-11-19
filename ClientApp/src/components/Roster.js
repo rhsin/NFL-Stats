@@ -10,6 +10,7 @@ import StatsForm from './StatsForm';
 import StatsButton from './StatsButton';
 import PlayerModal from './PlayerModal';
 import LoadingAlert from './LoadingAlert';
+import PlayerChart from './PlayerChart';
 import Container from '@material-ui/core/Container';
 import { url } from './AppConstants';
 
@@ -111,6 +112,7 @@ function Roster() {
         players={details}
         setOpen={()=> setOpen(!open)}
       />
+      <PlayerChart players={players} />
       {roster && (
         <PlayerTable 
           table='Roster'
