@@ -10,7 +10,7 @@ function PlayerChart({ players }) {
       height={250}
       data={{
         labels: players.map(player => player.name),
-        datasets: [{ values: players.map(player => player.passYds) }],
+        datasets: [{ values: players.map(player => player.points) }],
       }}
     />
   );

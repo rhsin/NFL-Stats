@@ -65,7 +65,7 @@ namespace NflStatsTests.Integration
         [Fact]
         public async Task AddPlayerError()
         {
-            var response = await _client.PutAsync($"api/Rosters/Players/Add/1/a", null);
+            var response = await _client.PutAsync("api/Rosters/Players/Add/1/a", null);
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
@@ -73,7 +73,7 @@ namespace NflStatsTests.Integration
         [Fact]
         public async Task RemovePlayerError()
         {
-            var response = await _client.PutAsync($"api/Rosters/Players/Remove/1/a", null);
+            var response = await _client.PutAsync("api/Rosters/Players/Remove/1/a", null);
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
@@ -81,7 +81,7 @@ namespace NflStatsTests.Integration
         [Fact]
         public async Task GetPlayerError()
         {
-            var response = await _client.GetAsync($"api/Player/100000");
+            var response = await _client.GetAsync("api/Players/100000");
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -89,7 +89,7 @@ namespace NflStatsTests.Integration
         [Fact]
         public async Task GetRosterError()
         {
-            var response = await _client.GetAsync($"api/Roster/100000");
+            var response = await _client.GetAsync("api/Rosters/100000");
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -97,7 +97,7 @@ namespace NflStatsTests.Integration
         [Fact]
         public async Task GetTeamError()
         {
-            var response = await _client.GetAsync($"api/Team/100000");
+            var response = await _client.GetAsync("api/Teams/100000");
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -105,7 +105,7 @@ namespace NflStatsTests.Integration
         [Fact]
         public async Task GetTeamStatError()
         {
-            var response = await _client.GetAsync($"api/TeamStats/100000");
+            var response = await _client.GetAsync("api/TeamStats/100000");
 
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
