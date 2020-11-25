@@ -15,7 +15,7 @@ namespace NflStats.Repositories
         public Task<IEnumerable<TeamStat>> GetAll();
         public Task<TeamStat> FindBy(string team, int season);
         public Task<IDictionary<string, Player>> GetTeamLeaders(string team, int season);
-        public Task<IEnumerable<object>> FindTeamLeaders(string team, int season);
+        public Task<IEnumerable<dynamic>> FindTeamLeaders(string team, int season);
         public Task SeedDefaultTeam();
     }
 
@@ -103,7 +103,7 @@ namespace NflStats.Repositories
             //    });
         }
 
-        public async Task<IEnumerable<object>> FindTeamLeaders(string team, int season)
+        public async Task<IEnumerable<dynamic>> FindTeamLeaders(string team, int season)
         {
             var parameters = new { Team = $"%{team}%", Season = season };
 
@@ -134,11 +134,11 @@ namespace NflStats.Repositories
             }
         }
 
-        private async Task<IEnumerable<object>> ExecuteQuery(string sql, object parameters)
+        private async Task<IEnumerable<dynamic>> ExecuteQuery(string sql, object parameters)
         {
             using (var connection = new SqlConnection(_config.GetConnectionString("Default")))
             {
-                var result = await connection.QueryAsync<object>(sql, parameters);
+                var result = await connection.QueryAsync(sql, parameters);
 
                 return result;
             }

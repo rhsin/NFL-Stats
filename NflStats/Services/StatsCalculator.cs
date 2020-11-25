@@ -6,16 +6,16 @@ namespace NflStats.Services
 {
     public interface IStatsCalculator
     {
-        public List<Player> TotalTDs(List<Player> players);
-        public List<Player> TDRatio(List<Player> players);
-        public List<Player> ScrimmageYds(List<Player> players);
+        public IList<Player> TotalTDs(IList<Player> players);
+        public IList<Player> TDRatio(IList<Player> players);
+        public IList<Player> ScrimmageYds(IList<Player> players);
     }
 
     public class StatsCalculator : IStatsCalculator
     {
         // Calculates each players total touchdowns and returns Player 
-        // list ordered by the total, set as the Points field.
-        public List<Player> TotalTDs(List<Player> players)
+        // List ordered by the total, set as the Points field.
+        public IList<Player> TotalTDs(IList<Player> players)
         {
             foreach (var p in players)
             {
@@ -28,8 +28,8 @@ namespace NflStats.Services
         }
 
         // Calculates each players(QB) TD/Turnover Ratio and returns Player 
-        // list ordered by the ratio, set as the Points field, if between 0, 100.
-        public List<Player> TDRatio(List<Player> players)
+        // List ordered by the ratio, set as the Points field, if between 0, 100.
+        public IList<Player> TDRatio(IList<Player> players)
         {
             foreach (var p in players.ToList())
             {
@@ -49,8 +49,8 @@ namespace NflStats.Services
         }
 
         // Calculates each players Yards from Scrimmage (Rush + Rec) and returns 
-        // Player list ordered by the YFS, set as the Points field.
-        public List<Player> ScrimmageYds(List<Player> players)
+        // Player List ordered by the YFS, set as the Points field.
+        public IList<Player> ScrimmageYds(IList<Player> players)
         {
             foreach (var p in players)
             {
